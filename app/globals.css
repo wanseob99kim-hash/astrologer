@@ -1,0 +1,257 @@
+/*
+ * 방향: 밤의 성도(星圖).
+ * 어두운 남색 바탕에 청금(라피스)과 금잔화(메리골드), 가는 금선.
+ * 밝은 테마는 '새벽' — 크림이 아니라 푸른빛 도는 회백색으로 잡는다.
+ */
+
+:root {
+  --bg: #EBEEF4;
+  --bg-deep: #DFE3EC;
+  --surface: #FFFFFF;
+  --ink: #131627;
+  --ink-2: #3C4157;
+  --muted: #6B7089;
+  --line: #D3D8E4;
+  --line-soft: #E3E7EF;
+  --lapis: #26418F;
+  --marigold: #9A6108;
+  --marigold-soft: #E8D9B8;
+  --shadow: 0 1px 2px rgba(19, 22, 39, .06), 0 8px 24px -12px rgba(19, 22, 39, .18);
+  --star: rgba(38, 65, 143, .16);
+
+  --step--1: clamp(.78rem, .76rem + .1vw, .84rem);
+  --step-0: clamp(.95rem, .92rem + .15vw, 1.02rem);
+  --step-1: clamp(1.1rem, 1.02rem + .35vw, 1.28rem);
+  --step-2: clamp(1.4rem, 1.2rem + .9vw, 1.9rem);
+  --step-3: clamp(1.9rem, 1.45rem + 2.1vw, 3.1rem);
+  --step-4: clamp(2.4rem, 1.6rem + 3.6vw, 4.4rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B0D19;
+    --bg-deep: #070813;
+    --surface: #141834;
+    --ink: #ECEEF8;
+    --ink-2: #BEC4DC;
+    --muted: #868CAB;
+    --line: #222848;
+    --line-soft: #1A1F3A;
+    --lapis: #91A6EC;
+    --marigold: #E0AC4E;
+    --marigold-soft: #3A3018;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -14px rgba(0, 0, 0, .7);
+    --star: rgba(200, 214, 255, .3);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0B0D19;
+  --bg-deep: #070813;
+  --surface: #141834;
+  --ink: #ECEEF8;
+  --ink-2: #BEC4DC;
+  --muted: #868CAB;
+  --line: #222848;
+  --line-soft: #1A1F3A;
+  --lapis: #91A6EC;
+  --marigold: #E0AC4E;
+  --marigold-soft: #3A3018;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -14px rgba(0, 0, 0, .7);
+  --star: rgba(200, 214, 255, .3);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--lapis); outline-offset: 3px; border-radius: 2px; }
+
+.shell {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 22px 72px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 공통 타이포 ── */
+.display {
+  font-family: "Gowun Batang", Georgia, serif;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  margin: 0;
+}
+/*
+ * 자간은 라틴 문자에서만 넓게 준다.
+ * 한글은 조합형이라 .28em 을 주면 글자가 흩어져 읽기 어려워진다.
+ */
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  color: var(--marigold);
+  margin: 0;
+}
+.eyebrow--latin {
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+/* 산스크리트·데바나가리 표기. 위아래 부호가 잘리지 않도록 행간을 넉넉히 준다. */
+.names {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--muted);
+  line-height: 2.1;
+  margin: 10px 0 0;
+}
+.names .dev {
+  font-family: "Noto Serif Devanagari", "Nirmala UI", serif;
+  font-size: 1.15em;
+}
+.lede { color: var(--ink-2); margin: 0; max-width: 34em; }
+.small { font-size: var(--step--1); color: var(--muted); }
+
+/* ── 금선 ── */
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, var(--marigold), transparent);
+  opacity: .5;
+}
+
+/* ── 버튼 ── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 54px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lapis);
+  color: var(--bg);
+  font: inherit;
+  font-weight: 600;
+  font-size: var(--step-1);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .12s ease, filter .12s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: scale(.985); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-weight: 500;
+  font-size: var(--step-0);
+  min-height: 48px;
+}
+.btn--ghost:hover { border-color: var(--muted); filter: none; }
+
+/* ── 폼 ── */
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field > label { font-weight: 500; font-size: var(--step-0); }
+.field .hint { font-size: var(--step--1); color: var(--muted); line-height: 1.55; }
+.input {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+.input::placeholder { color: var(--muted); opacity: .7; letter-spacing: 0; }
+.input:focus-visible { border-color: var(--lapis); }
+.input[aria-invalid="true"] { border-color: #C0392B; }
+.error { color: #C0392B; font-size: var(--step--1); margin: 0; }
+:root[data-theme="dark"] .error, :root:not([data-theme="light"]) .error { color: #F08B7E; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .error { color: #C0392B; } }
+
+.segmented { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.segmented button {
+  flex: 1;
+  min-height: 46px;
+  border: 0;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: var(--step-0);
+  cursor: pointer;
+}
+.segmented button[aria-pressed="true"] { background: var(--lapis); color: var(--bg); font-weight: 600; }
+
+.checkline { display: flex; align-items: center; gap: 8px; font-size: var(--step--1); color: var(--ink-2); cursor: pointer; }
+.checkline input { width: 17px; height: 17px; accent-color: var(--lapis); }
+
+/* ── 카드 ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.chip {
+  font-size: var(--step--1);
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+}
+.chip--accent { border-color: color-mix(in srgb, var(--marigold) 50%, transparent); color: var(--marigold); }
+
+/* ── 주의 배너 ── */
+.notice {
+  display: flex;
+  gap: 11px;
+  padding: 13px 15px;
+  border-radius: 8px;
+  background: var(--marigold-soft);
+  border: 1px solid color-mix(in srgb, var(--marigold) 35%, transparent);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.notice b { color: var(--ink); font-weight: 600; }
+
+/* ── 푸터 ── */
+.footer {
+  margin-top: auto;
+  padding-top: 44px;
+  font-size: 11.5px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.footer nav { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+.footer a { text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer .disclaimer { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "vedic-astrology",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node engine/verify/run-all.mjs",
+    "verify:nakshatra": "node engine/verify/01-nakshatra.mjs",
+    "verify:dasha": "node engine/verify/02-dasha.mjs",
+    "verify:match": "node engine/verify/03-match.mjs",
+    "verify:time": "node engine/verify/04-time-sensitivity.mjs",
+    "content:validate": "tsx content/validate.ts",
+    "typecheck": "tsc --noEmit",
+    "preview": "tsx scripts/preview-copy.ts",
+    "review": "tsx scripts/build-review-page.ts",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "shoot": "tsx scripts/shoot.ts"
+  },
+  "dependencies": {
+    "@ishubhamx/panchangam-js": "^3.0.0",
+    "astronomy-engine": "^2.1.19",
+    "mhah-panchang": "^1.2.0",
+    "next": "^15.5.25",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "playwright": "^1.62.1",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  }
+}
