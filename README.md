@@ -46,6 +46,13 @@ docs/       기획서 · 검증 보고서
 
 ## 명령어
 
+배포용 빌드는 기준 주소를 반드시 지정합니다. 지정하지 않으면 canonical 과 og:url 에
+`http://localhost:3000` 이 박힙니다. `prebuild` 가 이를 경고합니다.
+
+```bash
+SITE_URL=https://내도메인 npm run build
+```
+
 ```bash
 npm run dev               # 개발 서버
 npm run build             # 프로덕션 빌드
@@ -79,6 +86,6 @@ npm run shoot             # 화면 캡처 (서버 실행 중일 때)
 - [x] P1 데이터셋 — 27 나크샤트라 · 9 그라하 · 8 쿠타
 - [x] P2 계산 엔진 검증 — 전체 PASS
 - [x] P3 L0~L1 무료 플로우 — 19 페이지
-- [ ] P4 SEO 콘텐츠 — `/compare/saju`, `/tradition/*`
+- [x] P4 SEO 콘텐츠 — `/compare/saju`, `/tradition/*`, sitemap, robots, JSON-LD
 - [ ] P5 궁합 (아쉬타쿠타 36점)
 - [ ] P6 결제 · 유료 리포트

@@ -255,3 +255,97 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ── 비교 표 ── */
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table.compare { border-collapse: collapse; width: 100%; background: var(--surface); }
+table.compare th, table.compare td {
+  text-align: left; padding: 12px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: var(--step--1); line-height: 1.6; vertical-align: top;
+}
+table.compare tr:last-child th, table.compare tr:last-child td { border-bottom: 0; }
+table.compare thead th {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; background: var(--surface-2, var(--bg-deep));
+}
+table.compare tbody th { font-weight: 600; color: var(--ink); white-space: nowrap; }
+table.compare td { color: var(--ink-2); }
+table.compare td.vedic { color: var(--ink); }
+
+/* ── 다샤 막대 ── */
+.dashaBars { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.dashaBars li {
+  display: grid; grid-template-columns: 48px 1fr 48px;
+  align-items: center; gap: 12px;
+  font-size: var(--step--1); font-variant-numeric: tabular-nums;
+}
+.dashaBars__name { color: var(--ink-2); }
+.dashaBars__track {
+  height: 8px; border-radius: 999px;
+  background: var(--line-soft); overflow: hidden;
+}
+.dashaBars__fill { display: block; height: 100%; background: var(--lapis); border-radius: 999px; }
+.dashaBars__value { color: var(--muted); text-align: right; }
+
+/* ── 그라하 목록 ── */
+.grahaList { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line-soft); }
+.grahaList li { background: var(--bg); }
+.grahaList__link {
+  display: grid; grid-template-columns: 40px 1fr; gap: 14px;
+  padding: 16px 4px; text-decoration: none;
+}
+.grahaList__num {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 14px; font-weight: 500;
+  color: var(--bg); background: var(--dot);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.grahaList__body { display: grid; gap: 3px; min-width: 0; }
+.grahaList__name { font-family: "Gowun Batang", Georgia, serif; font-weight: 700; font-size: var(--step-1); }
+.grahaList__lat {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 7px;
+}
+.grahaList__meta { font-size: var(--step--1); color: var(--muted); }
+.grahaList__copy { font-size: var(--step--1); color: var(--ink-2); line-height: 1.6; margin-top: 3px; }
+
+/*
+ * 좁은 화면에서는 3열 표를 접어 세로로 쌓는다.
+ * 가로 스크롤로 두면 오른쪽 '베딕' 열이 화면 밖으로 나가는데,
+ * 그 열이 이 페이지에서 읽혀야 할 내용이라 잘리면 안 된다.
+ */
+@media (max-width: 640px) {
+  .tablewrap { border: 0; overflow: visible; }
+  table.compare { background: transparent; }
+  table.compare thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  table.compare tr {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  table.compare tr:last-child { margin-bottom: 0; }
+  table.compare th, table.compare td { display: block; border-bottom: 0; padding: 0; }
+  table.compare tbody th {
+    white-space: normal;
+    font-family: "Gowun Batang", Georgia, serif;
+    font-size: var(--step-1);
+    margin-bottom: 10px;
+  }
+  table.compare td { padding-left: 46px; position: relative; margin-top: 7px; }
+  table.compare td::before {
+    content: attr(data-label);
+    position: absolute; left: 0; top: 0;
+    width: 38px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10px; letter-spacing: .06em;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  table.compare td.vedic::before { color: var(--marigold); }
+}

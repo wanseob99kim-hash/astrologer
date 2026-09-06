@@ -1,12 +1,19 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { NAKSHATRAS } from '@/content/index'
+import { absoluteUrl, articleSchema, breadcrumbSchema } from '@/lib/seo'
 import { Footer } from '../../components/Footer'
+import { JsonLd } from '../../components/JsonLd'
+
+const PATH = '/tradition/nakshatra'
+const PUBLISHED = '2026-09-06'
 
 export const metadata: Metadata = {
   title: '27 탄생별(나크샤트라) 사전',
   description:
     '베딕 점성술의 27개 탄생별을 지배 행성, 신격, 상징, 기질과 함께 정리했습니다. 달이 하늘을 한 바퀴 도는 길을 27등분한 체계입니다.',
+  alternates: { canonical: absoluteUrl(PATH) },
+  openGraph: { type: 'article', title: '27 탄생별(나크샤트라) 사전', url: absoluteUrl(PATH) },
 }
 
 const deg = (value: number) => {
@@ -66,6 +73,21 @@ export default function NakshatraIndexPage() {
       </main>
 
       <Footer />
+
+      <JsonLd
+        data={articleSchema({
+          path: PATH,
+          headline: '27 탄생별(나크샤트라) 사전',
+          description: metadata.description ?? '',
+          datePublished: PUBLISHED,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: '홈', path: '/' },
+          { name: '27 탄생별', path: PATH },
+        ])}
+      />
     </div>
   )
 }

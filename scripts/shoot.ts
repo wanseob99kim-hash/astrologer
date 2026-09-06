@@ -17,6 +17,9 @@ const SHOTS = [
   { file: '05-star', path: '/star/ardra?d=1995-05-05&t=09:30&n=%ED%99%8D%EA%B8%B8%EB%8F%99', label: 'L1 결과 (시간 있음)' },
   { file: '06-star-provisional', path: '/star/ardra?d=1995-05-05', label: 'L1 결과 (시간 모름)' },
   { file: '07-tradition', path: '/tradition/nakshatra', label: '27수 사전' },
+  { file: '08-compare-saju', path: '/compare/saju', label: '사주 비교' },
+  { file: '09-navagraha', path: '/tradition/navagraha', label: '아홉 행성' },
+  { file: '10-dasha', path: '/tradition/dasha', label: '다샤 해설' },
 ] as const
 
 async function shoot(browser: Browser, theme: 'light' | 'dark') {

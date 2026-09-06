@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
+import { absoluteUrl } from '@/lib/seo'
 import { Footer } from '../components/Footer'
 import { BirthForm } from './BirthForm'
 
 export const metadata: Metadata = {
   title: '생년월일 입력',
   description: '생년월일 8자리만 넣으면 나를 지키는 행성이 바로 나옵니다.',
+  alternates: { canonical: absoluteUrl('/birth') },
 }
 
 export default function BirthPage() {

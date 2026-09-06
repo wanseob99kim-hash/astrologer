@@ -15,7 +15,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "shoot": "tsx scripts/shoot.ts"
+    "shoot": "tsx scripts/shoot.ts",
+    "prebuild": "tsx scripts/check-site-url.ts"
   },
   "dependencies": {
     "@ishubhamx/panchangam-js": "^3.0.0",

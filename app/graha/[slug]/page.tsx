@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { GRAHAS } from '@/content/index'
 import { grahaBySlug, grahaSlug } from '@/lib/astro/engine'
+import { absoluteUrl } from '@/lib/seo'
 import { normalizeDate, normalizeNickname } from '@/lib/astro/input'
 import { Footer } from '../../components/Footer'
 
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${graha.ko} — 나를 지키는 행성`,
     description: graha.copy,
+    alternates: { canonical: absoluteUrl(`/graha/${grahaSlug(graha)}`) },
   }
 }
 

@@ -7,6 +7,8 @@ import { RefineForm } from './RefineForm'
 export const metadata: Metadata = {
   title: '태어난 시간 입력',
   description: '태어난 시간과 장소를 더하면 27개 탄생별이 확정됩니다.',
+  // 입력 도중의 임시 화면이라 색인하지 않는다.
+  robots: { index: false, follow: true },
 }
 
 interface PageProps {

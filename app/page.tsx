@@ -1,6 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { NAKSHATRAS } from '@/content/index'
+import { SITE, absoluteUrl, faqSchema } from '@/lib/seo'
 import { Footer } from './components/Footer'
+import { JsonLd } from './components/JsonLd'
+
+export const metadata: Metadata = {
+  alternates: { canonical: absoluteUrl('/') },
+  openGraph: { url: absoluteUrl('/'), title: `${SITE.name} | ${SITE.tagline}`, description: SITE.description },
+}
 
 const FAQ = [
   {
@@ -122,20 +130,7 @@ export default function HomePage() {
 
       <Footer />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: FAQ.map((item) => ({
-              '@type': 'Question',
-              name: item.q,
-              acceptedAnswer: { '@type': 'Answer', text: item.a },
-            })),
-          }),
-        }}
-      />
+      <JsonLd data={faqSchema(FAQ)} />
     </div>
   )
 }

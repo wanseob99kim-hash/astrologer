@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next'
+import { SITE } from '@/lib/seo'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.origin),
   title: {
     default: '베딕 점성술 무료 | 생년월일로 보는 나의 탄생별',
     template: '%s | 베딕 점성술',

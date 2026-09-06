@@ -9,7 +9,10 @@ export function Footer() {
     <footer className="footer">
       <hr className="rule" style={{ marginBottom: 20 }} />
       <nav aria-label="약관">
-        <Link href="/tradition/nakshatra">27 탄생별 사전</Link>
+        <Link href="/compare/saju">사주와 뭐가 다른가</Link>
+        <Link href="/tradition/nakshatra">27 탄생별</Link>
+        <Link href="/tradition/navagraha">아홉 행성</Link>
+        <Link href="/tradition/dasha">다샤</Link>
         <Link href="/terms">이용약관</Link>
         <Link href="/privacy">개인정보처리방침</Link>
       </nav>

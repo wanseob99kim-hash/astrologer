@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { nakshatraByKey } from '@/content/index'
 import { PLANET_KO, computeLevelOne, computeLevelZero } from '@/lib/astro/engine'
+import { absoluteUrl } from '@/lib/seo'
 import { parseBirthInput } from '@/lib/astro/input'
 import type { LevelOneResult } from '@/lib/astro/types'
 import { Footer } from '../../components/Footer'
@@ -23,6 +24,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${nakshatra.archetype} — ${nakshatra.tagline}`,
     description: nakshatra.copy,
+    // 쿼리에 생년월일이 실린 개인 결과 주소가 따로 색인되지 않도록 정규 주소를 고정한다.
+    alternates: { canonical: absoluteUrl(`/star/${nakshatra.key}`) },
     openGraph: {
       title: `나의 탄생별은 '${nakshatra.archetype}'`,
       description: nakshatra.tagline,
