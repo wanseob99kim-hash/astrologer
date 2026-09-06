@@ -73,6 +73,15 @@ export default async function StarPage({ params, searchParams }: PageProps) {
   // redirect() 는 특수 예외를 던지므로 반드시 try 밖에서 호출한다.
   if (correctedHref) redirect(correctedHref)
 
+  const matchParams = new URLSearchParams()
+  if (result) {
+    matchParams.set('d', first(query.d) ?? '')
+    const time = first(query.t)
+    if (time) matchParams.set('t', time)
+    if (nickname) matchParams.set('n', nickname)
+  }
+  const matchHref = `/match?${matchParams}`
+
   const isProvisional = result !== null && !result.isTimeKnown
 
   return (
@@ -184,7 +193,19 @@ export default async function StarPage({ params, searchParams }: PageProps) {
           </ul>
         </section>
 
-        <Link href="/birth" className="btn btn--ghost" style={{ marginTop: 44 }}>
+        {result ? (
+          <section style={{ marginTop: 44 }}>
+            <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>연인과의 궁합</h2>
+            <p className="small" style={{ marginTop: 8 }}>
+              인도 전통 아쉬타쿠타 36점. 여덟 항목의 점수를 그대로 보여드립니다.
+            </p>
+            <Link href={matchHref} className="btn" style={{ marginTop: 16 }}>
+              궁합 보기
+            </Link>
+          </section>
+        ) : null}
+
+        <Link href="/birth" className="btn btn--ghost" style={{ marginTop: 24 }}>
           다시 해보기
         </Link>
       </main>

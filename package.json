@@ -16,7 +16,8 @@
     "build": "next build",
     "start": "next start",
     "shoot": "tsx scripts/shoot.ts",
-    "prebuild": "tsx scripts/check-site-url.ts"
+    "prebuild": "tsx scripts/check-site-url.ts",
+    "verify:match-avg": "node engine/verify/05-match-average.mjs"
   },
   "dependencies": {
     "@ishubhamx/panchangam-js": "^3.0.0",

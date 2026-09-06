@@ -349,3 +349,38 @@ table.compare td.vedic { color: var(--ink); }
   }
   table.compare td.vedic::before { color: var(--marigold); }
 }
+
+/* ── 궁합 총점 ── */
+.matchScore {
+  display: flex; align-items: baseline; gap: 8px;
+  margin: 14px 0 0; font-variant-numeric: tabular-nums;
+}
+.matchScore__value {
+  font-family: "Gowun Batang", Georgia, serif; font-weight: 700;
+  font-size: clamp(3.2rem, 2rem + 5vw, 5rem); line-height: 1;
+  color: var(--marigold);
+}
+.matchScore__max { font-size: var(--step-1); color: var(--muted); }
+
+/* ── 8쿠타 점수판 ── */
+.kootaBoard { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.kootaBoard li {
+  display: grid; grid-template-columns: 92px 1fr 34px;
+  align-items: center; gap: 12px;
+  font-size: var(--step--1); font-variant-numeric: tabular-nums;
+}
+.kootaBoard__name { display: flex; flex-direction: column; line-height: 1.35; }
+.kootaBoard__max { font-size: 10px; color: var(--muted); }
+.kootaBoard__track { height: 10px; border-radius: 999px; background: var(--line-soft); overflow: hidden; }
+.kootaBoard__fill { display: block; height: 100%; border-radius: 999px; background: var(--lapis); }
+.kootaBoard__score { text-align: right; font-weight: 600; }
+.kootaBoard li.is-weak .kootaBoard__fill { background: var(--marigold); }
+.kootaBoard li.is-weak .kootaBoard__score { color: var(--marigold); }
+
+/* ── 잠긴 영역 ── */
+.locked {
+  border: 1px dashed color-mix(in srgb, var(--lapis) 45%, transparent);
+  border-radius: 10px; padding: 20px;
+  background: color-mix(in srgb, var(--lapis) 6%, transparent);
+}
+.locked__list { margin: 12px 0 0; padding-left: 18px; display: grid; gap: 5px; color: var(--ink-2); font-size: var(--step--1); }

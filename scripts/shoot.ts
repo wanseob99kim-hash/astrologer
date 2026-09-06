@@ -20,6 +20,12 @@ const SHOTS = [
   { file: '08-compare-saju', path: '/compare/saju', label: '사주 비교' },
   { file: '09-navagraha', path: '/tradition/navagraha', label: '아홉 행성' },
   { file: '10-dasha', path: '/tradition/dasha', label: '다샤 해설' },
+  { file: '11-match', path: '/match?d=1995-05-05&t=09:30&n=%ED%99%8D%EA%B8%B8%EB%8F%99', label: '궁합 입력' },
+  {
+    file: '12-match-result',
+    path: '/match/result?ad=1995-05-05&at=09:30&an=%ED%99%8D%EA%B8%B8%EB%8F%99&bd=1993-11-20&bt=06:00&bn=%EC%98%81%ED%9D%AC',
+    label: '궁합 결과',
+  },
 ] as const
 
 async function shoot(browser: Browser, theme: 'light' | 'dark') {

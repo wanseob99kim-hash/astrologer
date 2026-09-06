@@ -7,6 +7,7 @@ const SCRIPTS = [
   ['02-dasha.mjs', '빔쇼타리 다샤'],
   ['03-match.mjs', '아쉬타쿠타 궁합'],
   ['04-time-sensitivity.mjs', '출생시각 민감도'],
+  ['05-match-average.mjs', '양방향 평균 궁합'],
 ]
 
 const failures = []
