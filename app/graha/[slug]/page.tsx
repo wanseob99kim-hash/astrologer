@@ -6,6 +6,7 @@ import { grahaBySlug, grahaSlug } from '@/lib/astro/engine'
 import { absoluteUrl } from '@/lib/seo'
 import { normalizeDate, normalizeNickname } from '@/lib/astro/input'
 import { Footer } from '../../components/Footer'
+import { GrahaGlyph } from '../../components/GrahaGlyph'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -54,6 +55,9 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
     <div className="shell">
       <header style={{ paddingTop: 56 }}>
         <p className="eyebrow">Step 1 결과 · 나바그라하</p>
+        <div className="heroGlyph" style={{ color: graha.colorHex }}>
+          <GrahaGlyph graha={graha.key} size={92} title={`${graha.ko} 기호`} />
+        </div>
         {nickname ? (
           <p className="small" style={{ marginTop: 12 }}>{nickname} 님을 지키는 행성은</p>
         ) : null}
@@ -66,9 +70,7 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
 
         <ul className="chips" style={{ marginTop: 16 }}>
           <li className="chip chip--accent">{graha.keyword}</li>
-          {graha.weekday ? <li className="chip">{graha.weekday}</li> : <li className="chip">요일 없음</li>}
-          <li className="chip">{graha.color}</li>
-          <li className="chip">{graha.gemstone}</li>
+          <li className="chip">{graha.deityKo.split(' —')[0]}</li>
         </ul>
       </header>
 
@@ -89,6 +91,27 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
           <ul style={{ margin: '12px 0 0', paddingLeft: 18, display: 'grid', gap: 5, color: 'var(--ink-2)' }}>
             {graha.shadows.map((item) => <li key={item}>{item}</li>)}
           </ul>
+        </section>
+
+        <section style={{ marginTop: 32 }}>
+          <h2 className="eyebrow" style={{ color: 'var(--lapis)' }}>행운 아이템</h2>
+          <dl className="itemGrid">
+            <div><dt>색</dt><dd><span className="swatch" style={{ background: graha.colorHex }} />{graha.color}</dd></div>
+            <div><dt>보석</dt><dd>{graha.gemstone}</dd></div>
+            <div><dt>요일</dt><dd>{graha.weekday ?? '없음'}</dd></div>
+            <div><dt>방위</dt><dd>{graha.direction ?? '없음'}</dd></div>
+            <div><dt>숫자</dt><dd>{graha.luckyNumber}</dd></div>
+            <div><dt>신격</dt><dd>{graha.deityKo}</dd></div>
+          </dl>
+        </section>
+
+        <section style={{ marginTop: 30 }}>
+          <h2 className="eyebrow">전통 처방</h2>
+          <p style={{ marginTop: 10, color: 'var(--ink-2)' }}>{graha.remedy}</p>
+          <div className="mantra">
+            <p className="eyebrow" style={{ color: 'var(--marigold)' }}>비자 만트라</p>
+            <p className="mantra__text">{graha.mantra}</p>
+          </div>
         </section>
 
         <section style={{ marginTop: 40 }}>

@@ -75,6 +75,10 @@ NAKSHATRAS.forEach((n, position) => {
   if (n.shadows.length < 2) fail(`${label}: shadows ${n.shadows.length}개 (최소 2)`)
   if (n.career.length < 3) fail(`${label}: career ${n.career.length}개 (최소 3)`)
   if (!/^#[0-9A-Fa-f]{6}$/.test(n.luckyColorHex)) fail(`${label}: luckyColorHex '${n.luckyColorHex}' 형식 오류`)
+  if (!n.direction || n.direction.trim().length === 0) fail(`${label}: direction 비어 있음`)
+  for (const [axis, value] of Object.entries(n.ratings)) {
+    if (!Number.isInteger(value) || value < 1 || value > 5) fail(`${label}: ratings.${axis} = ${value} 가 1~5 정수가 아님`)
+  }
   if (n.rashi.length === 0) fail(`${label}: rashi 비어 있음`)
 })
 
@@ -97,6 +101,9 @@ for (const g of GRAHAS) {
   if (g.strengths.length < 3) fail(`${label}: strengths ${g.strengths.length}개 (최소 3)`)
   if (g.shadows.length < 2) fail(`${label}: shadows ${g.shadows.length}개 (최소 2)`)
   if (!g.copy || g.copy.length < 30) fail(`${label}: copy 가 너무 짧음`)
+  if (!g.deityKo || !g.mantra || !g.remedy) fail(`${label}: deityKo/mantra/remedy 누락`)
+  if (g.luckyNumber !== g.moolank) fail(`${label}: luckyNumber ${g.luckyNumber} ≠ moolank ${g.moolank}`)
+  if (!g.mantra.startsWith('옴 ')) fail(`${label}: 만트라 표기 형식 확인 필요`)
 }
 const dashaSum = GRAHAS.reduce((sum, g) => sum + g.dashaYears, 0)
 if (dashaSum !== 120) fail(`빔쇼타리 대운 합 ${dashaSum}년 (기대 120)`)

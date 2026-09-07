@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { NAKSHATRAS } from '@/content/index'
+import { GRAHAS, NAKSHATRAS } from '@/content/index'
 import { SITE, absoluteUrl, faqSchema } from '@/lib/seo'
 import { Footer } from './components/Footer'
+import { GrahaGlyph } from './components/GrahaGlyph'
 import { JsonLd } from './components/JsonLd'
 
 export const metadata: Metadata = {
@@ -78,7 +79,7 @@ export default function HomePage() {
               <p className="eyebrow" style={{ color: 'var(--lapis)' }}>Step 1 · 생년월일</p>
               <p style={{ margin: '8px 0 0', fontWeight: 600 }}>나를 지키는 행성</p>
               <p className="small" style={{ marginTop: 6 }}>
-                태어난 날짜의 숫자를 더해 아홉 행성(나바그라하) 중 하나를 찾습니다. 계산이 필요 없어 오차가 없습니다.
+                태어난 날짜의 숫자를 더해 아홉 행성(나바그라하) 중 하나를 찾습니다.
               </p>
             </div>
             <div className="card">
@@ -89,6 +90,31 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+        </section>
+
+        <section style={{ marginTop: 52 }}>
+          <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>아홉 행성</h2>
+          <p className="small" style={{ marginTop: 8 }}>
+            눈으로 보이는 일곱 천체에 라후와 케투를 더해 아홉으로 봅니다.
+          </p>
+          <ul className="grahaGrid">
+            {GRAHAS.map((graha) => (
+              <li key={graha.key}>
+                <Link href={`/graha/${graha.sanskrit.toLowerCase()}`} style={{ textDecoration: 'none' }}>
+                  <span className="grahaGrid__glyph" style={{ color: graha.colorHex }}>
+                    <GrahaGlyph graha={graha.key} size={34} title={graha.ko} />
+                  </span>
+                  <span className="grahaGrid__name">{graha.ko}</span>
+                  <span className="grahaGrid__meta">{graha.keyword}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p style={{ marginTop: 14 }}>
+            <Link href="/tradition/navagraha" className="small" style={{ color: 'var(--lapis)', fontWeight: 500 }}>
+              아홉 행성 자세히 보기 →
+            </Link>
+          </p>
         </section>
 
         <section style={{ marginTop: 52 }}>

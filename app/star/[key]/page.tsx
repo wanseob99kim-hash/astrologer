@@ -7,12 +7,18 @@ import { absoluteUrl } from '@/lib/seo'
 import { parseBirthInput } from '@/lib/astro/input'
 import type { LevelOneResult } from '@/lib/astro/types'
 import { Footer } from '../../components/Footer'
+import { NakshatraWheel } from '../../components/NakshatraWheel'
+import { RatingBars } from './RatingBars'
 import { DashaTimeline } from './DashaTimeline'
 
 interface PageProps {
   params: Promise<{ key: string }>
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }
+
+/** 분류값은 화면에 영문으로 노출하지 않는다. */
+const GANA_KO: Record<string, string> = { Deva: '데바 — 신의 결', Manushya: '마누샤 — 사람의 결', Rakshasa: '락샤사 — 거센 결' }
+const NADI_KO: Record<string, string> = { Adi: '아디', Madhya: '마디아', Antya: '안티아' }
 
 const first = (value: string | string[] | undefined): string | undefined =>
   Array.isArray(value) ? value[0] : value
@@ -101,6 +107,12 @@ export default async function StarPage({ params, searchParams }: PageProps) {
           {nakshatra.ko} · {nakshatra.sanskrit} · <span className="dev">{nakshatra.devanagari}</span>
         </p>
 
+        <NakshatraWheel
+          activeIndex={nakshatra.index}
+          moonLongitude={result?.moonLongitude}
+          archetype={nakshatra.archetype}
+        />
+
         <ul className="chips" style={{ marginTop: 16 }}>
           <li className="chip chip--accent">{nakshatra.keyword}</li>
           <li className="chip">{nakshatra.luckyColor}</li>
@@ -144,6 +156,14 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         <hr className="rule" style={{ margin: '32px 0' }} />
 
         <section>
+          <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>다섯 축</h2>
+          <p className="small" style={{ marginTop: 8 }}>
+            전통 성격 서술을 근거로 매긴 값입니다. 계산으로 나온 수치는 아니에요.
+          </p>
+          <RatingBars ratings={nakshatra.ratings} />
+        </section>
+
+        <section style={{ marginTop: 34 }}>
           <h2 className="eyebrow" style={{ color: 'var(--lapis)' }}>이런 점이 강합니다</h2>
           <ul style={{ margin: '12px 0 0', paddingLeft: 18, display: 'grid', gap: 5 }}>
             {nakshatra.strengths.map((item) => <li key={item}>{item}</li>)}
@@ -181,9 +201,18 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         <section style={{ marginTop: 40 }}>
           <h2 className="eyebrow">전통</h2>
           <p style={{ marginTop: 10, color: 'var(--ink-2)' }}>{nakshatra.ritual}</p>
-          <p className="small" style={{ marginTop: 10 }}>
-            신격 {nakshatra.deityKo} · 상징 {nakshatra.symbolKo}
-          </p>
+          <dl className="itemGrid" style={{ marginTop: 14 }}>
+            <div><dt>색</dt><dd><span className="swatch" style={{ background: nakshatra.luckyColorHex }} />{nakshatra.luckyColor}</dd></div>
+            <div><dt>보석</dt><dd>{nakshatra.gemstone}</dd></div>
+            <div><dt>방위</dt><dd>{nakshatra.direction}</dd></div>
+            <div><dt>숫자</dt><dd>{nakshatra.luckyNumber}</dd></div>
+            <div><dt>신격</dt><dd>{nakshatra.deityKo}</dd></div>
+            <div><dt>상징</dt><dd>{nakshatra.symbolKo}</dd></div>
+            <div><dt>기질</dt><dd>{GANA_KO[nakshatra.gana] ?? nakshatra.gana}</dd></div>
+            <div><dt>동물</dt><dd>{nakshatra.yoniKo}</dd></div>
+            <div><dt>기운</dt><dd>{NADI_KO[nakshatra.nadi] ?? nakshatra.nadi}</dd></div>
+            <div><dt>라시</dt><dd>{nakshatra.rashi.join(' · ')}</dd></div>
+          </dl>
         </section>
 
         <section style={{ marginTop: 40 }}>

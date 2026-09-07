@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { GRAHAS } from '@/content/index'
 import { absoluteUrl, articleSchema, breadcrumbSchema } from '@/lib/seo'
 import { Footer } from '../../components/Footer'
+import { GrahaGlyph } from '../../components/GrahaGlyph'
 import { JsonLd } from '../../components/JsonLd'
 
 const PATH = '/tradition/navagraha'
@@ -37,8 +38,8 @@ export default function NavagrahaPage() {
             {GRAHAS.map((graha) => (
               <li key={graha.key}>
                 <Link href={`/graha/${graha.sanskrit.toLowerCase()}`} className="grahaList__link">
-                  <span className="grahaList__num" style={{ ['--dot' as string]: graha.colorHex }}>
-                    {graha.moolank}
+                  <span className="grahaList__glyph" style={{ color: graha.colorHex }}>
+                    <GrahaGlyph graha={graha.key} size={36} />
                   </span>
                   <span className="grahaList__body">
                     <span className="grahaList__name">
@@ -46,7 +47,7 @@ export default function NavagrahaPage() {
                       <span className="grahaList__lat">{graha.sanskrit}</span>
                     </span>
                     <span className="grahaList__meta">
-                      {graha.weekday ?? '요일 없음'} · {graha.gemstone} · 다샤 {graha.dashaYears}년
+                      물랑크 {graha.moolank} · {graha.weekday ?? '요일 없음'} · {graha.gemstone} · {graha.direction ?? '방위 없음'}
                     </span>
                     <span className="grahaList__copy">{graha.copy}</span>
                   </span>

@@ -30,6 +30,15 @@ export interface Graha {
   color: string
   colorHex: string
   gemstone: string
+  /** 이 행성을 모시는 신격. */
+  deityKo: string
+  /** 전통 방위. 라후·케투는 고정 방위가 없다. */
+  direction: string | null
+  luckyNumber: number
+  /** 비자 만트라 — 전통 종자 진언. */
+  mantra: string
+  /** 전통 처방 한 줄. */
+  remedy: string
   keyword: string
   /** L0 결과 화면 본문. */
   copy: string
@@ -37,6 +46,18 @@ export interface Graha {
   strengths: string[]
   /** 과하면 독이 되는 면. */
   shadows: string[]
+}
+
+/**
+ * 다섯 축 성향 강도 (1~5).
+ * 전통 자료의 성격 서술을 근거로 작성한 값이며, 계산으로 나온 수치가 아니다.
+ */
+export interface NakshatraRatings {
+  wealth: number
+  career: number
+  love: number
+  bond: number
+  helper: number
 }
 
 /** 27 나크샤트라. L1(시간·장소 포함) 단계의 메인 정체성. */
@@ -70,6 +91,9 @@ export interface Nakshatra {
   luckyColorHex: string
   gemstone: string
   luckyNumber: number
+  /** 전통 방위. */
+  direction: string
+  ratings: NakshatraRatings
   keyword: string
   /** 결과 화면 도입 본문. */
   copy: string
