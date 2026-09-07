@@ -109,6 +109,7 @@ export default async function StarPage({ params, searchParams }: PageProps) {
 
         <NakshatraWheel
           activeIndex={nakshatra.index}
+          glyphKey={nakshatra.key}
           moonLongitude={result?.moonLongitude}
           archetype={nakshatra.archetype}
         />

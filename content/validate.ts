@@ -9,6 +9,7 @@
  */
 
 import { createRequire } from 'node:module'
+import { NAKSHATRA_GLYPH_KEYS } from '../app/components/nakshatraGlyphKeys'
 import { GRAHAS, KOOTAS, MAX_TOTAL_SCORE, NAKSHATRAS, bhagyankOf, moolankOf } from './index'
 
 const require = createRequire(import.meta.url)
@@ -81,6 +82,15 @@ NAKSHATRAS.forEach((n, position) => {
   }
   if (n.rashi.length === 0) fail(`${label}: rashi 비어 있음`)
 })
+
+// 27종 전부 상징 도상이 있는지 — 하나라도 빠지면 그 유형만 그림 없이 나온다
+const glyphKeys = new Set<string>(NAKSHATRA_GLYPH_KEYS)
+for (const n of NAKSHATRAS) {
+  if (!glyphKeys.has(n.key)) fail(`[${n.index}] ${n.sanskrit}: 상징 도상 없음 (key '${n.key}')`)
+}
+if (NAKSHATRA_GLYPH_KEYS.length !== 27) {
+  fail(`상징 도상 ${NAKSHATRA_GLYPH_KEYS.length}종 (기대 27)`)
+}
 
 // ---------- 나바그라하 ----------
 

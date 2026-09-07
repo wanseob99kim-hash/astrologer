@@ -38,7 +38,7 @@ export default function NavagrahaPage() {
             {GRAHAS.map((graha) => (
               <li key={graha.key}>
                 <Link href={`/graha/${graha.sanskrit.toLowerCase()}`} className="grahaList__link">
-                  <span className="grahaList__glyph" style={{ color: graha.colorHex }}>
+                  <span className="grahaList__glyph glyphTint" style={{ ['--glyph' as string]: graha.colorHex }}>
                     <GrahaGlyph graha={graha.key} size={36} />
                   </span>
                   <span className="grahaList__body">

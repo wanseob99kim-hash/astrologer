@@ -5,6 +5,7 @@ import { SITE, absoluteUrl, faqSchema } from '@/lib/seo'
 import { Footer } from './components/Footer'
 import { GrahaGlyph } from './components/GrahaGlyph'
 import { JsonLd } from './components/JsonLd'
+import { NakshatraGlyph } from './components/NakshatraGlyph'
 
 export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl('/') },
@@ -101,7 +102,7 @@ export default function HomePage() {
             {GRAHAS.map((graha) => (
               <li key={graha.key}>
                 <Link href={`/graha/${graha.sanskrit.toLowerCase()}`} style={{ textDecoration: 'none' }}>
-                  <span className="grahaGrid__glyph" style={{ color: graha.colorHex }}>
+                  <span className="grahaGrid__glyph glyphTint" style={{ ['--glyph' as string]: graha.colorHex }}>
                     <GrahaGlyph graha={graha.key} size={34} title={graha.ko} />
                   </span>
                   <span className="grahaGrid__name">{graha.ko}</span>
@@ -122,11 +123,14 @@ export default function HomePage() {
           <p className="small" style={{ marginTop: 8 }}>27개 중 네 개만 미리 보면</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: '16px 0 0', display: 'grid', gap: 10 }}>
             {samples.map((n) => (
-              <li key={n.key} className="card" style={{ padding: '14px 16px' }}>
-                <p style={{ margin: 0, fontFamily: '"Gowun Batang", serif', fontWeight: 700, fontSize: 'var(--step-1)' }}>
-                  {n.archetype}
-                </p>
-                <p className="small" style={{ marginTop: 2 }}>{n.tagline}</p>
+              <li key={n.key} className="card sampleRow">
+                <span className="sampleRow__glyph glyphTint" style={{ ['--glyph' as string]: n.luckyColorHex }}>
+                  <NakshatraGlyph nakshatra={n.key} size={40} />
+                </span>
+                <span>
+                  <span className="sampleRow__name">{n.archetype}</span>
+                  <span className="small" style={{ display: 'block', marginTop: 2 }}>{n.tagline}</span>
+                </span>
               </li>
             ))}
           </ul>

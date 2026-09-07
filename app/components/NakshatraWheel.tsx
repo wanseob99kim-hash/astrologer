@@ -1,4 +1,5 @@
 import { NAKSHATRAS } from '@/content/index'
+import { NakshatraGlyph } from './NakshatraGlyph'
 
 /**
  * 황도 27등분 휠.
@@ -36,12 +37,14 @@ function arcPath(startDeg: number, endDeg: number, outer: number, inner: number)
 interface NakshatraWheelProps {
   /** 강조할 나크샤트라 인덱스 (0~26) */
   activeIndex: number
+  /** 가운데에 놓을 상징 도상의 key */
+  glyphKey: string
   /** 달의 항성 황경. 있으면 정확한 위치에 표식을 찍는다. */
   moonLongitude?: number
   archetype: string
 }
 
-export function NakshatraWheel({ activeIndex, moonLongitude, archetype }: NakshatraWheelProps) {
+export function NakshatraWheel({ activeIndex, glyphKey, moonLongitude, archetype }: NakshatraWheelProps) {
   const marker = moonLongitude === undefined ? undefined : pointAt(moonLongitude, (OUTER + INNER) / 2)
   const label = moonLongitude === undefined
     ? `27등분 황도에서 ${archetype}의 자리`
@@ -93,8 +96,12 @@ export function NakshatraWheel({ activeIndex, moonLongitude, archetype }: Naksha
           </>
         ) : null}
 
-        <text x={CENTER} y={CENTER - 4} className="wheel__count">27</text>
-        <text x={CENTER} y={CENTER + 14} className="wheel__unit">탄생별</text>
+        <foreignObject x={CENTER - 30} y={CENTER - 34} width="60" height="60">
+          <div className="wheel__glyph">
+            <NakshatraGlyph nakshatra={glyphKey} size={56} />
+          </div>
+        </foreignObject>
+        <text x={CENTER} y={CENTER + 32} className="wheel__unit">{archetype}</text>
       </svg>
       <figcaption className="small">
         {moonLongitude === undefined

@@ -4,6 +4,7 @@ import { NAKSHATRAS } from '@/content/index'
 import { absoluteUrl, articleSchema, breadcrumbSchema } from '@/lib/seo'
 import { Footer } from '../../components/Footer'
 import { JsonLd } from '../../components/JsonLd'
+import { NakshatraGlyph } from '../../components/NakshatraGlyph'
 
 const PATH = '/tradition/nakshatra'
 const PUBLISHED = '2026-09-06'
@@ -39,16 +40,10 @@ export default function NakshatraIndexPage() {
         <ol style={{ listStyle: 'none', padding: 0, margin: '32px 0 0', display: 'grid', gap: 1, background: 'var(--line-soft)' }}>
           {NAKSHATRAS.map((n) => (
             <li key={n.key} style={{ background: 'var(--bg)', padding: '16px 4px' }}>
-              <Link href={`/star/${n.key}`} style={{ textDecoration: 'none', display: 'grid', gridTemplateColumns: '52px 1fr', gap: 14 }}>
-                <span
-                  style={{
-                    fontFamily: '"IBM Plex Mono", monospace',
-                    fontSize: 'var(--step-1)',
-                    color: 'var(--marigold)',
-                    fontVariantNumeric: 'tabular-nums',
-                  }}
-                >
-                  {String(n.index + 1).padStart(2, '0')}
+              <Link href={`/star/${n.key}`} className="starRow">
+                <span className="starRow__glyph glyphTint" style={{ ['--glyph' as string]: n.luckyColorHex }}>
+                  <NakshatraGlyph nakshatra={n.key} size={38} />
+                  <span className="starRow__num">{String(n.index + 1).padStart(2, '0')}</span>
                 </span>
                 <span>
                   <span style={{ display: 'block', fontFamily: '"Gowun Batang", serif', fontWeight: 700, fontSize: 'var(--step-1)' }}>

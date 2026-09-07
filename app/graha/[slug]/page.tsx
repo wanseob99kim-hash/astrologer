@@ -55,7 +55,7 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
     <div className="shell">
       <header style={{ paddingTop: 56 }}>
         <p className="eyebrow">Step 1 결과 · 나바그라하</p>
-        <div className="heroGlyph" style={{ color: graha.colorHex }}>
+        <div className="heroGlyph glyphTint" style={{ ['--glyph' as string]: graha.colorHex }}>
           <GrahaGlyph graha={graha.key} size={92} title={`${graha.ko} 기호`} />
         </div>
         {nickname ? (

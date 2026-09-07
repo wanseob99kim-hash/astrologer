@@ -458,3 +458,29 @@ table.compare td.vedic { color: var(--ink); }
 @media (max-width: 400px) {
   .grahaGrid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── 탄생별 상징 도상 ── */
+.wheel__glyph { display: grid; place-items: center; height: 60px; color: var(--ink); }
+
+.starRow { display: grid; grid-template-columns: 52px 1fr; gap: 14px; text-decoration: none; align-items: start; }
+.starRow__glyph { display: grid; place-items: center; gap: 1px; line-height: 0; }
+.starRow__num {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1;
+}
+
+.sampleRow { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 14px 16px; }
+.sampleRow__glyph { display: grid; place-items: center; line-height: 0; }
+.sampleRow__name {
+  display: block; font-family: "Gowun Batang", Georgia, serif;
+  font-weight: 700; font-size: var(--step-1);
+}
+
+/*
+ * 도상 색 보정.
+ *
+ * 행운색을 그대로 쓰면 대비가 무너진다.
+ * '심연의 검정'은 어두운 테마에서, '오팔 화이트'는 밝은 테마에서 배경에 묻힌다.
+ * 잉크 색을 섞으면 --ink 가 테마마다 반대로 움직이므로 양쪽에서 자동으로 읽힌다.
+ */
+.glyphTint { color: color-mix(in srgb, var(--glyph, currentColor) 62%, var(--ink) 38%); }
