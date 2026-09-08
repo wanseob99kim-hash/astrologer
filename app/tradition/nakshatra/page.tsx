@@ -4,7 +4,7 @@ import { NAKSHATRAS } from '@/content/index'
 import { absoluteUrl, articleSchema, breadcrumbSchema } from '@/lib/seo'
 import { Footer } from '../../components/Footer'
 import { JsonLd } from '../../components/JsonLd'
-import { NakshatraGlyph } from '../../components/NakshatraGlyph'
+import { NakshatraCard } from '../../components/NakshatraCard'
 
 const PATH = '/tradition/nakshatra'
 const PUBLISHED = '2026-09-06'
@@ -37,24 +37,23 @@ export default function NakshatraIndexPage() {
       </header>
 
       <main>
-        <ol style={{ listStyle: 'none', padding: 0, margin: '32px 0 0', display: 'grid', gap: 1, background: 'var(--line-soft)' }}>
+        <ol className="cardDeck">
           {NAKSHATRAS.map((n) => (
-            <li key={n.key} style={{ background: 'var(--bg)', padding: '16px 4px' }}>
-              <Link href={`/star/${n.key}`} className="starRow">
-                <span className="starRow__glyph glyphTint" style={{ ['--glyph' as string]: n.luckyColorHex }}>
-                  <NakshatraGlyph nakshatra={n.key} size={38} />
-                  <span className="starRow__num">{String(n.index + 1).padStart(2, '0')}</span>
-                </span>
-                <span>
-                  <span style={{ display: 'block', fontFamily: '"Gowun Batang", serif', fontWeight: 700, fontSize: 'var(--step-1)' }}>
-                    {n.archetype}
-                  </span>
-                  <span className="small" style={{ display: 'block', marginTop: 2 }}>{n.tagline}</span>
-                  <span
-                    className="small"
-                    style={{ display: 'block', marginTop: 6, fontFamily: '"IBM Plex Mono", monospace', opacity: .8 }}
-                  >
-                    {n.sanskrit} · {deg(n.range[0])}–{deg(n.range[1])} · {n.rashi.join(' · ')}
+            <li key={n.key}>
+              <Link href={`/star/${n.key}`}>
+                <NakshatraCard
+                  index={n.index}
+                  glyphKey={n.key}
+                  archetype={n.archetype}
+                  keyword={n.keyword}
+                  accent={n.luckyColorHex}
+                  compact
+                />
+                <span className="cardDeck__caption">
+                  <span className="cardDeck__name">{n.archetype}</span>
+                  <span className="small">{n.tagline}</span>
+                  <span className="small" style={{ display: 'block', marginTop: 4, fontFamily: '"IBM Plex Mono", monospace', opacity: .8 }}>
+                    {n.sanskrit} · {deg(n.range[0])}–{deg(n.range[1])}
                   </span>
                 </span>
               </Link>

@@ -7,6 +7,7 @@ import { absoluteUrl } from '@/lib/seo'
 import { parseBirthInput } from '@/lib/astro/input'
 import type { LevelOneResult } from '@/lib/astro/types'
 import { Footer } from '../../components/Footer'
+import { NakshatraCard } from '../../components/NakshatraCard'
 import { NakshatraWheel } from '../../components/NakshatraWheel'
 import { RatingBars } from './RatingBars'
 import { DashaTimeline } from './DashaTimeline'
@@ -106,6 +107,16 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         <p className="names">
           {nakshatra.ko} · {nakshatra.sanskrit} · <span className="dev">{nakshatra.devanagari}</span>
         </p>
+
+        <div className="cardHero">
+          <NakshatraCard
+            index={nakshatra.index}
+            glyphKey={nakshatra.key}
+            archetype={nakshatra.archetype}
+            keyword={nakshatra.keyword}
+            accent={nakshatra.luckyColorHex}
+          />
+        </div>
 
         <NakshatraWheel
           activeIndex={nakshatra.index}

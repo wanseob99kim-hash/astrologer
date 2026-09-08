@@ -484,3 +484,98 @@ table.compare td.vedic { color: var(--ink); }
  * 잉크 색을 섞으면 --ink 가 테마마다 반대로 움직이므로 양쪽에서 자동으로 읽힌다.
  */
 .glyphTint { color: color-mix(in srgb, var(--glyph, currentColor) 62%, var(--ink) 38%); }
+
+/*
+ * ── 탄생별 카드 ──
+ *
+ * 카드는 페이지 테마를 따르지 않고 자기 팔레트를 갖는다.
+ * 손에 쥐는 물건(부적·카드)처럼 보여야 해서, 밝은 화면에서는 양피지에 금박,
+ * 어두운 화면에서는 검붉은 바탕에 금박으로 뒤집는다.
+ */
+.tarot {
+  --card-ground: #F4EBD6;
+  --card-ink: #9A7526;
+  --card-deep: #6B1F33;
+  --card-deep-2: #4A1424;
+  --card-keyword: #F4EBD6;
+  /* 자주색 아치 위에 얹는 상징용. 테두리 금색보다 한 단계 밝게 잡는다. */
+  --card-gold: #D9B45C;
+  display: block;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tarot {
+    --card-ground: #16101C;
+    --card-ink: #D6AC5C;
+    --card-deep: #4E1728;
+    --card-deep-2: #2A0D18;
+    --card-keyword: #F0DFB8;
+    --card-gold: #EBC97F;
+  }
+}
+:root[data-theme="dark"] .tarot {
+  --card-ground: #16101C;
+  --card-ink: #D6AC5C;
+  --card-deep: #4E1728;
+  --card-deep-2: #2A0D18;
+  --card-keyword: #F0DFB8;
+  --card-gold: #EBC97F;
+}
+
+.tarot__ground { fill: var(--card-ground); }
+.tarot__ink { stroke: var(--card-ink); }
+.tarot__fillInk { fill: var(--card-ink); }
+.tarot__fillAccent { fill: color-mix(in srgb, var(--accent) 55%, var(--card-ink) 45%); }
+.tarot__archTop { stop-color: var(--card-deep); }
+.tarot__archBottom { stop-color: var(--card-deep-2); }
+.tarot__archEdge { stroke: var(--card-ink); }
+.tarot__banner { fill: var(--card-deep); stroke: var(--card-ink); }
+
+.tarot__glyph {
+  display: grid;
+  place-items: center;
+  height: 132px;
+  color: var(--card-gold);
+}
+/* 카드 안에서는 축소돼 그려지므로 선을 굵혀야 형태가 남는다. */
+.tarot__glyph svg g { stroke-width: 3.2; }
+
+.tarot__numeral {
+  text-anchor: middle;
+  fill: var(--card-ink);
+  font-family: "Gowun Batang", Georgia, serif;
+  font-size: 19px;
+  letter-spacing: .22em;
+}
+.tarot__keyword {
+  text-anchor: middle;
+  fill: var(--card-keyword);
+  font-family: "Gowun Batang", Georgia, serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .14em;
+}
+.tarot__archetype {
+  text-anchor: middle;
+  fill: var(--card-ink);
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+/* 카드 한 장을 크게 놓는 자리 */
+.cardHero { max-width: 300px; margin: 22px auto 0; }
+
+/* 27장을 펼치는 자리 */
+.cardDeck {
+  list-style: none; margin: 26px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;
+}
+.cardDeck a { display: block; text-decoration: none; transition: transform .14s ease; }
+.cardDeck a:hover { transform: translateY(-3px); }
+.cardDeck__caption { display: block; margin-top: 7px; }
+.cardDeck__name {
+  display: block; font-family: "Gowun Batang", Georgia, serif;
+  font-weight: 700; font-size: var(--step-0); color: var(--ink);
+}
