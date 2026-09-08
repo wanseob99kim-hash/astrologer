@@ -5,14 +5,18 @@
  */
 
 :root {
-  --bg: #EBEEF4;
-  --bg-deep: #DFE3EC;
-  --surface: #FFFFFF;
-  --ink: #131627;
-  --ink-2: #3C4157;
-  --muted: #6B7089;
-  --line: #D3D8E4;
-  --line-soft: #E3E7EF;
+  /*
+   * 순백을 쓰면 카드(양피지+금박)만 따로 놀고 흰 덩어리가 페이지를 끊는다.
+   * 밝은 테마 바탕을 카드와 같은 계열의 종이색으로 맞춰 한 장의 종이처럼 읽히게 한다.
+   */
+  --bg: #EFEAE0;
+  --bg-deep: #E6DFD1;
+  --surface: #FAF6EC;
+  --ink: #211C14;
+  --ink-2: #4A4234;
+  --muted: #7A705E;
+  --line: #DCD2BE;
+  --line-soft: #EAE3D4;
   --lapis: #26418F;
   --marigold: #9A6108;
   --marigold-soft: #E8D9B8;
