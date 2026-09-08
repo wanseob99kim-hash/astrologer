@@ -111,9 +111,8 @@ for (const g of GRAHAS) {
   if (g.strengths.length < 3) fail(`${label}: strengths ${g.strengths.length}개 (최소 3)`)
   if (g.shadows.length < 2) fail(`${label}: shadows ${g.shadows.length}개 (최소 2)`)
   if (!g.copy || g.copy.length < 30) fail(`${label}: copy 가 너무 짧음`)
-  if (!g.deityKo || !g.mantra || !g.remedy) fail(`${label}: deityKo/mantra/remedy 누락`)
+  if (!g.deityKo || !g.remedy) fail(`${label}: deityKo/remedy 누락`)
   if (g.luckyNumber !== g.moolank) fail(`${label}: luckyNumber ${g.luckyNumber} ≠ moolank ${g.moolank}`)
-  if (!g.mantra.startsWith('옴 ')) fail(`${label}: 만트라 표기 형식 확인 필요`)
 }
 const dashaSum = GRAHAS.reduce((sum, g) => sum + g.dashaYears, 0)
 if (dashaSum !== 120) fail(`빔쇼타리 대운 합 ${dashaSum}년 (기대 120)`)

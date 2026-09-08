@@ -48,7 +48,7 @@ export const SITE = {
  * 대신 쿼리에 생년월일이 실린 개인 결과 주소가 따로 색인되지 않도록
  * 각 페이지에서 canonical 을 쿼리 없는 주소로 고정한다.
  */
-export const DISALLOWED_PATHS = ['/refine', '/star?'] as const
+export const DISALLOWED_PATHS = ['/star?', '/match'] as const
 
 export function absoluteUrl(path: string): string {
   return `${SITE.origin}${path.startsWith('/') ? path : `/${path}`}`

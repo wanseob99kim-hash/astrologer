@@ -47,8 +47,8 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
     isoDate = undefined
   }
 
-  const refineHref = isoDate
-    ? `/refine?${new URLSearchParams({ d: isoDate, ...(nickname ? { n: nickname } : {}) })}`
+  const nextHref = isoDate
+    ? `/star?${new URLSearchParams({ d: isoDate, ...(nickname ? { n: nickname } : {}) })}`
     : '/birth'
 
   return (
@@ -108,10 +108,6 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
         <section style={{ marginTop: 30 }}>
           <h2 className="eyebrow">전통 처방</h2>
           <p style={{ marginTop: 10, color: 'var(--ink-2)' }}>{graha.remedy}</p>
-          <div className="mantra">
-            <p className="eyebrow" style={{ color: 'var(--marigold)' }}>비자 만트라</p>
-            <p className="mantra__text">{graha.mantra}</p>
-          </div>
         </section>
 
         <section style={{ marginTop: 40 }}>
@@ -123,7 +119,7 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
             </span>
           </div>
 
-          <Link href={refineHref} className="btn" style={{ marginTop: 18 }}>
+          <Link href={nextHref} className="btn" style={{ marginTop: 18 }}>
             {isoDate ? '탄생별까지 확인하기' : '생년월일 입력하러 가기'}
           </Link>
           <p className="small" style={{ textAlign: 'center', marginTop: 10 }}>

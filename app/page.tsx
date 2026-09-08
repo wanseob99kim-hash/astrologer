@@ -5,6 +5,7 @@ import { SITE, absoluteUrl, faqSchema } from '@/lib/seo'
 import { Footer } from './components/Footer'
 import { GrahaGlyph } from './components/GrahaGlyph'
 import { JsonLd } from './components/JsonLd'
+import { NakshatraCard } from './components/NakshatraCard'
 import { NakshatraGlyph } from './components/NakshatraGlyph'
 
 export const metadata: Metadata = {
@@ -19,11 +20,11 @@ const FAQ = [
   },
   {
     q: '생년월일만 알아도 되나요?',
-    a: '됩니다. 생년월일만으로 수호 행성(나바그라하)이 바로 나옵니다. 여기까지는 계산이 필요 없어 100% 확정입니다. 다만 27개 탄생별은 달의 위치로 정해지기 때문에, 태어난 시간을 모르면 4명 중 1명꼴로 결과가 달라집니다. 그래서 시간을 넣기 전까지는 탄생별을 확정해서 보여드리지 않습니다.',
+    a: '됩니다. 생년월일만 넣어도 결과는 전부 나옵니다. 다만 27개 탄생별은 태어난 순간 달의 위치로 정해지기 때문에, 시간을 모르면 4명 중 1명꼴로 결과가 달라집니다. 그래서 시간을 안 넣으신 경우에는 결과 맨 위에 확정이 아니라고 표시해 드립니다.',
   },
   {
     q: '태어난 시간을 모르면요?',
-    a: '수호 행성까지는 그대로 보실 수 있습니다. 탄생별은 정오 기준으로 계산하되 "확정 아님"으로 표시합니다. 시간을 아는 분과 같은 화면을 보여드리면서 정확한 척하지는 않겠다는 뜻입니다.',
+    a: '그대로 보실 수 있습니다. 정오를 기준으로 계산하되 "확정 아님"으로 표시합니다. 시간을 아는 분과 같은 화면을 보여드리면서 정확한 척하지는 않겠다는 뜻입니다.',
   },
   {
     q: '왜 27개인가요?',
@@ -38,8 +39,15 @@ const FAQ = [
 /** 랜딩에 미리 보여줄 네 유형. 성향이 서로 겹치지 않는 것으로 골랐다. */
 const SAMPLE_KEYS = ['rohini', 'ashlesha', 'uttara-ashadha', 'uttara-bhadrapada']
 
+/** 히어로 카드 세 장. 가운데가 정면에 온다. */
+const HERO_KEYS = ['magha', 'uttara-ashadha', 'rohini']
+
 export default function HomePage() {
   const samples = NAKSHATRAS.filter((n) => SAMPLE_KEYS.includes(n.key))
+  // 히어로에 부채꼴로 펼칠 세 장. 가운데가 주인공이다.
+  const heroCards = HERO_KEYS.map((key) => NAKSHATRAS.find((n) => n.key === key)).filter(
+    (n): n is NonNullable<typeof n> => n !== undefined,
+  )
 
   return (
     <div className="shell">
@@ -62,7 +70,22 @@ export default function HomePage() {
           생년월일만 넣으면 나를 지키는 행성이 나오고, 태어난 시간을 더하면 27개 탄생별까지 확정됩니다.
         </p>
 
-        <hr className="rule" style={{ margin: '32px 0' }} />
+        <div className="heroDeck" aria-hidden="true">
+          {heroCards.map((n, i) => (
+            <div key={n.key} className={`heroDeck__slot heroDeck__slot--${i}`}>
+              <NakshatraCard
+                index={n.index}
+                glyphKey={n.key}
+                archetype={n.archetype}
+                keyword={n.keyword}
+                accent={n.luckyColorHex}
+                compact={i !== 1}
+              />
+            </div>
+          ))}
+        </div>
+
+        <hr className="rule" style={{ margin: '28px 0' }} />
 
         <Link href="/birth" className="btn">
           무료로 내 탄생별 보기
@@ -74,20 +97,21 @@ export default function HomePage() {
 
       <main>
         <section style={{ marginTop: 60 }}>
-          <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>두 단계로 읽습니다</h2>
+          <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>한 번에 다 나옵니다</h2>
           <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
             <div className="card">
-              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>Step 1 · 생년월일</p>
-              <p style={{ margin: '8px 0 0', fontWeight: 600 }}>나를 지키는 행성</p>
+              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>입력</p>
+              <p style={{ margin: '8px 0 0', fontWeight: 600 }}>생년월일 · 시간 · 태어난 곳</p>
               <p className="small" style={{ marginTop: 6 }}>
-                태어난 날짜의 숫자를 더해 아홉 행성(나바그라하) 중 하나를 찾습니다.
+                시간은 몰라도 됩니다. 대신 결과에 확정이 아니라고 표시해 드려요.
               </p>
             </div>
             <div className="card">
-              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>Step 2 · 시간과 장소</p>
-              <p style={{ margin: '8px 0 0', fontWeight: 600 }}>27개 탄생별과 인생 흐름</p>
+              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>결과</p>
+              <p style={{ margin: '8px 0 0', fontWeight: 600 }}>탄생별 카드와 열두 가지 이야기</p>
               <p className="small" style={{ marginTop: 6 }}>
-                태어난 순간 달의 위치를 계산해 탄생별을 확정하고, 120년 다샤 주기에서 지금 어느 구간인지 짚습니다.
+                운명 능력치, 겉모습과 속마음, 인생 3막, 다음 전성기, 행운 아이템,
+                그리고 나와 잘 맞는 탄생별까지 한 화면에서 봅니다.
               </p>
             </div>
           </div>

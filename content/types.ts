@@ -35,9 +35,7 @@ export interface Graha {
   /** 전통 방위. 라후·케투는 고정 방위가 없다. */
   direction: string | null
   luckyNumber: number
-  /** 비자 만트라 — 전통 종자 진언. */
-  mantra: string
-  /** 전통 처방 한 줄. */
+  /** 전통 처방 한 줄. 한국어로만 쓴다. */
   remedy: string
   keyword: string
   /** L0 결과 화면 본문. */
@@ -60,7 +58,15 @@ export interface NakshatraRatings {
   helper: number
 }
 
-/** 27 나크샤트라. L1(시간·장소 포함) 단계의 메인 정체성. */
+/** 전성기 구간. 나이는 다샤가 아니라 유형 성향에서 온 값이다. */
+export interface PeakPeriod {
+  from: number
+  to: number
+  /** 전성기가 오기 전에 나타나는 신호 3개. */
+  signals: string[]
+}
+
+/** 27 나크샤트라. 결과 화면의 메인 정체성. */
 export interface Nakshatra {
   /** 0-based. 계산 엔진의 인덱스와 동일해야 한다. */
   index: number
@@ -106,6 +112,17 @@ export interface Nakshatra {
   love: string
   /** 돈을 대하는 방식. */
   wealth: string
+  /** 남들이 보는 나. */
+  publicSelf: string
+  /** 정작 나는 이런 사람. */
+  trueSelf: string
+  peak: PeakPeriod
+  /** 미리 알면 피할 수 있는 것 3개. */
+  cautions: string[]
+  /** 잘 맞는 유형 key 3개. */
+  compatible: string[]
+  /** 제일 조심할 조합 key 1개. */
+  caution: string
 }
 
 /** 아쉬타쿠타 8쿠타 메타데이터. 점수 계산은 엔진이 하고, 표기는 여기서 한다. */

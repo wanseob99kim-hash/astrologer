@@ -579,3 +579,146 @@ table.compare td.vedic { color: var(--ink); }
   display: block; font-family: "Gowun Batang", Georgia, serif;
   font-weight: 700; font-size: var(--step-0); color: var(--ink);
 }
+
+/* ── 결과 화면 ── */
+.resultHead { padding-top: 44px; text-align: center; }
+.resultHead .names { text-align: center; }
+.resultLede {
+  margin: 24px 0 0; font-size: var(--step-1); line-height: 1.8;
+  color: var(--ink); text-align: center; text-wrap: balance;
+}
+.resultBody { margin: 10px 0 0; line-height: 1.8; color: var(--ink-2); }
+
+.sect {
+  margin-top: 34px; padding: 22px 20px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: var(--shadow);
+}
+.sect__title {
+  font-family: "Gowun Batang", Georgia, serif; font-weight: 700;
+  font-size: var(--step-2); margin: 0 0 8px;
+}
+.sect .small { margin: 0; }
+.sect--warn {
+  background: color-mix(in srgb, var(--marigold) 8%, var(--surface));
+  border-color: color-mix(in srgb, var(--marigold) 30%, transparent);
+}
+
+.bullets { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.bullets li { position: relative; padding-left: 16px; line-height: 1.65; }
+.bullets li::before {
+  content: ""; position: absolute; left: 0; top: .68em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--lapis);
+}
+.bullets--dim li { color: var(--ink-2); }
+.bullets--dim li::before { background: var(--muted); }
+.bullets--warn li::before { background: var(--marigold); }
+
+.split { display: grid; gap: 20px; margin-top: 20px; }
+@media (min-width: 620px) { .split { grid-template-columns: 1fr 1fr; } }
+
+/* 겉모습 vs 속마음 */
+.contrast { display: grid; gap: 10px; margin-top: 16px; }
+.contrast__row {
+  padding: 14px 16px; border-radius: 10px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.contrast__row--true {
+  background: color-mix(in srgb, var(--lapis) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--lapis) 28%, transparent);
+}
+.contrast__label {
+  margin: 0; font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .1em; color: var(--muted);
+}
+.contrast__value { margin: 6px 0 0; font-size: var(--step-1); font-weight: 600; }
+
+/* 등급표 */
+.grades { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 1px; background: var(--line-soft); border-radius: 10px; overflow: hidden; }
+.grades li {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  background: var(--surface); padding: 13px 15px;
+}
+.grades__name { display: flex; flex-direction: column; font-weight: 600; }
+.grades__lead { font-weight: 400; font-size: 11px; color: var(--muted); }
+.grades__badge {
+  min-width: 40px; text-align: center; padding: 4px 10px; border-radius: 999px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 500; font-size: 13px;
+  border: 1px solid var(--line); color: var(--ink-2);
+}
+.grades__badge--S { background: color-mix(in srgb, var(--marigold) 20%, transparent); border-color: var(--marigold); color: var(--marigold); }
+.grades__badge--Ap { background: color-mix(in srgb, var(--lapis) 16%, transparent); border-color: var(--lapis); color: var(--lapis); }
+.grades__badge--A { border-color: color-mix(in srgb, var(--lapis) 45%, transparent); color: var(--lapis); }
+
+/* 인생 3막 */
+.acts { list-style: none; margin: 18px 0 0; padding: 0 0 0 18px; display: grid; gap: 20px; border-left: 1px solid var(--line); }
+.acts li { position: relative; display: grid; gap: 3px; }
+.acts li::before {
+  content: ""; position: absolute; left: -22px; top: 6px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--marigold);
+}
+.acts__meta { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; color: var(--muted); }
+.acts__title { font-family: "Gowun Batang", Georgia, serif; font-weight: 700; font-size: var(--step-1); }
+.acts__body { font-size: var(--step--1); color: var(--ink-2); line-height: 1.65; }
+
+/* 전성기 */
+.peakRange {
+  margin: 10px 0 4px; font-family: "Gowun Batang", Georgia, serif; font-weight: 700;
+  font-size: clamp(2.2rem, 1.4rem + 3vw, 3.2rem); color: var(--marigold); line-height: 1;
+}
+.peak { margin: 16px 0 0; }
+.peak__area { fill: color-mix(in srgb, var(--marigold) 18%, transparent); }
+.peak__line { stroke: var(--marigold); stroke-width: 2; }
+.peak__dot { fill: var(--surface); stroke: var(--marigold); stroke-width: 2; }
+.peak__dot--on { fill: var(--marigold); }
+.peak__tick { text-anchor: middle; fill: var(--muted); font-size: 10px; }
+.peak__tick--on { fill: var(--marigold); font-weight: 600; }
+
+.itemGrid--wide { grid-template-columns: repeat(2, 1fr); }
+
+.ritual {
+  margin-top: 18px; padding: 14px 16px; border-radius: 10px;
+  background: var(--marigold-soft);
+  border: 1px solid color-mix(in srgb, var(--marigold) 30%, transparent);
+}
+
+/* 잘 맞는 조합 */
+.matchList { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+.matchList a {
+  display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center;
+  padding: 11px 13px; border-radius: 10px; text-decoration: none;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.matchList a:hover { border-color: var(--muted); }
+.matchList__glyph { display: grid; place-items: center; line-height: 0; }
+.matchList__name { font-family: "Gowun Batang", Georgia, serif; font-weight: 700; font-size: var(--step-0); }
+.matchList__warn {
+  margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+  background: color-mix(in srgb, var(--marigold) 9%, var(--surface));
+  border: 1px dashed color-mix(in srgb, var(--marigold) 40%, transparent);
+}
+
+/* ── 랜딩 히어로 카드 ── */
+.heroDeck {
+  position: relative;
+  height: 300px;
+  margin: 30px 0 0;
+  display: grid;
+  place-items: center;
+}
+.heroDeck__slot {
+  position: absolute;
+  width: 158px;
+  transition: transform .2s ease;
+}
+.heroDeck__slot--0 { transform: translateX(-84px) rotate(-11deg); opacity: .82; }
+.heroDeck__slot--1 { z-index: 2; width: 186px; }
+.heroDeck__slot--2 { transform: translateX(84px) rotate(11deg); opacity: .82; }
+@media (max-width: 380px) {
+  .heroDeck { height: 258px; }
+  .heroDeck__slot { width: 132px; }
+  .heroDeck__slot--1 { width: 158px; }
+  .heroDeck__slot--0 { transform: translateX(-68px) rotate(-11deg); }
+  .heroDeck__slot--2 { transform: translateX(68px) rotate(11deg); }
+}

@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { nakshatraByKey } from '@/content/index'
 import { PLANET_KO, computeLevelOne, computeLevelZero } from '@/lib/astro/engine'
-import { absoluteUrl } from '@/lib/seo'
 import { parseBirthInput } from '@/lib/astro/input'
-import type { LevelOneResult } from '@/lib/astro/types'
+import type { LevelOneResult, LevelZeroResult } from '@/lib/astro/types'
+import { absoluteUrl } from '@/lib/seo'
 import { Footer } from '../../components/Footer'
 import { NakshatraCard } from '../../components/NakshatraCard'
 import { NakshatraWheel } from '../../components/NakshatraWheel'
-import { RatingBars } from './RatingBars'
 import { DashaTimeline } from './DashaTimeline'
+import { GradeTable, LuckyItems, MatchPreview, PeakChart, SelfContrast, ThreeActs } from './ResultSections'
 
 interface PageProps {
   params: Promise<{ key: string }>
@@ -18,8 +18,15 @@ interface PageProps {
 }
 
 /** 분류값은 화면에 영문으로 노출하지 않는다. */
-const GANA_KO: Record<string, string> = { Deva: '데바 — 신의 결', Manushya: '마누샤 — 사람의 결', Rakshasa: '락샤사 — 거센 결' }
+const GANA_KO: Record<string, string> = {
+  Deva: '데바 — 신의 결',
+  Manushya: '마누샤 — 사람의 결',
+  Rakshasa: '락샤사 — 거센 결',
+}
 const NADI_KO: Record<string, string> = { Adi: '아디', Madhya: '마디아', Antya: '안티아' }
+
+/** 인도에서 쓰는 샤카력. 서기에서 78을 뺀다. */
+const SHAKA_OFFSET = 78
 
 const first = (value: string | string[] | undefined): string | undefined =>
   Array.isArray(value) ? value[0] : value
@@ -47,8 +54,10 @@ export default async function StarPage({ params, searchParams }: PageProps) {
 
   const query = await searchParams
   let result: LevelOneResult | null = null
+  let zero: LevelZeroResult | null = null
   let nickname: string | undefined
-  let zeroLabel: string | undefined
+  let birthYear: number | undefined
+  let age: number | undefined
   let correctedHref: string | null = null
 
   try {
@@ -60,7 +69,9 @@ export default async function StarPage({ params, searchParams }: PageProps) {
     })
     nickname = input.nickname
     result = computeLevelOne(input)
-    zeroLabel = computeLevelZero(input).graha.ko
+    zero = computeLevelZero(input)
+    birthYear = Number(input.date.slice(0, 4))
+    age = new Date().getUTCFullYear() - birthYear
 
     // 주소의 탄생별과 계산 결과가 다르면 올바른 주소로 보낸다.
     if (result.nakshatra.key !== nakshatra.key) {
@@ -88,25 +99,14 @@ export default async function StarPage({ params, searchParams }: PageProps) {
     if (nickname) matchParams.set('n', nickname)
   }
   const matchHref = `/match?${matchParams}`
-
+  const who = nickname ? `${nickname} 님` : '당신'
   const isProvisional = result !== null && !result.isTimeKnown
 
   return (
     <div className="shell">
-      <header style={{ paddingTop: 56 }}>
-        <p className="eyebrow">
-          {result ? '나의 탄생별' : '탄생별 사전'} · 나크샤트라 {String(nakshatra.index + 1).padStart(2, '0')}
-        </p>
-        {nickname ? <p className="small" style={{ marginTop: 12 }}>{nickname} 님의 탄생별</p> : null}
-        <h1 className="display" style={{ fontSize: 'var(--step-4)', marginTop: nickname ? 4 : 14 }}>
-          {nakshatra.archetype}
-        </h1>
-        <p style={{ margin: '10px 0 0', fontSize: 'var(--step-1)', color: 'var(--ink-2)' }}>
-          {nakshatra.tagline}
-        </p>
-        <p className="names">
-          {nakshatra.ko} · {nakshatra.sanskrit} · <span className="dev">{nakshatra.devanagari}</span>
-        </p>
+      <header className="resultHead">
+        <p className="eyebrow eyebrow--latin">Nakshatra {String(nakshatra.index + 1).padStart(2, '0')}</p>
+        {result ? <p className="small" style={{ marginTop: 10 }}>{who}의 탄생별은</p> : null}
 
         <div className="cardHero">
           <NakshatraCard
@@ -118,135 +118,150 @@ export default async function StarPage({ params, searchParams }: PageProps) {
           />
         </div>
 
-        <NakshatraWheel
-          activeIndex={nakshatra.index}
-          glyphKey={nakshatra.key}
-          moonLongitude={result?.moonLongitude}
-          archetype={nakshatra.archetype}
-        />
-
-        <ul className="chips" style={{ marginTop: 16 }}>
-          <li className="chip chip--accent">{nakshatra.keyword}</li>
-          <li className="chip">{nakshatra.luckyColor}</li>
-          <li className="chip">{nakshatra.gemstone}</li>
-          <li className="chip">행운의 수 {nakshatra.luckyNumber}</li>
-        </ul>
+        <h1 className="display" style={{ fontSize: 'var(--step-3)', marginTop: 18 }}>
+          {nakshatra.archetype}
+        </h1>
+        <p style={{ margin: '8px 0 0', fontSize: 'var(--step-1)', color: 'var(--ink-2)' }}>
+          {nakshatra.tagline}
+        </p>
+        <p className="names">
+          {nakshatra.ko} · {nakshatra.sanskrit} · <span className="dev">{nakshatra.devanagari}</span>
+        </p>
       </header>
 
       <main>
         {isProvisional ? (
-          <div className="notice" style={{ marginTop: 24 }}>
+          <div className="notice" style={{ marginTop: 22 }}>
             <span aria-hidden="true">✦</span>
             <span>
               태어난 시간을 몰라 <b>정오 기준</b>으로 계산했습니다. 이 경우 4명 중 1명꼴로 탄생별이 달라지니
-              <b> 확정된 결과가 아닙니다.</b> 시간을 알게 되면 다시 확인해 보세요.
+              <b> 확정된 결과가 아닙니다.</b>
             </span>
           </div>
         ) : null}
 
-        <p style={{ marginTop: 26, fontSize: 'var(--step-1)', lineHeight: 1.75 }}>{nakshatra.copy}</p>
+        <p className="resultLede">{nakshatra.copy}</p>
 
-        {result ? (
-          <div className="card" style={{ marginTop: 24 }}>
-            <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '6px 16px', fontSize: 'var(--step--1)' }}>
-              <dt style={{ color: 'var(--muted)' }}>수호 행성</dt>
-              <dd style={{ margin: 0 }}>{zeroLabel}</dd>
-              <dt style={{ color: 'var(--muted)' }}>지배성</dt>
-              <dd style={{ margin: 0 }}>{PLANET_KO[nakshatra.lord] ?? nakshatra.lord}</dd>
-              <dt style={{ color: 'var(--muted)' }}>달의 자리</dt>
-              <dd style={{ margin: 0, fontFamily: '"IBM Plex Mono", monospace' }}>
-                {result.moonRashi} {result.moonLongitude.toFixed(2)}°
-              </dd>
-              <dt style={{ color: 'var(--muted)' }}>파다</dt>
-              <dd style={{ margin: 0 }}>
-                {result.isPadaReliable ? `${result.pada}번째` : '시간을 알아야 정해집니다'}
-              </dd>
+        {result && zero ? (
+          <section className="sect">
+            <h2 className="sect__title">베딕으로 본 {who}</h2>
+            <p className="small">
+              베딕 점성술은 탄생별(나크샤트라)·지배 행성·달의 자리·기질·생일 숫자에
+              인생 구간(다샤)까지 여섯 축으로 봅니다.
+            </p>
+            <dl className="itemGrid itemGrid--wide">
+              <div><dt>탄생별</dt><dd>{nakshatra.ko} · {nakshatra.archetype}</dd></div>
+              <div><dt>지배 행성</dt><dd>{PLANET_KO[nakshatra.lord] ?? nakshatra.lord}</dd></div>
+              <div><dt>수호 신격</dt><dd>{nakshatra.deityKo}</dd></div>
+              <div><dt>상징</dt><dd>{nakshatra.symbolKo}</dd></div>
+              <div><dt>수호 행성</dt><dd>{zero.graha.ko}</dd></div>
+              <div><dt>태어난 요일</dt><dd>{zero.weekdayKo}</dd></div>
+              <div><dt>달의 자리</dt><dd>{result.moonRashi} {result.moonLongitude.toFixed(1)}°</dd></div>
+              <div><dt>기질</dt><dd>{GANA_KO[nakshatra.gana] ?? nakshatra.gana}</dd></div>
+              <div><dt>상징 동물</dt><dd>{nakshatra.yoniKo}</dd></div>
+              <div><dt>기운</dt><dd>{NADI_KO[nakshatra.nadi] ?? nakshatra.nadi}</dd></div>
+              <div><dt>생일 숫자</dt><dd>{zero.moolank} · {zero.graha.keyword}</dd></div>
+              <div><dt>운명 숫자</dt><dd>{zero.bhagyank} · {zero.destinyGraha.keyword}</dd></div>
+              <div><dt>행운의 색</dt><dd><span className="swatch" style={{ background: nakshatra.luckyColorHex }} />{nakshatra.luckyColor}</dd></div>
+              <div><dt>행운의 방향</dt><dd>{nakshatra.direction}</dd></div>
+              <div><dt>파다</dt><dd>{result.isPadaReliable ? `${result.pada}번째` : '시간을 알아야 정해집니다'}</dd></div>
+              <div><dt>샤카력</dt><dd>{(birthYear ?? 0) - SHAKA_OFFSET}년생</dd></div>
             </dl>
-          </div>
+          </section>
         ) : null}
 
-        <hr className="rule" style={{ margin: '32px 0' }} />
-
-        <section>
-          <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>다섯 축</h2>
-          <p className="small" style={{ marginTop: 8 }}>
-            전통 성격 서술을 근거로 매긴 값입니다. 계산으로 나온 수치는 아니에요.
-          </p>
-          <RatingBars ratings={nakshatra.ratings} />
+        <section className="sect">
+          <h2 className="sect__title">{who}, 이런 사람입니다</h2>
+          <SelfContrast nakshatra={nakshatra} />
+          <div className="split">
+            <div>
+              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>타고난 힘</p>
+              <ul className="bullets">{nakshatra.strengths.map((v) => <li key={v}>{v}</li>)}</ul>
+            </div>
+            <div>
+              <p className="eyebrow">그림자</p>
+              <ul className="bullets bullets--dim">{nakshatra.shadows.map((v) => <li key={v}>{v}</li>)}</ul>
+            </div>
+          </div>
         </section>
 
-        <section style={{ marginTop: 34 }}>
-          <h2 className="eyebrow" style={{ color: 'var(--lapis)' }}>이런 점이 강합니다</h2>
-          <ul style={{ margin: '12px 0 0', paddingLeft: 18, display: 'grid', gap: 5 }}>
-            {nakshatra.strengths.map((item) => <li key={item}>{item}</li>)}
+        <section className="sect">
+          <h2 className="sect__title">운명 능력치</h2>
+          <p className="small">전통 성격 서술을 근거로 매긴 값입니다. 계산으로 나온 수치는 아니에요.</p>
+          <GradeTable ratings={nakshatra.ratings} />
+        </section>
+
+        <section className="sect">
+          <h2 className="sect__title">재물운</h2>
+          <p className="resultBody">{nakshatra.wealth}</p>
+          <h2 className="sect__title" style={{ marginTop: 30 }}>연애운</h2>
+          <p className="resultBody">{nakshatra.love}</p>
+        </section>
+
+        <section className="sect">
+          <h2 className="sect__title">인생 3막 흐름</h2>
+          <ThreeActs peakFrom={nakshatra.peak.from} />
+        </section>
+
+        <section className="sect">
+          <h2 className="sect__title">다음 전성기</h2>
+          <p className="peakRange">{nakshatra.peak.from}–{nakshatra.peak.to}세</p>
+          {age !== undefined ? (
+            <p className="small">
+              지금 {age}세 · {age < nakshatra.peak.from
+                ? `전성기까지 ${nakshatra.peak.from - age}년 남았습니다`
+                : age > nakshatra.peak.to
+                  ? '첫 전성기는 지나왔고, 다음 구간이 이어집니다'
+                  : '지금이 그 구간 한가운데입니다'}
+            </p>
+          ) : null}
+          <PeakChart from={nakshatra.peak.from} to={nakshatra.peak.to} />
+          <p className="eyebrow" style={{ marginTop: 14, color: 'var(--lapis)' }}>전성기가 오기 전 신호</p>
+          <ul className="bullets" style={{ marginTop: 10 }}>
+            {nakshatra.peak.signals.map((v) => <li key={v}>{v}</li>)}
           </ul>
         </section>
 
-        <section style={{ marginTop: 26 }}>
-          <h2 className="eyebrow">이런 점을 조심하세요</h2>
-          <ul style={{ margin: '12px 0 0', paddingLeft: 18, display: 'grid', gap: 5, color: 'var(--ink-2)' }}>
-            {nakshatra.shadows.map((item) => <li key={item}>{item}</li>)}
+        <section className="sect sect--warn">
+          <h2 className="sect__title">이건 조심하세요</h2>
+          <ul className="bullets bullets--warn">
+            {nakshatra.cautions.map((v) => <li key={v}>{v}</li>)}
           </ul>
-        </section>
-
-        <section style={{ marginTop: 30, display: 'grid', gap: 14 }}>
-          <div className="card">
-            <p className="eyebrow" style={{ color: 'var(--lapis)' }}>연애</p>
-            <p style={{ margin: '8px 0 0' }}>{nakshatra.love}</p>
-          </div>
-          <div className="card">
-            <p className="eyebrow" style={{ color: 'var(--lapis)' }}>재물</p>
-            <p style={{ margin: '8px 0 0' }}>{nakshatra.wealth}</p>
-          </div>
         </section>
 
         {result ? (
-          <section style={{ marginTop: 40 }}>
-            <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>인생의 흐름</h2>
-            <p className="small" style={{ marginTop: 8 }}>
-              빔쇼타리 다샤 — 아홉 행성이 6년에서 20년씩, 120년을 나눠 맡습니다.
-            </p>
+          <section className="sect">
+            <h2 className="sect__title">인생의 흐름</h2>
+            <p className="small">빔쇼타리 다샤 — 아홉 행성이 6년에서 20년씩, 120년을 나눠 맡습니다.</p>
             <DashaTimeline timeline={result.dasha.timeline} />
           </section>
         ) : null}
 
-        <section style={{ marginTop: 40 }}>
-          <h2 className="eyebrow">전통</h2>
-          <p style={{ marginTop: 10, color: 'var(--ink-2)' }}>{nakshatra.ritual}</p>
-          <dl className="itemGrid" style={{ marginTop: 14 }}>
-            <div><dt>색</dt><dd><span className="swatch" style={{ background: nakshatra.luckyColorHex }} />{nakshatra.luckyColor}</dd></div>
-            <div><dt>보석</dt><dd>{nakshatra.gemstone}</dd></div>
-            <div><dt>방위</dt><dd>{nakshatra.direction}</dd></div>
-            <div><dt>숫자</dt><dd>{nakshatra.luckyNumber}</dd></div>
-            <div><dt>신격</dt><dd>{nakshatra.deityKo}</dd></div>
-            <div><dt>상징</dt><dd>{nakshatra.symbolKo}</dd></div>
-            <div><dt>기질</dt><dd>{GANA_KO[nakshatra.gana] ?? nakshatra.gana}</dd></div>
-            <div><dt>동물</dt><dd>{nakshatra.yoniKo}</dd></div>
-            <div><dt>기운</dt><dd>{NADI_KO[nakshatra.nadi] ?? nakshatra.nadi}</dd></div>
-            <div><dt>라시</dt><dd>{nakshatra.rashi.join(' · ')}</dd></div>
-          </dl>
+        <section className="sect">
+          <h2 className="sect__title">행운 아이템 &amp; 잘 맞는 일</h2>
+          <LuckyItems nakshatra={nakshatra} />
+          <div className="ritual">
+            <p className="eyebrow" style={{ color: 'var(--marigold)' }}>전통 처방</p>
+            <p style={{ margin: '8px 0 0' }}>{nakshatra.ritual}</p>
+          </div>
         </section>
 
-        <section style={{ marginTop: 40 }}>
-          <h2 className="eyebrow">어울리는 일</h2>
-          <ul className="chips" style={{ marginTop: 12 }}>
-            {nakshatra.career.map((item) => <li key={item} className="chip">{item}</li>)}
-          </ul>
+        <section className="sect">
+          <h2 className="sect__title">나와 잘 맞는 탄생별</h2>
+          <MatchPreview nakshatra={nakshatra} matchHref={result ? matchHref : '/birth'} />
         </section>
 
-        {result ? (
-          <section style={{ marginTop: 44 }}>
-            <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>연인과의 궁합</h2>
-            <p className="small" style={{ marginTop: 8 }}>
-              인도 전통 아쉬타쿠타 36점. 여덟 항목의 점수를 그대로 보여드립니다.
-            </p>
-            <Link href={matchHref} className="btn" style={{ marginTop: 16 }}>
-              궁합 보기
-            </Link>
-          </section>
-        ) : null}
+        <section className="sect">
+          <h2 className="sect__title">달이 있던 자리</h2>
+          <NakshatraWheel
+            activeIndex={nakshatra.index}
+            glyphKey={nakshatra.key}
+            moonLongitude={result?.moonLongitude}
+            archetype={nakshatra.archetype}
+          />
+        </section>
 
-        <Link href="/birth" className="btn btn--ghost" style={{ marginTop: 24 }}>
+        <Link href="/birth" className="btn btn--ghost" style={{ marginTop: 34 }}>
           다시 해보기
         </Link>
       </main>
