@@ -750,3 +750,34 @@ table.compare td.vedic { color: var(--ink); }
 .tarot__haloIn { stop-color: color-mix(in srgb, var(--card-gold) 30%, transparent); }
 .tarot__haloOut { stop-color: transparent; }
 .tarot__ray { stroke: color-mix(in srgb, var(--card-gold) 26%, transparent); stroke-width: .8; }
+
+/* 운세 상세 — 결론 한 줄 + 항목 */
+.fortune__headline {
+  margin: 12px 0 0; font-family: "Gowun Batang", Georgia, serif;
+  font-weight: 700; font-size: var(--step-1); line-height: 1.5;
+}
+.fortune__points { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 7px; }
+.fortune__points li {
+  position: relative; padding-left: 15px;
+  font-size: var(--step--1); line-height: 1.65; color: var(--ink-2);
+}
+.fortune__points li::before {
+  content: ""; position: absolute; left: 2px; top: .72em;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--muted);
+}
+
+/* 성격 깊게 보기 */
+.traits { display: grid; gap: 10px; margin-top: 16px; }
+@media (min-width: 620px) { .traits { grid-template-columns: 1fr 1fr; } }
+.traits__card {
+  display: grid; grid-template-columns: 30px 1fr; gap: 11px; align-items: start;
+  padding: 14px 15px; border-radius: 12px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.traits__card--good { border-left: 3px solid var(--lapis); }
+.traits__card--watch { border-left: 3px solid var(--marigold); }
+.traits__icon { font-size: 20px; line-height: 1.2; }
+.traits__body { margin: 0; line-height: 1.65; font-size: var(--step--1); color: var(--ink); }
+
+/* 요약표 아이콘 정렬 */
+.grades__name { flex-direction: row; align-items: center; gap: 7px; }

@@ -11,8 +11,10 @@ import { NakshatraCard } from '../../components/NakshatraCard'
 import { NakshatraWheel } from '../../components/NakshatraWheel'
 import { DashaTimeline } from './DashaTimeline'
 import {
-  FortuneDetail,
+  FortuneCards,
+  GradeSummary,
   LuckyItems,
+  PersonalityCards,
   MatchPreview,
   PeakChart,
   RETURN_CYCLE_YEARS,
@@ -186,22 +188,23 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         <section className="sect">
           <h2 className="sect__title">{who}, 이런 사람입니다</h2>
           <SelfContrast nakshatra={nakshatra} />
-          <div className="split">
-            <div>
-              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>타고난 힘</p>
-              <ul className="bullets">{nakshatra.strengths.map((v) => <li key={v}>{v}</li>)}</ul>
-            </div>
-            <div>
-              <p className="eyebrow">그림자</p>
-              <ul className="bullets bullets--dim">{nakshatra.shadows.map((v) => <li key={v}>{v}</li>)}</ul>
-            </div>
-          </div>
+        </section>
+
+        <section className="sect">
+          <h2 className="sect__title">성격 깊게 보기</h2>
+          <p className="small">위 세 개는 타고난 힘, 아래 세 개는 조심할 결입니다.</p>
+          <PersonalityCards nakshatra={nakshatra} />
         </section>
 
         <section className="sect">
           <h2 className="sect__title">운명 능력치</h2>
-          <p className="small">전통 성격 서술을 근거로 매긴 값입니다. 계산으로 나온 수치는 아니에요.</p>
-          <FortuneDetail nakshatra={nakshatra} />
+          <p className="small">눌러보면 아래에 설명이 이어집니다. 전통 성격 서술을 근거로 매긴 값이라 계산 결과는 아니에요.</p>
+          <GradeSummary ratings={nakshatra.ratings} />
+        </section>
+
+        <section className="sect">
+          <h2 className="sect__title">항목별로 보면</h2>
+          <FortuneCards nakshatra={nakshatra} />
         </section>
 
         <section className="sect">

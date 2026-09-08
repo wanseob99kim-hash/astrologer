@@ -18,14 +18,38 @@ function grade(score: number): string {
   return GRADE[Math.min(Math.max(score, 1), 5) - 1] ?? 'B'
 }
 
-/** 다섯 축 상세. 등급과 본문을 한 자리에서 보여준다. */
-export function FortuneDetail({ nakshatra }: { nakshatra: Nakshatra }) {
-  const blocks: ReadonlyArray<{ key: keyof NakshatraRatings; icon: string; ko: string; body: string }> = [
-    { key: 'wealth', icon: '💰', ko: '재물운', body: nakshatra.wealth },
-    { key: 'career', icon: '💼', ko: '직업운', body: nakshatra.work },
-    { key: 'love', icon: '❤️', ko: '연애운', body: nakshatra.love },
-    { key: 'bond', icon: '🔗', ko: '인연운', body: nakshatra.bond },
-    { key: 'helper', icon: '🍀', ko: '귀인운', body: nakshatra.helper },
+const AXES: ReadonlyArray<{ key: keyof NakshatraRatings; icon: string; ko: string }> = [
+  { key: 'wealth', icon: '💰', ko: '재물운' },
+  { key: 'career', icon: '💼', ko: '직업운' },
+  { key: 'love', icon: '❤️', ko: '연애운' },
+  { key: 'bond', icon: '🔗', ko: '인연운' },
+  { key: 'helper', icon: '🍀', ko: '귀인운' },
+]
+
+/** 다섯 축을 한눈에 보는 요약표. 상세는 아래 카드가 맡는다. */
+export function GradeSummary({ ratings }: { ratings: NakshatraRatings }) {
+  return (
+    <ul className="grades">
+      {AXES.map((axis) => (
+        <li key={axis.key}>
+          <span className="grades__name">
+            <span aria-hidden="true">{axis.icon}</span> {axis.ko}
+          </span>
+          <span className={`grades__badge grades__badge--${grade(ratings[axis.key]).replace('+', 'p')}`}>
+            {grade(ratings[axis.key])}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** 한 축의 상세. 결론을 굵게 먼저 주고 항목으로 푼다. */
+export function FortuneCards({ nakshatra }: { nakshatra: Nakshatra }) {
+  const blocks = [
+    { key: 'wealth' as const, icon: '💰', ko: '재물운', axis: nakshatra.wealth },
+    { key: 'career' as const, icon: '💼', ko: '직업운', axis: nakshatra.work },
+    { key: 'love' as const, icon: '❤️', ko: '연애운', axis: nakshatra.love },
   ]
 
   return (
@@ -40,8 +64,61 @@ export function FortuneDetail({ nakshatra }: { nakshatra: Nakshatra }) {
               {grade(nakshatra.ratings[block.key])}
             </span>
           </header>
-          <p className="fortune__body">{block.body}</p>
+          <p className="fortune__headline">{block.axis.headline}</p>
+          <ul className="fortune__points">
+            {block.axis.points.map((point) => <li key={point}>{point}</li>)}
+          </ul>
         </section>
+      ))}
+
+      <section className="fortune__item">
+        <header className="fortune__head">
+          <span className="fortune__name"><span aria-hidden="true">🔗</span> 인연운</span>
+          <span className={`grades__badge grades__badge--${grade(nakshatra.ratings.bond).replace('+', 'p')}`}>
+            {grade(nakshatra.ratings.bond)}
+          </span>
+        </header>
+        <p className="fortune__body">{nakshatra.bond}</p>
+      </section>
+
+      <section className="fortune__item">
+        <header className="fortune__head">
+          <span className="fortune__name"><span aria-hidden="true">🍀</span> 귀인운</span>
+          <span className={`grades__badge grades__badge--${grade(nakshatra.ratings.helper).replace('+', 'p')}`}>
+            {grade(nakshatra.ratings.helper)}
+          </span>
+        </header>
+        <p className="fortune__body">{nakshatra.helper}</p>
+      </section>
+    </div>
+  )
+}
+
+/** 성격 깊게 보기. 강점과 그림자를 이모지 카드로 나눠 보여준다. */
+export function PersonalityCards({ nakshatra }: { nakshatra: Nakshatra }) {
+  const strengthIcons = ['🎯', '🌱', '🔥']
+  const shadowIcons = ['🌘', '🫧', '🧩']
+
+  const cards = [
+    ...nakshatra.strengths.slice(0, 3).map((body, i) => ({
+      icon: strengthIcons[i] ?? '🎯',
+      tone: 'good' as const,
+      body,
+    })),
+    ...nakshatra.shadows.slice(0, 3).map((body, i) => ({
+      icon: shadowIcons[i] ?? '🌘',
+      tone: 'watch' as const,
+      body,
+    })),
+  ]
+
+  return (
+    <div className="traits">
+      {cards.map((card) => (
+        <article key={card.body} className={`traits__card traits__card--${card.tone}`}>
+          <span className="traits__icon" aria-hidden="true">{card.icon}</span>
+          <p className="traits__body">{card.body}</p>
+        </article>
       ))}
     </div>
   )

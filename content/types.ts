@@ -58,6 +58,17 @@ export interface NakshatraRatings {
   helper: number
 }
 
+/**
+ * 운세 한 축의 상세.
+ * 굵은 한 줄로 결론을 먼저 주고, 짧은 항목으로 풀어 쓴다.
+ */
+export interface FortuneAxis {
+  /** 한 줄 결론. */
+  headline: string
+  /** 짧은 항목 3개. */
+  points: string[]
+}
+
 /** 전성기 구간. 나이는 다샤가 아니라 유형 성향에서 온 값이다. */
 export interface PeakPeriod {
   from: number
@@ -109,11 +120,11 @@ export interface Nakshatra {
   shadows: string[]
   career: string[]
   /** 연애에서 드러나는 방식. */
-  love: string
+  love: FortuneAxis
   /** 돈을 대하는 방식. */
-  wealth: string
+  wealth: FortuneAxis
   /** 일에서 드러나는 방식. */
-  work: string
+  work: FortuneAxis
   /** 사람을 오래 이어가는 방식. */
   bond: string
   /** 도와줄 사람이 어떻게 나타나는가. */

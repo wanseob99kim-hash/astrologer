@@ -66,12 +66,21 @@ NAKSHATRAS.forEach((n, position) => {
     ['ko', n.ko], ['archetype', n.archetype], ['tagline', n.tagline],
     ['deityKo', n.deityKo], ['symbolKo', n.symbolKo], ['yoniKo', n.yoniKo],
     ['keyword', n.keyword], ['copy', n.copy], ['ritual', n.ritual],
-    ['love', n.love], ['wealth', n.wealth], ['luckyColor', n.luckyColor], ['gemstone', n.gemstone],
+    ['luckyColor', n.luckyColor], ['gemstone', n.gemstone],
   ]
   for (const [field, value] of requiredText) {
     if (!value || value.trim().length === 0) fail(`${label}: ${field} 비어 있음`)
   }
   if (n.copy.length < 40) fail(`${label}: copy 가 너무 짧음 (${n.copy.length}자)`)
+  // 운세 세 축은 결론 한 줄과 항목 3개를 갖춰야 화면이 비지 않는다
+  for (const [axisName, axis] of [['wealth', n.wealth], ['work', n.work], ['love', n.love]] as const) {
+    if (!axis.headline || axis.headline.trim().length === 0) fail(`${label}: ${axisName}.headline 비어 있음`)
+    if (axis.points.length < 3) fail(`${label}: ${axisName}.points ${axis.points.length}개 (최소 3)`)
+    for (const point of axis.points) {
+      if (!point || point.trim().length === 0) fail(`${label}: ${axisName}.points 에 빈 항목`)
+    }
+  }
+  if (!n.bond || !n.helper) fail(`${label}: bond/helper 누락`)
   if (n.strengths.length < 3) fail(`${label}: strengths ${n.strengths.length}개 (최소 3)`)
   if (n.shadows.length < 2) fail(`${label}: shadows ${n.shadows.length}개 (최소 2)`)
   if (n.career.length < 3) fail(`${label}: career ${n.career.length}개 (최소 3)`)

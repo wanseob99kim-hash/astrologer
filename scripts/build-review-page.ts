@@ -72,8 +72,8 @@ function entry(n: Nakshatra): string {
         ${list(n.shadows, 'bul')}
       </section>
       <dl class="lines">
-        <dt>연애</dt><dd class="sharp">${esc(n.love)}</dd>
-        <dt>재물</dt><dd>${esc(n.wealth)}</dd>
+        <dt>연애</dt><dd class="sharp">${esc(n.love.headline)} ${n.love.points.map(esc).join(' ')}</dd>
+        <dt>재물</dt><dd>${esc(n.wealth.headline)} ${n.wealth.points.map(esc).join(' ')}</dd>
         <dt>전통</dt><dd class="rit">${esc(n.ritual)}</dd>
       </dl>
       <p class="career">${n.career.map((c) => `<span>${esc(c)}</span>`).join('')}</p>
