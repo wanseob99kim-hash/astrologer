@@ -18,14 +18,6 @@ function grade(score: number): string {
   return GRADE[Math.min(Math.max(score, 1), 5) - 1] ?? 'B'
 }
 
-const AXES: ReadonlyArray<{ key: keyof NakshatraRatings; ko: string; lead: string }> = [
-  { key: 'wealth', ko: '재물운', lead: '모으고 불리는 힘' },
-  { key: 'career', ko: '직업운', lead: '자리에서 성과를 내는 힘' },
-  { key: 'love', ko: '연애운', lead: '끌어당기고 표현하는 힘' },
-  { key: 'bond', ko: '인연복', lead: '오래 이어가는 힘' },
-  { key: 'helper', ko: '귀인운', lead: '도와줄 사람이 나타나는 힘' },
-]
-
 /** 다섯 축 상세. 등급과 본문을 한 자리에서 보여준다. */
 export function FortuneDetail({ nakshatra }: { nakshatra: Nakshatra }) {
   const blocks: ReadonlyArray<{ key: keyof NakshatraRatings; icon: string; ko: string; body: string }> = [
