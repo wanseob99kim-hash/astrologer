@@ -75,6 +75,12 @@ export interface PeakPeriod {
   to: number
   /** 전성기가 오기 전에 나타나는 신호 3개. */
   signals: string[]
+  /** 이 구간이 어떤 식으로 오는지 한 문단. */
+  story: string
+  /** 구간 안에서 하면 좋은 것 3개. */
+  actions: string[]
+  /** 이 구간에 제일 자주 놓치는 것 하나. */
+  miss: string
 }
 
 /** 27 나크샤트라. 결과 화면의 메인 정체성. */

@@ -14,6 +14,7 @@ import {
   FortuneCards,
   GradeSummary,
   LuckyItems,
+  MoonPlacement,
   PersonalityCards,
   MatchPreview,
   PeakChart,
@@ -233,10 +234,36 @@ export default async function StarPage({ params, searchParams }: PageProps) {
             </p>
           ) : null}
           <PeakChart from={peak.from} to={peak.to} />
-          <p className="eyebrow" style={{ marginTop: 14, color: 'var(--lapis)' }}>전성기가 오기 전 신호</p>
-          <ul className="bullets" style={{ marginTop: 10 }}>
-            {nakshatra.peak.signals.map((v) => <li key={v}>{v}</li>)}
-          </ul>
+
+          <p className="peakStory">
+            {peak.from}세부터 흐름이 다시 올라가 {peak.to}세 전후로 결과가 모입니다.{' '}
+            {nakshatra.peak.story}
+          </p>
+
+          {!peak.isFirst ? (
+            <p className="peakStory">
+              이번 구간은 처음 맞는 전성기가 아니라 {peak.passed + 1}번째입니다.
+              새로 시작하는 일보다, 첫 전성기 때 쌓아둔 것을 정리해 값으로 바꾸는 쪽이 훨씬 유리합니다.
+            </p>
+          ) : null}
+
+          <div className="peakBox">
+            <p className="peakBox__title" style={{ color: 'var(--lapis)' }}>전성기가 오기 전 신호</p>
+            <ul className="bullets" style={{ marginTop: 10 }}>
+              {nakshatra.peak.signals.map((v) => <li key={v}>{v}</li>)}
+            </ul>
+          </div>
+
+          <div className="peakBox peakBox--do">
+            <p className="peakBox__title" style={{ color: 'var(--marigold)' }}>이 구간에 하면 좋은 것</p>
+            <ul className="bullets" style={{ marginTop: 10 }}>
+              {nakshatra.peak.actions.map((v) => <li key={v}>{v}</li>)}
+            </ul>
+          </div>
+
+          <p className="peakMiss">
+            <strong>제일 자주 놓치는 것</strong> · {nakshatra.peak.miss}
+          </p>
         </section>
 
         <section className="sect sect--warn">
@@ -262,7 +289,7 @@ export default async function StarPage({ params, searchParams }: PageProps) {
             <p style={{ margin: '8px 0 0' }}>{nakshatra.ritual}</p>
             <p className="small" style={{ marginTop: 10 }}>
               인도에서 오래 해오던 방식입니다. 효험을 믿어서라기보다, 중요한 날에
-              마음을 다잡는 장치로 씁니다. 안 해도 결과가 달라지지는 않아요.
+              마음을 다잡는 장치로 씁니다.
             </p>
           </div>
         </section>
@@ -280,6 +307,8 @@ export default async function StarPage({ params, searchParams }: PageProps) {
             moonLongitude={result?.moonLongitude}
             archetype={nakshatra.archetype}
           />
+
+          <MoonPlacement nakshatra={nakshatra} result={result ?? undefined} />
         </section>
 
         <Link href="/birth" className="btn btn--ghost" style={{ marginTop: 34 }}>

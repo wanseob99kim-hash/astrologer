@@ -675,6 +675,18 @@ table.compare td.vedic { color: var(--ink); }
 .peak__tick { text-anchor: middle; fill: var(--muted); font-size: 10px; }
 .peak__tick--on { fill: var(--marigold); font-weight: 600; }
 
+.peakStory { margin: 16px 0 0; line-height: 1.8; }
+.peakBox {
+  margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.peakBox--do { background: var(--marigold-soft); border-color: color-mix(in srgb, var(--marigold) 28%, transparent); }
+.peakBox__title { margin: 0; font-weight: 600; font-size: var(--step--1); letter-spacing: .02em; }
+.peakMiss {
+  margin-top: 14px; padding-left: 14px; border-left: 3px solid var(--marigold);
+  color: var(--ink-2); font-size: var(--step--1); line-height: 1.7;
+}
+
 .itemGrid--wide { grid-template-columns: repeat(2, 1fr); }
 
 .ritual {

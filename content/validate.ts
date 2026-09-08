@@ -81,6 +81,12 @@ NAKSHATRAS.forEach((n, position) => {
     }
   }
   if (!n.bond || !n.helper) fail(`${label}: bond/helper 누락`)
+  // 전성기 구간은 신호·해설·행동·놓치기 쉬운 것이 모두 있어야 읽을거리가 된다
+  if (n.peak.signals.length < 3) fail(`${label}: peak.signals ${n.peak.signals.length}개 (최소 3)`)
+  if (n.peak.actions.length < 3) fail(`${label}: peak.actions ${n.peak.actions.length}개 (최소 3)`)
+  if (n.peak.story.length < 40) fail(`${label}: peak.story 가 너무 짧음 (${n.peak.story.length}자)`)
+  if (!n.peak.miss || n.peak.miss.trim().length === 0) fail(`${label}: peak.miss 비어 있음`)
+  if (n.peak.from >= n.peak.to) fail(`${label}: peak 구간이 뒤집힘 (${n.peak.from}-${n.peak.to})`)
   if (n.strengths.length < 3) fail(`${label}: strengths ${n.strengths.length}개 (최소 3)`)
   if (n.shadows.length < 2) fail(`${label}: shadows ${n.shadows.length}개 (최소 2)`)
   if (n.career.length < 3) fail(`${label}: career ${n.career.length}개 (최소 3)`)

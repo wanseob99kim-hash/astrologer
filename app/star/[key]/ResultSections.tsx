@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { nakshatraByKey } from '@/content/index'
+import { NAKSHATRAS, nakshatraByKey } from '@/content/index'
 import type { Nakshatra, NakshatraRatings } from '@/content/types'
 import { NakshatraGlyph } from '../../components/NakshatraGlyph'
 
@@ -253,6 +253,107 @@ export function LuckyItems({ nakshatra }: { nakshatra: Nakshatra }) {
       <ul className="chips" style={{ marginTop: 10 }}>
         {nakshatra.career.map((item) => <li key={item} className="chip">{item}</li>)}
       </ul>
+    </>
+  )
+}
+
+/** 황도 360도를 27칸으로 나눈 한 칸의 크기. 계산 엔진이 쓰는 값과 같다. */
+const SEGMENT_DEGREES = 360 / 27
+
+/** 한 칸을 넷으로 나눈 파다. 전통에서 인생의 네 가지 목적에 붙여 읽는다. */
+const PADA_MEANING = [
+  {
+    ko: '방향',
+    body: '무엇이 옳은지부터 정하고 나서야 몸이 움직입니다. 명분이 안 서면 아무리 좋은 조건이어도 손이 안 갑니다.',
+  },
+  {
+    ko: '현실',
+    body: '먹고사는 쪽에 힘이 실려 있습니다. 손에 잡히는 결과로 확인돼야 마음이 놓이고, 그래서 실속을 잘 챙깁니다.',
+  },
+  {
+    ko: '관계',
+    body: '사람과 하고 싶은 마음에 힘이 실려 있습니다. 무엇을 하느냐보다 누구와 하느냐가 결과를 더 크게 바꿉니다.',
+  },
+  {
+    ko: '비움',
+    body: '쥐고 있던 것을 한 번 놓는 자리입니다. 크게 정리하고 난 뒤에야 진짜 자기 것이 보이는 흐름을 탑니다.',
+  },
+] as const
+
+interface MoonPlacementProps {
+  nakshatra: Nakshatra
+  /** 계산 결과. 없으면(유형 설명 페이지) 일반 설명만 보여준다. */
+  result?: { moonLongitude: number; pada: number; isPadaReliable: boolean }
+}
+
+/**
+ * 달이 있던 자리가 내 운명에서 무엇을 뜻하는지.
+ *
+ * 각도나 세차 같은 천문 설명은 읽는 사람에게 쓸모가 없다.
+ * 대신 전통이 실제로 해석에 쓰는 것 — 칸 안에서의 위치(초입·한가운데·끝자락)와
+ * 파다(네 등분) — 만 남긴다.
+ */
+export function MoonPlacement({ nakshatra, result }: MoonPlacementProps) {
+  if (!result) {
+    return (
+      <p className="peakStory">
+        인도에서는 태어난 순간 <strong>달</strong>이 있던 자리를 가장 중요하게 봅니다.
+        태양이 밖으로 드러나는 자리라면, 달은 마음이 움직이는 방식입니다.
+        위 그림에서 표시된 칸이 {nakshatra.archetype} — 이 사람의 마음이 기본으로 돌아오는 자리입니다.
+      </p>
+    )
+  }
+
+  const into = ((result.moonLongitude % SEGMENT_DEGREES) + SEGMENT_DEGREES) % SEGMENT_DEGREES
+  const ratio = into / SEGMENT_DEGREES
+
+  const prev = NAKSHATRAS[(nakshatra.index + 26) % 27]
+  const next = NAKSHATRAS[(nakshatra.index + 1) % 27]
+
+  const stage = ratio < 1 / 3
+    ? {
+        label: '칸의 초입',
+        body: `${nakshatra.archetype}의 성질이 다듬어지기 전의 날것으로 나옵니다. 좋을 때는 거침없고, 나쁠 때는 조절이 안 됩니다. 앞 칸인 ${prev?.archetype ?? ''}의 여운이 남아 있어 마무리하는 습관이 같이 붙어 있습니다.`,
+      }
+    : ratio < 2 / 3
+      ? {
+          label: '칸의 한가운데',
+          body: `${nakshatra.archetype}의 성질이 가장 진하게 나옵니다. 위에서 읽은 설명이 거의 그대로 맞는 자리입니다. 흔들림이 적은 대신, 이 유형의 약점도 그만큼 선명하게 나타납니다.`,
+        }
+      : {
+          label: '칸의 끝자락',
+          body: `${nakshatra.archetype}의 성질에 다음 칸인 ${next?.archetype ?? ''}의 기운이 섞입니다. 두 방향 사이에서 자주 흔들리지만, 한쪽만 가진 사람이 못 하는 일을 해냅니다. 나이가 들수록 뒤쪽 성질이 강해집니다.`,
+        }
+
+  const pada = PADA_MEANING[Math.min(Math.max(result.pada, 1), 4) - 1]
+
+  return (
+    <>
+      <p className="peakStory">
+        인도에서는 태어난 순간 <strong>달</strong>이 있던 자리를 가장 중요하게 봅니다.
+        태양이 밖으로 드러나는 자리라면, 달은 마음이 움직이는 방식입니다.
+        내 달은 {nakshatra.archetype} 칸에 있었습니다. 힘들 때 돌아오는 자리,
+        아무도 안 볼 때 나오는 반응이 여기서 정해집니다.
+      </p>
+
+      <div className="peakBox">
+        <p className="peakBox__title" style={{ color: 'var(--lapis)' }}>{stage.label}에 있습니다</p>
+        <p style={{ margin: '10px 0 0', lineHeight: 1.8 }}>{stage.body}</p>
+      </div>
+
+      {pada ? (
+        <div className="peakBox peakBox--do">
+          <p className="peakBox__title" style={{ color: 'var(--marigold)' }}>
+            힘이 실린 곳 · {pada.ko}
+          </p>
+          <p style={{ margin: '10px 0 0', lineHeight: 1.8 }}>{pada.body}</p>
+          <p className="small" style={{ marginTop: 10 }}>
+            {result.isPadaReliable
+              ? '한 칸을 다시 넷으로 나눈 자리(파다)로 봤습니다. 같은 탄생별이라도 여기서 사람이 갈립니다.'
+              : '태어난 시간을 모르면 이 자리는 정해지지 않습니다. 정오 기준으로 잡은 값이라 참고만 하세요.'}
+          </p>
+        </div>
+      ) : null}
     </>
   )
 }
