@@ -112,6 +112,12 @@ export interface Nakshatra {
   love: string
   /** 돈을 대하는 방식. */
   wealth: string
+  /** 일에서 드러나는 방식. */
+  work: string
+  /** 사람을 오래 이어가는 방식. */
+  bond: string
+  /** 도와줄 사람이 어떻게 나타나는가. */
+  helper: string
   /** 남들이 보는 나. */
   publicSelf: string
   /** 정작 나는 이런 사람. */

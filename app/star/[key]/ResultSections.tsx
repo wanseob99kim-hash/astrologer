@@ -26,21 +26,32 @@ const AXES: ReadonlyArray<{ key: keyof NakshatraRatings; ko: string; lead: strin
   { key: 'helper', ko: '귀인운', lead: '도와줄 사람이 나타나는 힘' },
 ]
 
-export function GradeTable({ ratings }: { ratings: NakshatraRatings }) {
+/** 다섯 축 상세. 등급과 본문을 한 자리에서 보여준다. */
+export function FortuneDetail({ nakshatra }: { nakshatra: Nakshatra }) {
+  const blocks: ReadonlyArray<{ key: keyof NakshatraRatings; icon: string; ko: string; body: string }> = [
+    { key: 'wealth', icon: '💰', ko: '재물운', body: nakshatra.wealth },
+    { key: 'career', icon: '💼', ko: '직업운', body: nakshatra.work },
+    { key: 'love', icon: '❤️', ko: '연애운', body: nakshatra.love },
+    { key: 'bond', icon: '🔗', ko: '인연운', body: nakshatra.bond },
+    { key: 'helper', icon: '🍀', ko: '귀인운', body: nakshatra.helper },
+  ]
+
   return (
-    <ul className="grades">
-      {AXES.map((axis) => (
-        <li key={axis.key}>
-          <span className="grades__name">
-            {axis.ko}
-            <span className="grades__lead">{axis.lead}</span>
-          </span>
-          <span className={`grades__badge grades__badge--${grade(ratings[axis.key]).replace('+', 'p')}`}>
-            {grade(ratings[axis.key])}
-          </span>
-        </li>
+    <div className="fortune">
+      {blocks.map((block) => (
+        <section key={block.key} className="fortune__item">
+          <header className="fortune__head">
+            <span className="fortune__name">
+              <span aria-hidden="true">{block.icon}</span> {block.ko}
+            </span>
+            <span className={`grades__badge grades__badge--${grade(nakshatra.ratings[block.key]).replace('+', 'p')}`}>
+              {grade(nakshatra.ratings[block.key])}
+            </span>
+          </header>
+          <p className="fortune__body">{block.body}</p>
+        </section>
       ))}
-    </ul>
+    </div>
   )
 }
 
@@ -82,6 +93,31 @@ export function ThreeActs({ peakFrom }: ThreeActsProps) {
       ))}
     </ol>
   )
+}
+
+/**
+ * 목성이 하늘을 한 바퀴 도는 데 12년.
+ * 전통에서 같은 기운이 다시 돌아오는 주기로 본다.
+ */
+export const RETURN_CYCLE_YEARS = 12
+
+/**
+ * 지금 나이 기준으로 아직 오지 않은 전성기 구간.
+ *
+ * 타고난 전성기가 이미 지났으면 12년 주기를 더해 다음 구간을 찾는다.
+ * 그러지 않으면 46세인 사람에게 34~42세를 '다음 전성기'라고 부르게 된다.
+ */
+export function upcomingPeak(from: number, to: number, age?: number) {
+  if (age === undefined) return { from, to, isFirst: true, passed: 0 }
+  let start = from
+  let end = to
+  let passed = 0
+  while (age > end) {
+    start += RETURN_CYCLE_YEARS
+    end += RETURN_CYCLE_YEARS
+    passed += 1
+  }
+  return { from: start, to: end, isFirst: passed === 0, passed }
 }
 
 /** 전성기 곡선. 값은 유형의 전성기 구간에서 만든다. */

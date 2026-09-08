@@ -10,20 +10,33 @@ import { Footer } from '../../components/Footer'
 import { NakshatraCard } from '../../components/NakshatraCard'
 import { NakshatraWheel } from '../../components/NakshatraWheel'
 import { DashaTimeline } from './DashaTimeline'
-import { GradeTable, LuckyItems, MatchPreview, PeakChart, SelfContrast, ThreeActs } from './ResultSections'
+import {
+  FortuneDetail,
+  LuckyItems,
+  MatchPreview,
+  PeakChart,
+  RETURN_CYCLE_YEARS,
+  SelfContrast,
+  ThreeActs,
+  upcomingPeak,
+} from './ResultSections'
 
 interface PageProps {
   params: Promise<{ key: string }>
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
-/** 분류값은 화면에 영문으로 노출하지 않는다. */
+/**
+ * 기질 표기.
+ * 원어(데바·마누샤·락샤사)를 그대로 두면 읽는 사람에게 아무 뜻도 전해지지 않아
+ * 우리말 설명만 남긴다. 기운(나디)은 궁합 계산에만 쓰이고 개인 결과에서는
+ * 뜻이 서지 않아 화면에서 뺐다.
+ */
 const GANA_KO: Record<string, string> = {
-  Deva: '데바 — 신의 결',
-  Manushya: '마누샤 — 사람의 결',
-  Rakshasa: '락샤사 — 거센 결',
+  Deva: '부드럽고 잘 맞춰주는 결',
+  Manushya: '재고 따지는 현실적인 결',
+  Rakshasa: '세고 밀어붙이는 결',
 }
-const NADI_KO: Record<string, string> = { Adi: '아디', Madhya: '마디아', Antya: '안티아' }
 
 /** 인도에서 쓰는 샤카력. 서기에서 78을 뺀다. */
 const SHAKA_OFFSET = 78
@@ -100,6 +113,7 @@ export default async function StarPage({ params, searchParams }: PageProps) {
   }
   const matchHref = `/match?${matchParams}`
   const who = nickname ? `${nickname} 님` : '당신'
+  const peak = upcomingPeak(nakshatra.peak.from, nakshatra.peak.to, age)
   const isProvisional = result !== null && !result.isTimeKnown
 
   return (
@@ -159,13 +173,12 @@ export default async function StarPage({ params, searchParams }: PageProps) {
               <div><dt>달의 자리</dt><dd>{result.moonRashi} {result.moonLongitude.toFixed(1)}°</dd></div>
               <div><dt>기질</dt><dd>{GANA_KO[nakshatra.gana] ?? nakshatra.gana}</dd></div>
               <div><dt>상징 동물</dt><dd>{nakshatra.yoniKo}</dd></div>
-              <div><dt>기운</dt><dd>{NADI_KO[nakshatra.nadi] ?? nakshatra.nadi}</dd></div>
               <div><dt>생일 숫자</dt><dd>{zero.moolank} · {zero.graha.keyword}</dd></div>
               <div><dt>운명 숫자</dt><dd>{zero.bhagyank} · {zero.destinyGraha.keyword}</dd></div>
               <div><dt>행운의 색</dt><dd><span className="swatch" style={{ background: nakshatra.luckyColorHex }} />{nakshatra.luckyColor}</dd></div>
               <div><dt>행운의 방향</dt><dd>{nakshatra.direction}</dd></div>
               <div><dt>파다</dt><dd>{result.isPadaReliable ? `${result.pada}번째` : '시간을 알아야 정해집니다'}</dd></div>
-              <div><dt>샤카력</dt><dd>{(birthYear ?? 0) - SHAKA_OFFSET}년생</dd></div>
+              <div><dt>인도 달력</dt><dd>샤카력 {(birthYear ?? 0) - SHAKA_OFFSET}년생</dd></div>
             </dl>
           </section>
         ) : null}
@@ -188,14 +201,7 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         <section className="sect">
           <h2 className="sect__title">운명 능력치</h2>
           <p className="small">전통 성격 서술을 근거로 매긴 값입니다. 계산으로 나온 수치는 아니에요.</p>
-          <GradeTable ratings={nakshatra.ratings} />
-        </section>
-
-        <section className="sect">
-          <h2 className="sect__title">재물운</h2>
-          <p className="resultBody">{nakshatra.wealth}</p>
-          <h2 className="sect__title" style={{ marginTop: 30 }}>연애운</h2>
-          <p className="resultBody">{nakshatra.love}</p>
+          <FortuneDetail nakshatra={nakshatra} />
         </section>
 
         <section className="sect">
@@ -204,18 +210,26 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         </section>
 
         <section className="sect">
-          <h2 className="sect__title">다음 전성기</h2>
-          <p className="peakRange">{nakshatra.peak.from}–{nakshatra.peak.to}세</p>
+          <h2 className="sect__title">
+            {age !== undefined && age >= peak.from && age <= peak.to ? '지금이 전성기입니다' : '다음 전성기'}
+          </h2>
+          <p className="peakRange">{peak.from}–{peak.to}세</p>
           {age !== undefined ? (
             <p className="small">
-              지금 {age}세 · {age < nakshatra.peak.from
-                ? `전성기까지 ${nakshatra.peak.from - age}년 남았습니다`
-                : age > nakshatra.peak.to
-                  ? '첫 전성기는 지나왔고, 다음 구간이 이어집니다'
-                  : '지금이 그 구간 한가운데입니다'}
+              지금 {age}세 · {age < peak.from
+                ? `${peak.from - age}년 남았습니다`
+                : age <= peak.to
+                  ? '이 구간 한가운데입니다'
+                  : ''}
             </p>
           ) : null}
-          <PeakChart from={nakshatra.peak.from} to={nakshatra.peak.to} />
+          {!peak.isFirst ? (
+            <p className="small" style={{ marginTop: 6 }}>
+              타고난 첫 전성기 {nakshatra.peak.from}–{nakshatra.peak.to}세는 이미 지나왔습니다.
+              전통에서는 목성이 하늘을 한 바퀴 도는 {RETURN_CYCLE_YEARS}년마다 같은 기운이 다시 온다고 봅니다.
+            </p>
+          ) : null}
+          <PeakChart from={peak.from} to={peak.to} />
           <p className="eyebrow" style={{ marginTop: 14, color: 'var(--lapis)' }}>전성기가 오기 전 신호</p>
           <ul className="bullets" style={{ marginTop: 10 }}>
             {nakshatra.peak.signals.map((v) => <li key={v}>{v}</li>)}
@@ -243,6 +257,10 @@ export default async function StarPage({ params, searchParams }: PageProps) {
           <div className="ritual">
             <p className="eyebrow" style={{ color: 'var(--marigold)' }}>전통 처방</p>
             <p style={{ margin: '8px 0 0' }}>{nakshatra.ritual}</p>
+            <p className="small" style={{ marginTop: 10 }}>
+              인도에서 오래 해오던 방식입니다. 효험을 믿어서라기보다, 중요한 날에
+              마음을 다잡는 장치로 씁니다. 안 해도 결과가 달라지지는 않아요.
+            </p>
           </div>
         </section>
 

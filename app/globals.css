@@ -722,3 +722,31 @@ table.compare td.vedic { color: var(--ink); }
   .heroDeck__slot--0 { transform: translateX(-68px) rotate(-11deg); }
   .heroDeck__slot--2 { transform: translateX(68px) rotate(11deg); }
 }
+
+/* ── 다섯 축 상세 ── */
+.fortune { display: grid; gap: 12px; margin-top: 18px; }
+.fortune__item {
+  padding: 16px 17px; border-radius: 12px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.fortune__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.fortune__name {
+  font-family: "Gowun Batang", Georgia, serif; font-weight: 700;
+  font-size: var(--step-1);
+}
+.fortune__body { margin: 10px 0 0; line-height: 1.75; color: var(--ink-2); }
+
+/* ── 다섯 축 상세 ── */
+.fortune { display: grid; gap: 12px; margin-top: 18px; }
+.fortune__item {
+  padding: 16px 17px; border-radius: 12px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.fortune__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.fortune__name { font-family: "Gowun Batang", Georgia, serif; font-weight: 700; font-size: var(--step-1); }
+.fortune__body { margin: 10px 0 0; line-height: 1.75; color: var(--ink-2); }
+
+/* 카드 후광과 빛살 */
+.tarot__haloIn { stop-color: color-mix(in srgb, var(--card-gold) 30%, transparent); }
+.tarot__haloOut { stop-color: transparent; }
+.tarot__ray { stroke: color-mix(in srgb, var(--card-gold) 26%, transparent); stroke-width: .8; }

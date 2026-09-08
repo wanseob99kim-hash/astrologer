@@ -113,6 +113,11 @@ export function NakshatraCard({
           <stop offset="0%" className="tarot__archTop" />
           <stop offset="100%" className="tarot__archBottom" />
         </linearGradient>
+        {/* 상징 뒤에서 번지는 빛. 원본 삽화의 후광을 옮긴 것. */}
+        <radialGradient id={`halo-${glyphKey}`}>
+          <stop offset="0%" className="tarot__haloIn" />
+          <stop offset="100%" className="tarot__haloOut" />
+        </radialGradient>
       </defs>
 
       {/* 바탕 */}
@@ -130,6 +135,14 @@ export function NakshatraCard({
           className="tarot__fillInk"
           stroke="none"
         />
+      ))}
+
+      {/* 테두리 중앙의 매듭 장식 */}
+      {[[150, 16], [16, 210], [284, 210]].map(([cx, cy]) => (
+        <g key={`knot-${cx}-${cy}`} transform={`translate(${cx} ${cy})`}>
+          <path d="M-7 0 0-6 7 0 0 6z" className="tarot__ink" fill="none" strokeWidth="1" />
+          <circle r="1.6" className="tarot__fillInk" stroke="none" />
+        </g>
       ))}
 
       {/* 상단 로마 숫자 */}
@@ -160,6 +173,24 @@ export function NakshatraCard({
         fill="none"
         strokeWidth="0.7"
       />
+
+      {/* 상징 뒤 후광 */}
+      <circle cx="150" cy="196" r="62" fill={`url(#halo-${glyphKey})`} />
+
+      {/* 아치 안에서 뻗는 빛살 */}
+      {Array.from({ length: 24 }, (_, i) => {
+        const angle = (i * 15 - 90) * (Math.PI / 180)
+        return (
+          <line
+            key={`ray-${i}`}
+            x1={150 + Math.cos(angle) * 40}
+            y1={196 + Math.sin(angle) * 40}
+            x2={150 + Math.cos(angle) * (i % 2 === 0 ? 70 : 62)}
+            y2={196 + Math.sin(angle) * (i % 2 === 0 ? 70 : 62)}
+            className="tarot__ray"
+          />
+        )
+      })}
 
       {/* 만다라 안쪽 27 눈금 — 27등분 체계를 장식으로 옮긴 것 */}
       {Array.from({ length: 27 }, (_, i) => {
@@ -193,13 +224,13 @@ export function NakshatraCard({
 
       {/* 키워드 배너 */}
       <g>
-        <path d="M46 356h208v30H46z" className="tarot__banner" strokeWidth="1.2" />
-        <path d="M52 361h196v20H52z" className="tarot__ink" fill="none" strokeWidth="0.5" />
-        <text x="150" y="376" className="tarot__keyword">{keyword}</text>
+        <path d="M46 346h208v30H46z" className="tarot__banner" strokeWidth="1.2" />
+        <path d="M52 351h196v20H52z" className="tarot__ink" fill="none" strokeWidth="0.5" />
+        <text x="150" y="366" className="tarot__keyword">{keyword}</text>
       </g>
 
       {/* 하단 아키타입 */}
-      <text x="150" y="404" className="tarot__archetype">{archetype}</text>
+      <text x="150" y="392" className="tarot__archetype">{archetype}</text>
     </svg>
   )
 }
