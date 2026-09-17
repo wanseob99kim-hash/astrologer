@@ -21,6 +21,6 @@
   "vars": {
     // canonical·sitemap 의 기준 주소. 배포 후 실제 주소로 바꾼다.
     // 비워두면 localhost 가 색인에 박힌다 — 벤치마크 사이트가 저지른 실수.
-    "SITE_URL": "https://astrologer.wanseob99kim-hash.workers.dev"
+    "SITE_URL": "https://astrologer.wanseob99-kim.workers.dev"
   }
 }
