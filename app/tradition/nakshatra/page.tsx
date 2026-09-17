@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { cardArtUrl } from '@/content/cardArt'
 import Link from 'next/link'
 import { NAKSHATRAS } from '@/content/index'
 import { absoluteUrl, articleSchema, breadcrumbSchema } from '@/lib/seo'
@@ -44,6 +45,7 @@ export default function NakshatraIndexPage() {
                 <NakshatraCard
                   index={n.index}
                   glyphKey={n.key}
+                  artUrl={cardArtUrl(n.key)}
                   archetype={n.archetype}
                   keyword={n.keyword}
                   accent={n.luckyColorHex}

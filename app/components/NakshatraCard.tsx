@@ -83,6 +83,8 @@ interface NakshatraCardProps {
   accent: string
   /** 좁은 자리에 놓을 때 잔장식을 줄인다. */
   compact?: boolean
+  /** 회화 삽화 주소. 있으면 아치 안이 벡터 상징 대신 이 그림으로 채워진다. */
+  artUrl?: string
   width?: number | string
 }
 
@@ -93,6 +95,7 @@ export function NakshatraCard({
   keyword,
   accent,
   compact = false,
+  artUrl,
   width = '100%',
 }: NakshatraCardProps) {
   const numeral = toRoman(index + 1)
@@ -216,8 +219,29 @@ export function NakshatraCard({
         strokeDasharray="2 3"
       />
 
+      {artUrl ? (
+        <>
+          {/* 회화 삽화. 아치 모양으로 잘라 넣고 가장자리를 금선으로 마감한다. */}
+          <image
+            href={artUrl}
+            x="92"
+            y="98"
+            width="116"
+            height="170"
+            preserveAspectRatio="xMidYMid slice"
+            clipPath={`url(#archclip-${glyphKey})`}
+          />
+          <path
+            d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z"
+            fill="none"
+            className="tarot__archEdge"
+            strokeWidth="1.6"
+          />
+        </>
+      ) : null}
+
       {/* 상징 뒤 후광 — 꽃잎·고리·빛살은 아치 안에서만 보인다 */}
-      <g clipPath={`url(#archclip-${glyphKey})`}>
+      <g clipPath={`url(#archclip-${glyphKey})`} display={artUrl ? 'none' : undefined}>
       <circle cx="150" cy="196" r="62" fill={`url(#halo-${glyphKey})`} />
 
       {/* 팔각 별 — 두 정사각형을 45도로 겹친다. 인도 얀트라의 기본 도형. */}
@@ -296,7 +320,7 @@ export function NakshatraCard({
       })}
 
       {/* 아치 안 반짝임 */}
-      <g className="tarot__spark">
+      <g className="tarot__spark" display={artUrl ? 'none' : undefined}>
         <Sparkle x={112} y={150} r={3.2} />
         <Sparkle x={190} y={142} r={2.6} />
         <Sparkle x={106} y={236} r={2.4} />
@@ -304,12 +328,14 @@ export function NakshatraCard({
         <Sparkle x={150} y={116} r={2.2} />
       </g>
 
-      {/* 상징 */}
-      <foreignObject x="84" y="128" width="132" height="132">
-        <div className="tarot__glyph">
-          <NakshatraGlyph nakshatra={glyphKey} size={128} ornate />
-        </div>
-      </foreignObject>
+      {/* 상징 — 삽화가 있으면 뺀다 */}
+      {!artUrl ? (
+        <foreignObject x="84" y="128" width="132" height="132">
+          <div className="tarot__glyph">
+            <NakshatraGlyph nakshatra={glyphKey} size={128} ornate />
+          </div>
+        </foreignObject>
+      ) : null}
 
       {/* 밑동의 연꽃 */}
       <g transform="translate(150 302)">

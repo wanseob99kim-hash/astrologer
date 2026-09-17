@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { nakshatraByKey } from '@/content/index'
+import { cardArtUrl } from '@/content/cardArt'
 import { PLANET_KO, computeLevelOne, computeLevelZero } from '@/lib/astro/engine'
 import { parseBirthInput } from '@/lib/astro/input'
 import type { LevelOneResult, LevelZeroResult } from '@/lib/astro/types'
@@ -129,6 +130,7 @@ export default async function StarPage({ params, searchParams }: PageProps) {
           <NakshatraCard
             index={nakshatra.index}
             glyphKey={nakshatra.key}
+            artUrl={cardArtUrl(nakshatra.key)}
             archetype={nakshatra.archetype}
             keyword={nakshatra.keyword}
             accent={nakshatra.luckyColorHex}

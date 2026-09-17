@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GRAHAS, NAKSHATRAS } from '@/content/index'
+import { cardArtUrl } from '@/content/cardArt'
 import { SITE, absoluteUrl, faqSchema } from '@/lib/seo'
 import { Footer } from './components/Footer'
 import { GrahaGlyph } from './components/GrahaGlyph'
@@ -76,6 +77,7 @@ export default function HomePage() {
               <NakshatraCard
                 index={n.index}
                 glyphKey={n.key}
+                artUrl={cardArtUrl(n.key)}
                 archetype={n.archetype}
                 keyword={n.keyword}
                 accent={n.luckyColorHex}

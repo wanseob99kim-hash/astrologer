@@ -21,7 +21,9 @@
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "cards:sync": "tsx scripts/sync-card-art.ts",
+    "cards:prompts": "tsx scripts/card-art-prompts.ts"
   },
   "dependencies": {
     "@ishubhamx/panchangam-js": "^3.0.0",
