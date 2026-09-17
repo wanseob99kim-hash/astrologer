@@ -250,11 +250,19 @@ interface NakshatraGlyphProps {
   nakshatra: string
   size?: number
   title?: string
+  /**
+   * 금박 양각. 카드 안에서만 쓴다.
+   * 같은 선을 세 번 겹친다 — 넓은 그림자, 금 그라데이션 본선, 가는 하이라이트.
+   * 선화 하나로 두께와 광택이 생긴다.
+   */
+  ornate?: boolean
 }
 
-export function NakshatraGlyph({ nakshatra, size = 48, title }: NakshatraGlyphProps) {
+export function NakshatraGlyph({ nakshatra, size = 48, title, ornate = false }: NakshatraGlyphProps) {
   const symbol = SYMBOLS[nakshatra as NakshatraGlyphKey]
   if (!symbol) return null
+
+  const gildId = `gild-glyph-${nakshatra}`
 
   return (
     <svg
@@ -265,17 +273,39 @@ export function NakshatraGlyph({ nakshatra, size = 48, title }: NakshatraGlyphPr
       aria-label={title}
       aria-hidden={title ? undefined : true}
       focusable="false"
+      className={ornate ? 'glyph glyph--ornate' : 'glyph'}
     >
       {title ? <title>{title}</title> : null}
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {symbol}
-      </g>
+      {ornate ? (
+        <>
+          <defs>
+            <linearGradient id={gildId} x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" className="glyph__gildHi" />
+              <stop offset="45%" className="glyph__gildMid" />
+              <stop offset="100%" className="glyph__gildLo" />
+            </linearGradient>
+          </defs>
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round" className="glyph__shadow" strokeWidth="5.4">
+            {symbol}
+          </g>
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round" stroke={`url(#${gildId})`} strokeWidth="3.2">
+            {symbol}
+          </g>
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round" className="glyph__highlight" strokeWidth="0.9">
+            {symbol}
+          </g>
+        </>
+      ) : (
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {symbol}
+        </g>
+      )}
     </svg>
   )
 }

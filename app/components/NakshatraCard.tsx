@@ -122,6 +122,11 @@ export function NakshatraCard({
         <pattern id={`lattice-${glyphKey}`} width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <path d="M0 6h12M6 0v12" className="tarot__lattice" />
         </pattern>
+        <radialGradient id={`star-${glyphKey}`}>
+          <stop offset="0%" className="tarot__starIn" />
+          <stop offset="70%" className="tarot__starMid" />
+          <stop offset="100%" className="tarot__starOut" />
+        </radialGradient>
         <clipPath id={`archclip-${glyphKey}`}>
           <path d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z" />
         </clipPath>
@@ -215,6 +220,23 @@ export function NakshatraCard({
       <g clipPath={`url(#archclip-${glyphKey})`}>
       <circle cx="150" cy="196" r="62" fill={`url(#halo-${glyphKey})`} />
 
+      {/* 팔각 별 — 두 정사각형을 45도로 겹친다. 인도 얀트라의 기본 도형. */}
+      <g transform="translate(150 196)">
+        <rect x="-58" y="-58" width="116" height="116" fill={`url(#star-${glyphKey})`} className="tarot__starEdge" transform="rotate(45)" />
+        <rect x="-58" y="-58" width="116" height="116" fill={`url(#star-${glyphKey})`} className="tarot__starEdge" />
+        <rect x="-40" y="-40" width="80" height="80" fill="none" className="tarot__starEdge2" transform="rotate(45)" />
+        <rect x="-40" y="-40" width="80" height="80" fill="none" className="tarot__starEdge2" />
+        {/* 큰 연꽃잎 8장 */}
+        {Array.from({ length: 8 }, (_, i) => (
+          <path
+            key={`lotus-${i}`}
+            d="M0-30c9-14 22-30 24-56-14 8-24 24-24 56zM0-30c-9-14-22-30-24-56 14 8 24 24 24 56z"
+            transform={`rotate(${i * 45})`}
+            className="tarot__lotus"
+          />
+        ))}
+      </g>
+
       {/* 꽃잎 만다라 — 16잎 두 겹 */}
       {Array.from({ length: 16 }, (_, i) => (
         <ellipse
@@ -285,7 +307,7 @@ export function NakshatraCard({
       {/* 상징 */}
       <foreignObject x="84" y="128" width="132" height="132">
         <div className="tarot__glyph">
-          <NakshatraGlyph nakshatra={glyphKey} size={124} />
+          <NakshatraGlyph nakshatra={glyphKey} size={128} ornate />
         </div>
       </foreignObject>
 

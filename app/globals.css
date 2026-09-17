@@ -543,7 +543,7 @@ table.compare td.vedic { color: var(--ink); }
   color: var(--card-gold);
 }
 /* 카드 안에서는 축소돼 그려지므로 선을 굵혀야 형태가 남는다. */
-.tarot__glyph svg g { stroke-width: 3.2; }
+.tarot__glyph svg:not(.glyph--ornate) g { stroke-width: 3.2; }
 
 .tarot__numeral {
   text-anchor: middle;
@@ -781,11 +781,27 @@ table.compare td.vedic { color: var(--ink); }
 }
 .tarot__ring { stroke: color-mix(in srgb, var(--card-gold) 45%, transparent); stroke-width: .7; }
 .tarot__spark .tarot__fillInk { fill: var(--card-gold); }
+.tarot__starIn { stop-color: color-mix(in srgb, var(--card-gold) 26%, transparent); }
+.tarot__starMid { stop-color: color-mix(in srgb, var(--accent) 14%, transparent); }
+.tarot__starOut { stop-color: transparent; }
+.tarot__starEdge { stroke: color-mix(in srgb, var(--card-gold) 55%, transparent); stroke-width: .8; }
+.tarot__starEdge2 { stroke: color-mix(in srgb, var(--card-gold) 35%, transparent); stroke-width: .5; }
+.tarot__lotus {
+  fill: color-mix(in srgb, var(--accent) 22%, transparent);
+  stroke: color-mix(in srgb, var(--card-gold) 60%, transparent);
+  stroke-width: .6;
+}
 /* 상징에 금박 광택. 카드 안에서만 건다. */
 .tarot__glyph svg {
-  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--card-gold) 70%, transparent))
-          drop-shadow(0 1px 0 color-mix(in srgb, #000 35%, transparent));
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--card-gold) 75%, transparent))
+          drop-shadow(0 2px 1px color-mix(in srgb, #000 45%, transparent));
 }
+/* 금박 양각 3겹의 색. 카드 팔레트를 따른다. */
+.glyph__gildHi { stop-color: #F6DA86; }
+.glyph__gildMid { stop-color: var(--card-gold, #D9B45C); }
+.glyph__gildLo { stop-color: #9A6A1E; }
+.glyph__shadow { stroke: color-mix(in srgb, var(--card-deep-2, #4A1424) 85%, #000 15%); }
+.glyph__highlight { stroke: #FFEDB0; opacity: .5; }
 
 /* 운세 상세 — 결론 한 줄 + 항목 */
 .fortune__headline {
