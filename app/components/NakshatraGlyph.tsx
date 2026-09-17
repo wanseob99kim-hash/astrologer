@@ -8,8 +8,9 @@
  *  - 27장을 따로 받아오지 않아 요청이 늘지 않는다
  *
  * 상징이 겹치는 짝은 전통의 차이를 살려 구분했다.
- *  - 침대 앞다리/뒷다리(11·12) 와 상여 앞다리/뒷다리(25·26) → 가로대 위치를 뒤집고,
- *    상여 쪽에는 신격의 표식(외발의 불, 심연의 물)을 더했다
+ *  - 침대 앞다리/뒷다리(11·12) → 이름을 '한낮의 정원'·'맹세의 반지'로 바꾸면서
+ *    앞은 해가 비치는 침상, 뒤는 보석 박힌 반지로 그렸다(신격 바가·아리아만의 뜻을 따름)
+ *  - 상여 앞다리/뒷다리(25·26) → 가로대 위치를 뒤집고 신격의 표식(외발의 불, 심연의 물)을 더했다
  *  - 연꽃이 겹치는 푸쉬야(8)·아누라다(17) → 앞은 젖방울을 단 만개한 꽃, 뒤는 줄기 달린 꽃
  */
 
@@ -81,22 +82,30 @@ const SYMBOLS: Record<NakshatraGlyphKey, React.ReactNode> = {
   // 10 왕좌
   magha: (
     <>
-      <path d="M15 42V19a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v23M15 31h18" />
+      <path d="M15 42V19a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v23" />
       <path d="M19 15V8l3 3 2-4 2 4 3-3v7" />
+      <path d="M13 31h22M18 31v-5h12v5M18 36h12" />
+      <circle cx="24" cy="21" r="1.4" fill="currentColor" stroke="none" />
     </>
   ),
   // 11 침대의 앞다리 — 가로대가 위
   'purva-phalguni': (
     <>
-      <path d="M13 17h22" />
-      <path d="M17 17v20m14-20v20M14 37h6m8 0h6" />
+      <path d="M12 24c4-6 20-6 24 0" />
+      <path d="M15 24v16m18-16v16M12 40h7m10 0h7" />
+      <path d="M15 32h18" />
+      <circle cx="24" cy="12" r="3.2" />
+      <path d="M24 5v2m5 1-1.4 1.4M31 12h-2M19 8l1.4 1.4M17 12h2" />
     </>
   ),
   // 12 침대의 뒷다리 — 가로대가 아래
   'uttara-phalguni': (
     <>
-      <path d="M13 37h22" />
-      <path d="M17 37V17m14 20V17M14 17h6m8 0h6" />
+      <circle cx="24" cy="27" r="10" />
+      <circle cx="24" cy="27" r="6.5" />
+      <path d="M19 15l5-5 5 5-5 4z" />
+      <path d="M21 13l3-3 3 3" />
+      <path d="M11 41c4-4 8-2 13 0s9 4 13 0" />
     </>
   ),
   // 13 펼친 손
@@ -104,13 +113,15 @@ const SYMBOLS: Record<NakshatraGlyphKey, React.ReactNode> = {
     <>
       <path d="M14 33V24m5 9V16m5 17V12m5 21V16m5 17v-9" />
       <path d="M14 33c0 6 4 10 10 10s10-4 10-10" />
+      <path d="M18 38c3-2 6-2 9 0M17 35c2-1 4-1 6 0" strokeWidth="1.4" />
     </>
   ),
   // 14 빛나는 보석
   chitra: (
     <>
-      <path d="M24 11 35 22 24 39 13 22z" />
-      <path d="M13 22h22M24 11v28" />
+      <path d="M24 9 36 22 24 41 12 22z" />
+      <path d="M12 22h24M24 9v32M18 22l6-13 6 13-6 19z" />
+      <path d="M8 12l2 2m30-2-2 2" strokeWidth="1.4" />
     </>
   ),
   // 15 바람에 흔들리는 새싹
@@ -149,16 +160,19 @@ const SYMBOLS: Record<NakshatraGlyphKey, React.ReactNode> = {
   // 19 묶인 뿌리 다발
   mula: (
     <>
-      <path d="M24 8v12" />
-      <path d="M24 20c-4 4-6 10-7 20M24 20c4 4 6 10 7 20M24 20c-1 6-1 13 0 20" />
-      <path d="M16 26h16" />
+      <path d="M19 8h10l-2 9h-6z" />
+      <path d="M24 17c-5 4-9 9-12 20M24 17c5 4 9 9 12 20M24 17v22" />
+      <path d="M18 27c-3 1-5 4-8 5M30 27c3 1 5 4 8 5M21 32c-2 2-2 5-4 8M27 32c2 2 2 5 4 8" strokeWidth="1.5" />
+      <path d="M14 15c3 1 5-1 8 0M26 15c3 1 5-1 8 0" strokeWidth="1.4" />
     </>
   ),
   // 20 부채
   'purva-ashadha': (
     <>
-      <path d="M24 41 10 21a17 17 0 0 1 28 0z" />
-      <path d="M24 41 17 23m7 18 7-18m-7 18V23" />
+      <path d="M24 41 9 20a18 18 0 0 1 30 0z" />
+      <path d="M24 41 14 21m10 20-5-23m5 23V17m0 24 5-23m-5 23 10-20" strokeWidth="1.5" />
+      <path d="M13 17a15 15 0 0 1 22 0" strokeWidth="1.2" />
+      <circle cx="24" cy="41" r="1.6" fill="currentColor" stroke="none" />
     </>
   ),
   // 21 코끼리의 엄니
@@ -171,42 +185,53 @@ const SYMBOLS: Record<NakshatraGlyphKey, React.ReactNode> = {
   // 22 귀
   shravana: (
     <>
-      <path d="M31 42c-7 0-11-5-11-11V21a9 9 0 0 1 18 0c0 5-3 8-7 8s-5-3-5-5" />
-      <path d="M20 30h-4" />
+      <path d="M33 41c-7 0-11-5-11-11V21a9 9 0 0 1 18 0c0 5-3 8-7 8s-5-3-5-5" />
+      <path d="M28 23a4 4 0 0 1 7 2" strokeWidth="1.4" />
+      <path d="M14 20a10 10 0 0 0 0 14M9 16a16 16 0 0 0 0 22" strokeWidth="1.5" />
     </>
   ),
   // 23 북
   dhanishta: (
     <>
-      <path d="M15 19h18v12H15z" />
-      <path d="M15 19a9 4 0 0 1 18 0M15 31a9 4 0 0 0 18 0" />
-      <path d="M9 12l6 6m24-6-6 6" />
+      <path d="M14 18h20v14H14z" />
+      <path d="M14 18a10 4 0 0 1 20 0M14 32a10 4 0 0 0 20 0" />
+      <path d="M17 18l4 14m5-14-4 14m5-14 4 14m-13-14-2 14m19-14 2 14" strokeWidth="1.3" />
+      <path d="M8 10l6 6m26-6-6 6" />
+      <path d="M6 24h3m30 0h3" strokeWidth="1.4" />
     </>
   ),
   // 24 텅 빈 원
   shatabhisha: (
     <>
-      <circle cx="24" cy="25" r="12" />
-      <circle cx="24" cy="9" r="1.3" fill="currentColor" stroke="none" />
-      <circle cx="40" cy="25" r="1.3" fill="currentColor" stroke="none" />
-      <circle cx="24" cy="41" r="1.3" fill="currentColor" stroke="none" />
-      <circle cx="8" cy="25" r="1.3" fill="currentColor" stroke="none" />
+      <circle cx="24" cy="25" r="13" />
+      <circle cx="24" cy="25" r="7" strokeWidth="1.3" />
+      <path d="M24 18v14M17 25h14M19 20l10 10M29 20 19 30" strokeWidth="1.3" />
+      <circle cx="24" cy="8" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="41" cy="25" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="24" cy="42" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="7" cy="25" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="36" cy="13" r="1.1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="13" r="1.1" fill="currentColor" stroke="none" />
+      <circle cx="36" cy="37" r="1.1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="37" r="1.1" fill="currentColor" stroke="none" />
     </>
   ),
   // 25 상여의 앞다리 — 가로대가 위, 외발의 불
   'purva-bhadrapada': (
     <>
-      <path d="M13 22h22" />
-      <path d="M17 22v18m14-18v18M14 40h6m8 0h6" />
-      <path d="M24 18c-3-4 0-6 0-9 2 3 4 5 4 9" />
+      <path d="M12 24h24" />
+      <path d="M16 24v17m16-17v17M12 41h8m8 0h8M16 33h16" strokeWidth="1.8" />
+      <path d="M24 20c-5-4-3-9 0-14 1 3 3 4 3 7 2-2 2-4 1-6 4 4 4 10-4 13z" />
+      <path d="M24 20c-2-2-1-4 0-6 1 2 2 4 0 6z" strokeWidth="1.2" />
     </>
   ),
   // 26 상여의 뒷다리 — 가로대가 아래, 심연의 물
   'uttara-bhadrapada': (
     <>
-      <path d="M13 34h22" />
-      <path d="M17 34V16m14 18V16M14 16h6m8 0h6" />
-      <path d="M12 42c4-3 6 1 10-1s6 1 10-1" />
+      <path d="M12 32h24" />
+      <path d="M16 32V14m16 18V14M12 14h8m8 0h8M16 22h16" strokeWidth="1.8" />
+      <path d="M9 38c4-3 6 1 10-1s6 1 10-1 6 1 10-1" strokeWidth="1.6" />
+      <path d="M9 43c4-3 6 1 10-1s6 1 10-1 6 1 10-1" strokeWidth="1.3" />
     </>
   ),
   // 27 두 마리 물고기

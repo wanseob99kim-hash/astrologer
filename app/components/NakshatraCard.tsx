@@ -118,6 +118,18 @@ export function NakshatraCard({
           <stop offset="0%" className="tarot__haloIn" />
           <stop offset="100%" className="tarot__haloOut" />
         </radialGradient>
+        {/* 아치 위에 얹는 마름모 격자. 자주색 바탕에 비단 결을 준다. */}
+        <pattern id={`lattice-${glyphKey}`} width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <path d="M0 6h12M6 0v12" className="tarot__lattice" />
+        </pattern>
+        <clipPath id={`archclip-${glyphKey}`}>
+          <path d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z" />
+        </clipPath>
+        <linearGradient id={`gild-${glyphKey}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" className="tarot__gildA" />
+          <stop offset="50%" className="tarot__gildB" />
+          <stop offset="100%" className="tarot__gildA" />
+        </linearGradient>
       </defs>
 
       {/* 바탕 */}
@@ -145,8 +157,21 @@ export function NakshatraCard({
         </g>
       ))}
 
+      {/* 모서리 당초문 — 네 귀퉁이를 돌려 찍는다 */}
+      {[[22, 22, 0], [278, 22, 90], [278, 398, 180], [22, 398, 270]].map(([x, y, rot]) => (
+        <g key={`scroll-${x}-${y}`} transform={`translate(${x} ${y}) rotate(${rot})`}>
+          <path d="M0 14C0 6 6 0 14 0" className="tarot__ink" fill="none" strokeWidth="0.9" />
+          <path d="M2 22c0-8 4-14 10-16M22 2c-8 0-14 4-16 10" className="tarot__ink" fill="none" strokeWidth="0.7" />
+          <circle cx="5" cy="5" r="1.4" className="tarot__fillInk" stroke="none" />
+          <path d="M9 12c2-2 5-2 6 1-3 1-5 1-6-1zM12 9c-2 2-2 5 1 6 1-3 1-5-1-6z" className="tarot__fillAccent" stroke="none" />
+        </g>
+      ))}
+
       {/* 상단 로마 숫자 */}
       <text x="150" y="49" className="tarot__numeral">{numeral}</text>
+      <path d="M62 44h50M188 44h50" className="tarot__ink" strokeWidth="0.6" />
+      <circle cx="58" cy="44" r="1.4" className="tarot__fillInk" stroke="none" />
+      <circle cx="242" cy="44" r="1.4" className="tarot__fillInk" stroke="none" />
 
       {/* 해·달·별 — 좁은 자리에서는 뺀다 */}
       {!compact ? (
@@ -168,18 +193,57 @@ export function NakshatraCard({
         strokeWidth="1.6"
       />
       <path
+        d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z"
+        fill={`url(#lattice-${glyphKey})`}
+        stroke="none"
+      />
+      <path
         d="M102 262V188c0-40 22-64 48-76 26 12 48 36 48 76v74z"
         className="tarot__ink"
         fill="none"
         strokeWidth="0.7"
       />
+      <path
+        d="M86 268V184c0-50 28-80 64-94 36 14 64 44 64 94v84"
+        className="tarot__ink"
+        fill="none"
+        strokeWidth="0.6"
+        strokeDasharray="2 3"
+      />
 
-      {/* 상징 뒤 후광 */}
+      {/* 상징 뒤 후광 — 꽃잎·고리·빛살은 아치 안에서만 보인다 */}
+      <g clipPath={`url(#archclip-${glyphKey})`}>
       <circle cx="150" cy="196" r="62" fill={`url(#halo-${glyphKey})`} />
 
+      {/* 꽃잎 만다라 — 16잎 두 겹 */}
+      {Array.from({ length: 16 }, (_, i) => (
+        <ellipse
+          key={`petal-${i}`}
+          cx="150"
+          cy="140"
+          rx="7"
+          ry="20"
+          transform={`rotate(${i * 22.5} 150 196)`}
+          className="tarot__petal"
+        />
+      ))}
+      {Array.from({ length: 16 }, (_, i) => (
+        <ellipse
+          key={`petal2-${i}`}
+          cx="150"
+          cy="150"
+          rx="4.5"
+          ry="13"
+          transform={`rotate(${i * 22.5 + 11.25} 150 196)`}
+          className="tarot__petalIn"
+        />
+      ))}
+      <circle cx="150" cy="196" r="46" className="tarot__ring" fill="none" />
+      <circle cx="150" cy="196" r="52" className="tarot__ring" fill="none" strokeDasharray="1.5 4" />
+
       {/* 아치 안에서 뻗는 빛살 */}
-      {Array.from({ length: 24 }, (_, i) => {
-        const angle = (i * 15 - 90) * (Math.PI / 180)
+      {Array.from({ length: 36 }, (_, i) => {
+        const angle = (i * 10 - 90) * (Math.PI / 180)
         return (
           <line
             key={`ray-${i}`}
@@ -191,6 +255,8 @@ export function NakshatraCard({
           />
         )
       })}
+
+      </g>
 
       {/* 만다라 안쪽 27 눈금 — 27등분 체계를 장식으로 옮긴 것 */}
       {Array.from({ length: 27 }, (_, i) => {
@@ -207,6 +273,15 @@ export function NakshatraCard({
         )
       })}
 
+      {/* 아치 안 반짝임 */}
+      <g className="tarot__spark">
+        <Sparkle x={112} y={150} r={3.2} />
+        <Sparkle x={190} y={142} r={2.6} />
+        <Sparkle x={106} y={236} r={2.4} />
+        <Sparkle x={196} y={240} r={3} />
+        <Sparkle x={150} y={116} r={2.2} />
+      </g>
+
       {/* 상징 */}
       <foreignObject x="84" y="128" width="132" height="132">
         <div className="tarot__glyph">
@@ -219,6 +294,8 @@ export function NakshatraCard({
         <path d="M0 0c-7 0-12-6-12-11 5-1 10 2 12 8 2-6 7-9 12-8 0 5-5 11-12 11z" className="tarot__fillAccent" stroke="none" />
         <path d="M0 0c-4-5-4-13 0-18 4 5 4 13 0 18z" className="tarot__ink" fill="none" strokeWidth="1.2" />
         <path d="M-40 2c10-4 16 2 18 6M40 2c-10-4-16 2-18 6" className="tarot__ink" fill="none" strokeWidth="1.1" />
+        <path d="M-58 4c6-6 12-4 16 0M58 4c-6-6-12-4-16 0" className="tarot__ink" fill="none" strokeWidth="0.9" />
+        <path d="M-30 -2c-2-3-5-3-7 0 2 2 5 2 7 0zM30 -2c2-3 5-3 7 0-2 2-5 2-7 0z" className="tarot__fillAccent" stroke="none" />
         <path d="M-62 6h124" className="tarot__ink" strokeWidth="0.7" />
       </g>
 
@@ -227,6 +304,8 @@ export function NakshatraCard({
         <path d="M46 346h208v30H46z" className="tarot__banner" strokeWidth="1.2" />
         <path d="M52 351h196v20H52z" className="tarot__ink" fill="none" strokeWidth="0.5" />
         <text x="150" y="366" className="tarot__keyword">{keyword}</text>
+        <path d="M40 361l6-5 6 5-6 5zM248 361l6-5 6 5-6 5z" className="tarot__fillInk" stroke="none" />
+        <path d="M46 361h-12M254 361h12" className="tarot__ink" strokeWidth="0.8" />
       </g>
 
       {/* 하단 아키타입 */}
