@@ -1,0 +1,26 @@
+/**
+ * Cloudflare Workers 배포 설정.
+ *
+ * Next.js 앱을 OpenNext 로 변환해 Workers 에서 돌린다.
+ * 빌드: npx opennextjs-cloudflare build
+ * 배포: npx opennextjs-cloudflare deploy
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "astrologer",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    // canonical·sitemap 의 기준 주소. 배포 후 실제 주소로 바꾼다.
+    // 비워두면 localhost 가 색인에 박힌다 — 벤치마크 사이트가 저지른 실수.
+    "SITE_URL": "https://astrologer.wanseob99kim-hash.workers.dev"
+  }
+}

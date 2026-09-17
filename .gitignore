@@ -24,3 +24,5 @@ Thumbs.db
 
 # 프로젝트 도구 상태
 .bkit/
+.open-next/
+.wrangler/
