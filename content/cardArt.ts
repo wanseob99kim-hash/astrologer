@@ -8,7 +8,33 @@
  * 목록에 없는 탄생별은 카드가 벡터 상징으로 그려진다.
  */
 export const CARD_ART_KEYS: ReadonlySet<string> = new Set<string>([
-  // cards:sync 가 채운다
+  'ashwini',
+  'bharani',
+  'krittika',
+  'rohini',
+  'mrigashira',
+  'ardra',
+  'punarvasu',
+  'pushya',
+  'ashlesha',
+  'magha',
+  'purva-phalguni',
+  'uttara-phalguni',
+  'hasta',
+  'chitra',
+  'swati',
+  'vishakha',
+  'anuradha',
+  'jyeshtha',
+  'mula',
+  'purva-ashadha',
+  'uttara-ashadha',
+  'shravana',
+  'dhanishta',
+  'shatabhisha',
+  'purva-bhadrapada',
+  'uttara-bhadrapada',
+  'revati',
 ])
 
 export function cardArtUrl(key: string): string | undefined {

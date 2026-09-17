@@ -131,7 +131,7 @@ export function NakshatraCard({
           <stop offset="100%" className="tarot__starOut" />
         </radialGradient>
         <clipPath id={`archclip-${glyphKey}`}>
-          <path d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z" />
+          <path d="M76 274V182c0-52 32-84 74-98 42 14 74 46 74 98v92z" />
         </clipPath>
         <linearGradient id={`gild-${glyphKey}`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" className="tarot__gildA" />
@@ -195,24 +195,24 @@ export function NakshatraCard({
 
       {/* 아치형 만다라 */}
       <path
-        d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z"
+        d="M76 274V182c0-52 32-84 74-98 42 14 74 46 74 98v92z"
         fill={`url(#arch-${glyphKey})`}
         className="tarot__archEdge"
         strokeWidth="1.6"
       />
       <path
-        d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z"
+        d="M76 274V182c0-52 32-84 74-98 42 14 74 46 74 98v92z"
         fill={`url(#lattice-${glyphKey})`}
         stroke="none"
       />
       <path
-        d="M102 262V188c0-40 22-64 48-76 26 12 48 36 48 76v74z"
+        d="M86 268V184c0-46 28-74 64-86 36 12 64 40 64 86v84z"
         className="tarot__ink"
         fill="none"
         strokeWidth="0.7"
       />
       <path
-        d="M86 268V184c0-50 28-80 64-94 36 14 64 44 64 94v84"
+        d="M70 274V180c0-56 34-90 80-104 46 14 80 48 80 104v94"
         className="tarot__ink"
         fill="none"
         strokeWidth="0.6"
@@ -224,15 +224,15 @@ export function NakshatraCard({
           {/* 회화 삽화. 아치 모양으로 잘라 넣고 가장자리를 금선으로 마감한다. */}
           <image
             href={artUrl}
-            x="92"
-            y="98"
-            width="116"
-            height="170"
+            x="76"
+            y="84"
+            width="148"
+            height="190"
             preserveAspectRatio="xMidYMid slice"
             clipPath={`url(#archclip-${glyphKey})`}
           />
           <path
-            d="M92 268V186c0-46 26-74 58-88 32 14 58 42 58 88v82z"
+            d="M76 274V182c0-52 32-84 74-98 42 14 74 46 74 98v92z"
             fill="none"
             className="tarot__archEdge"
             strokeWidth="1.6"
@@ -310,8 +310,8 @@ export function NakshatraCard({
         return (
           <circle
             key={i}
-            cx={150 + Math.cos(angle) * 76}
-            cy={196 + Math.sin(angle) * 76}
+            cx={150 + Math.cos(angle) * 86}
+            cy={196 + Math.sin(angle) * 86}
             r="1.1"
             className="tarot__fillAccent"
             stroke="none"
@@ -338,7 +338,7 @@ export function NakshatraCard({
       ) : null}
 
       {/* 밑동의 연꽃 */}
-      <g transform="translate(150 302)">
+      <g transform="translate(150 308)">
         <path d="M0 0c-7 0-12-6-12-11 5-1 10 2 12 8 2-6 7-9 12-8 0 5-5 11-12 11z" className="tarot__fillAccent" stroke="none" />
         <path d="M0 0c-4-5-4-13 0-18 4 5 4 13 0 18z" className="tarot__ink" fill="none" strokeWidth="1.2" />
         <path d="M-40 2c10-4 16 2 18 6M40 2c-10-4-16 2-18 6" className="tarot__ink" fill="none" strokeWidth="1.1" />
