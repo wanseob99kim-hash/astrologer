@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-art-src/ 의 생성 시트에서 카드 아치 안 그림만 잘라 public/cards/<key>.webp 로 저장한다.
+art-src/ 의 생성 시트에서 카드 한 장(테두리·보석·배너 포함)을 잘라 public/cards/<key>.webp 로 저장한다.
+기본은 카드 전체 5:7(600×840). --arch 를 주면 아치 안 그림만 2:3 으로 자른다.
 
 좌표는 900px 폭 프리뷰 기준 (cx, top, bottom, half_w). 원본 크기에 맞춰 비율로 환산한다.
 각 그림은 2:3 으로 중앙 크롭 후 600×900. 카드 아치 clipPath 가 나머지를 정리한다.
@@ -27,7 +28,38 @@ SHEETS = {
     'ykcjey': 'sheet_h',  # XXV~XXVII
 }
 
-# (sheet, cx, top, bottom, half_w)  — 900px 프리뷰 좌표
+# 카드 전체(테두리·보석·배너 포함). 4장 시트는 폭 ~200, 3장 시트는 ~280.
+FULL = {
+    'ashwini':           ('sheet_a', 131, 30, 296, 102),
+    'bharani':           ('sheet_a', 348, 30, 296, 102),
+    'krittika':          ('sheet_a', 565, 30, 296, 102),
+    'rohini':            ('sheet_a', 781, 30, 296, 102),
+    'mrigashira':        ('sheet_b', 129, 30, 284, 102),
+    'ardra':             ('sheet_b', 346, 30, 284, 102),
+    'punarvasu':         ('sheet_b', 562, 30, 284, 102),
+    'pushya':            ('sheet_b', 779, 30, 284, 102),
+    'ashlesha':          ('sheet_c', 129, 28, 284, 102),
+    'magha':             ('sheet_c', 347, 28, 284, 102),
+    'purva-phalguni':    ('sheet_c', 563, 28, 284, 102),
+    'uttara-phalguni':   ('sheet_c', 779, 28, 284, 102),
+    'hasta':             ('sheet_d', 129, 30, 284, 102),
+    'chitra':            ('sheet_d', 347, 30, 284, 102),
+    'swati':             ('sheet_d', 563, 30, 284, 102),
+    'vishakha':          ('sheet_d', 779, 30, 284, 102),
+    'anuradha':          ('sheet_e', 129, 30, 290, 102),
+    'jyeshtha':          ('sheet_f', 150, 40, 408, 140),
+    'mula':              ('sheet_f', 450, 40, 408, 140),
+    'purva-ashadha':     ('sheet_f', 750, 40, 408, 140),
+    'uttara-ashadha':    ('sheet_g', 129, 30, 284, 102),
+    'shravana':          ('sheet_g', 347, 30, 284, 102),
+    'dhanishta':         ('sheet_g', 563, 30, 284, 102),
+    'shatabhisha':       ('sheet_g', 779, 30, 284, 102),
+    'purva-bhadrapada':  ('sheet_h', 150, 44, 412, 140),
+    'uttara-bhadrapada': ('sheet_h', 450, 44, 412, 140),
+    'revati':            ('sheet_h', 750, 44, 412, 140),
+}
+
+# 아치 안 그림만 (예전 방식, --arch 로 선택)
 CARDS = {
     'ashwini':           ('sheet_a', 128, 62, 238, 86),
     'bharani':           ('sheet_a', 347, 62, 238, 86),
@@ -72,14 +104,13 @@ def load_sheets():
     return sheets
 
 
-def crop(im, cx, top, bottom, half_w):
+def crop(im, cx, top, bottom, half_w, target=2 / 3, size=(600, 900)):
     scale = im.width / PREVIEW_W
     x0, x1 = int((cx - half_w) * scale), int((cx + half_w) * scale)
     y0, y1 = int(top * scale), int(bottom * scale)
     box = im.crop((x0, y0, x1, y1))
-    # 2:3 중앙 크롭
+    # 목표 비율로 중앙 크롭
     w, h = box.size
-    target = 2 / 3
     if w / h > target:
         nw = int(h * target)
         x = (w - nw) // 2
@@ -88,22 +119,26 @@ def crop(im, cx, top, bottom, half_w):
         nh = int(w / target)
         y = (h - nh) // 2
         box = box.crop((0, y, w, y + nh))
-    return box.resize((600, 900), Image.LANCZOS)
+    return box.resize(size, Image.LANCZOS)
 
 
 def main():
     preview_only = '--preview' in sys.argv
+    arch_only = '--arch' in sys.argv
+    table = CARDS if arch_only else FULL
+    target = (2 / 3) if arch_only else (5 / 7)
+    size = (600, 900) if arch_only else (600, 840)
     sheets = load_sheets()
     os.makedirs(OUT, exist_ok=True)
     tiles = []
-    for key, (sheet, cx, top, bottom, half_w) in CARDS.items():
-        img = crop(sheets[sheet], cx, top, bottom, half_w)
+    for key, (sheet, cx, top, bottom, half_w) in table.items():
+        img = crop(sheets[sheet], cx, top, bottom, half_w, target, size)
         if not preview_only:
             img.save(os.path.join(OUT, key + '.webp'), 'WEBP', quality=82, method=6)
         tiles.append((key, img))
     # 검토용 컨택트 시트
     cols = 9
-    tw, th = 200, 300
+    tw, th = (200, 300) if arch_only else (200, 280)
     rows = (len(tiles) + cols - 1) // cols
     contact = Image.new('RGB', (cols * tw, rows * th), (30, 30, 30))
     for i, (key, img) in enumerate(tiles):
