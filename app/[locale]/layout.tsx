@@ -1,8 +1,10 @@
+import { Suspense } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
 import { LOCALES, LOCALE_META, isLocale, localePath, type Locale } from '@/lib/i18n'
 import { SITE, absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
+import { LangSwitch } from '@/app/components/LangSwitch'
 import '../globals.css'
 
 interface LayoutProps {
@@ -62,7 +64,13 @@ export default async function RootLayout({ children, params }: LayoutProps) {
           href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Devanagari:wght@400;600&display=swap"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* useSearchParams 를 쓰는 클라이언트 컴포넌트라 Suspense 로 감싼다 */}
+        <Suspense fallback={null}>
+          <LangSwitch locale={locale} />
+        </Suspense>
+        {children}
+      </body>
     </html>
   )
 }
