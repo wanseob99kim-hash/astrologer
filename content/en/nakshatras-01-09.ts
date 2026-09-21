@@ -48,7 +48,7 @@ export const NAKSHATRA_TEXT_EN_01_09: Record<string, NakshatraText> = {
   },
   bharani: {
     ko: 'Bharani',
-    archetype: 'Keeper of the Threshold',
+    archetype: 'The Gatekeeper',
     tagline: 'The one who ends up carrying what everyone else avoids',
     deityKo: 'Yama — guardian of the boundary',
     symbolKo: 'A gateway',
@@ -89,7 +89,7 @@ export const NAKSHATRA_TEXT_EN_01_09: Record<string, NakshatraText> = {
   },
   krittika: {
     ko: 'Krittika',
-    archetype: 'The Blade of Fire',
+    archetype: 'The Flame Blade',
     tagline: 'The verdict is already decided inside',
     deityKo: 'Agni — god of fire',
     symbolKo: 'A sharp blade',

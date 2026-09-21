@@ -4,7 +4,7 @@ import type { NakshatraText } from './types'
 export const NAKSHATRA_TEXT_EN_19_27: Record<string, NakshatraText> = {
   mula: {
     ko: 'Mula',
-    archetype: 'The Deep Root',
+    archetype: 'Deep Roots',
     tagline: 'Keeps asking why until the whole board flips',
     deityKo: 'Nirriti — goddess of dissolution',
     symbolKo: 'A bundle of roots',
@@ -45,7 +45,7 @@ export const NAKSHATRA_TEXT_EN_19_27: Record<string, NakshatraText> = {
   },
   'purva-ashadha': {
     ko: 'Purva Ashadha',
-    archetype: 'The Rushing Water',
+    archetype: 'Fierce Water',
     tagline: 'Ends up proving they were right after all',
     deityKo: 'Apas — goddesses of water',
     symbolKo: 'A fan',
@@ -168,7 +168,7 @@ export const NAKSHATRA_TEXT_EN_19_27: Record<string, NakshatraText> = {
   },
   dhanishta: {
     ko: 'Dhanishta',
-    archetype: 'The Drum of Plenty',
+    archetype: 'Drums of Abundance',
     tagline: 'Gets the party going when the mood drops',
     deityKo: 'The Ashta Vasus — gods of the eight elements',
     symbolKo: 'A drum',
@@ -250,7 +250,7 @@ export const NAKSHATRA_TEXT_EN_19_27: Record<string, NakshatraText> = {
   },
   'purva-bhadrapada': {
     ko: 'Purva Bhadrapada',
-    archetype: 'The One-Footed Fire',
+    archetype: 'Fire on One Leg',
     tagline: 'Thinks alone, for a long time, what others never think',
     deityKo: 'Aja Ekapada — the one-footed fire god',
     symbolKo: 'Front legs of a funeral cot',
@@ -291,7 +291,7 @@ export const NAKSHATRA_TEXT_EN_19_27: Record<string, NakshatraText> = {
   },
   'uttara-bhadrapada': {
     ko: 'Uttara Bhadrapada',
-    archetype: 'The Serpent of Deep Water',
+    archetype: 'Serpent of Deep Waters',
     tagline: 'Has every reason to be angry and isn\'t — which is scarier',
     deityKo: 'Ahirbudhnya — serpent of the deep',
     symbolKo: 'Back legs of a funeral cot',
@@ -332,7 +332,7 @@ export const NAKSHATRA_TEXT_EN_19_27: Record<string, NakshatraText> = {
   },
   revati: {
     ko: 'Revati',
-    archetype: 'The Guiding Fish',
+    archetype: 'The Guide Fish',
     tagline: 'Finds everyone else\'s way and delays their own',
     deityKo: 'Pushan — guardian of the road',
     symbolKo: 'Two fish',

@@ -39,7 +39,33 @@ export const CARD_ART_KEYS: ReadonlySet<string> = new Set<string>([
 
 /** 영어 카드. public/cards-en/<key>.webp. cards:sync 가 채운다. */
 export const CARD_ART_KEYS_EN: ReadonlySet<string> = new Set<string>([
-  // cards:sync 가 채운다
+  'ashwini',
+  'bharani',
+  'krittika',
+  'rohini',
+  'mrigashira',
+  'ardra',
+  'punarvasu',
+  'pushya',
+  'ashlesha',
+  'magha',
+  'purva-phalguni',
+  'uttara-phalguni',
+  'hasta',
+  'chitra',
+  'swati',
+  'vishakha',
+  'anuradha',
+  'jyeshtha',
+  'mula',
+  'purva-ashadha',
+  'uttara-ashadha',
+  'shravana',
+  'dhanishta',
+  'shatabhisha',
+  'purva-bhadrapada',
+  'uttara-bhadrapada',
+  'revati',
 ])
 
 /**

@@ -27,6 +27,15 @@ SHEETS = {
     'mfpngp': 'sheet_f',  # XVIII~XX
     '8iuqdf': 'sheet_g',  # XXI~XXIV
     'ykcjey': 'sheet_h',  # XXV~XXVII
+    # 영어 시트 (art-src-en). 같은 그림에 배너만 영어라 크기·좌표가 한국어와 같다.
+    '8s11oq': 'sheet_a',
+    'vhox7v': 'sheet_b',
+    'o37ntn': 'sheet_c',
+    '1m2sno': 'sheet_d',
+    '1uzuhp': 'sheet_e',
+    '99mud2': 'sheet_f',
+    'fady96': 'sheet_g',
+    'q0j8s7': 'sheet_h',
 }
 
 # 카드 전체(테두리·보석·배너 포함). 4장 시트는 폭 ~200, 3장 시트는 ~280.

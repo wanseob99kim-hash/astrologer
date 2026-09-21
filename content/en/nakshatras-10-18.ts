@@ -86,7 +86,7 @@ export const NAKSHATRA_TEXT_EN_10_18: Record<string, NakshatraText> = {
   },
   'uttara-phalguni': {
     ko: 'Uttara Phalguni',
-    archetype: 'The Ring of Oaths',
+    archetype: 'The Vow Ring',
     tagline: 'Takes the loss to keep a promise once made',
     deityKo: 'Aryaman — god of contracts and friendship',
     symbolKo: 'Back legs of a bed',
@@ -127,7 +127,7 @@ export const NAKSHATRA_TEXT_EN_10_18: Record<string, NakshatraText> = {
   },
   hasta: {
     ko: 'Hasta',
-    archetype: 'The Making Hand',
+    archetype: 'The Hand That Makes',
     tagline: 'Instead of explaining, just makes it and shows you',
     deityKo: 'Savitar — the sun as craftsman',
     symbolKo: 'An open hand',
@@ -209,7 +209,7 @@ export const NAKSHATRA_TEXT_EN_10_18: Record<string, NakshatraText> = {
   },
   swati: {
     ko: 'Swati',
-    archetype: 'The Sprout in the Wind',
+    archetype: 'Bud of the Wind',
     tagline: 'Cannot ask for help even when it is hard',
     deityKo: 'Vayu — god of wind',
     symbolKo: 'A sprout swaying in the wind',
