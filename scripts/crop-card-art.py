@@ -12,8 +12,9 @@ import sys
 
 from PIL import Image
 
-SRC = 'art-src'
-OUT = 'public/cards'
+# --src DIR --out DIR 로 바꿀 수 있다 (영어 시트: --src art-src-en --out public/cards-en)
+SRC = sys.argv[sys.argv.index('--src') + 1] if '--src' in sys.argv else 'art-src'
+OUT = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv else 'public/cards'
 PREVIEW_W = 900
 
 # 파일명 접미(6자) → 시트 번호. 파일명은 Gemini 가 붙인 임의 문자열이라 여기서 고정한다.

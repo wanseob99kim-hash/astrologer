@@ -10,7 +10,8 @@
 
 import { createRequire } from 'node:module'
 import { NAKSHATRA_GLYPH_KEYS } from '../app/components/nakshatraGlyphKeys'
-import { GRAHAS, KOOTAS, MAX_TOTAL_SCORE, NAKSHATRAS, bhagyankOf, moolankOf } from './index'
+import { LOCALES, type Locale } from '../lib/i18n'
+import { MAX_TOTAL_SCORE, bhagyankOf, contentFor, moolankOf } from './index'
 
 const require = createRequire(import.meta.url)
 const engineConstants = require('@ishubhamx/panchangam-js/dist/matching/constants.js')
@@ -19,10 +20,20 @@ const NAKSHATRA_SPAN = 360 / 27
 const RANGE_TOLERANCE = 0.001
 
 const problems: string[] = []
-const fail = (message: string) => problems.push(message)
+let currentLocale: Locale = 'ko'
+const fail = (message: string) => problems.push(`[${currentLocale}] ${message}`)
 
 /** 엔진 표기 'Adi (Start)' → 'Adi' */
 const shortNadi = (raw: string) => raw.split(' ')[0]
+
+/**
+ * 두 언어를 같은 규칙으로 검사한다.
+ * 영어는 한국어 위에 문안만 덮어쓴 것이라 분류 검사는 사실상 한 번이지만,
+ * 문안 누락·빈 문자열·개수 부족은 언어마다 따로 나온다.
+ */
+for (const locale of LOCALES) {
+  currentLocale = locale
+  const { nakshatras: NAKSHATRAS, grahas: GRAHAS, kootas: KOOTAS } = contentFor(locale)
 
 // ---------- 나크샤트라 ----------
 
@@ -166,9 +177,11 @@ for (let day = 1; day <= 31; day += 1) {
   if (m < 1 || m > 9) fail(`moolankOf(${day}) = ${m} 가 1~9 범위 밖`)
 }
 
+  console.log(`[${locale}] 나크샤트라 ${NAKSHATRAS.length}종 · 그라하 ${GRAHAS.length}종 · 쿠타 ${KOOTAS.length}종 검사`)
+}
+
 // ---------- 결과 ----------
 
-console.log(`나크샤트라 ${NAKSHATRAS.length}종 · 그라하 ${GRAHAS.length}종 · 쿠타 ${KOOTAS.length}종 검사`)
 if (problems.length === 0) {
   console.log('콘텐츠 정합성: PASS (엔진 분류 테이블과 완전 일치)')
 } else {

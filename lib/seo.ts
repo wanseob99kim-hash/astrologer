@@ -48,7 +48,7 @@ export const SITE = {
  * 대신 쿼리에 생년월일이 실린 개인 결과 주소가 따로 색인되지 않도록
  * 각 페이지에서 canonical 을 쿼리 없는 주소로 고정한다.
  */
-export const DISALLOWED_PATHS = ['/star?', '/match'] as const
+export const DISALLOWED_PATHS = ['/star?', '/match', '/en/star?', '/en/match'] as const
 
 export function absoluteUrl(path: string): string {
   return `${SITE.origin}${path.startsWith('/') ? path : `/${path}`}`
@@ -61,6 +61,9 @@ interface ArticleSchemaInput {
   /** ISO 날짜 */
   datePublished: string
   dateModified?: string
+  /** 'ko' | 'en'. 스키마의 언어 표기와 발행자 이름에 쓴다. */
+  locale?: 'ko' | 'en'
+  publisher?: string
 }
 
 /** 해설 문서용 Article 스키마. */
@@ -70,11 +73,11 @@ export function articleSchema(input: ArticleSchemaInput) {
     '@type': 'Article',
     headline: input.headline,
     description: input.description,
-    inLanguage: 'ko',
+    inLanguage: input.locale ?? 'ko',
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
     mainEntityOfPage: { '@type': 'WebPage', '@id': absoluteUrl(input.path) },
-    publisher: { '@type': 'Organization', name: SITE.name },
+    publisher: { '@type': 'Organization', name: input.publisher ?? SITE.name },
   }
 }
 

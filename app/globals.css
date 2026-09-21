@@ -833,3 +833,5 @@ table.compare td.vedic { color: var(--ink); }
 
 /* 요약표 아이콘 정렬 */
 .grades__name { flex-direction: row; align-items: center; gap: 7px; }
+
+.footer__lang { font-weight: 600; color: var(--lapis); }

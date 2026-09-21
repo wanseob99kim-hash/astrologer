@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module'
-import { KOOTAS, MAX_TOTAL_SCORE, SCORE_BANDS } from '@/content/index'
+import { MAX_TOTAL_SCORE, contentFor, type ScoreBand } from '@/content/index'
+import type { Locale } from '@/lib/i18n'
 import type { Koota } from '@/content/types'
 import { DEFAULT_PLACE, toUtcInstant } from './input'
 import type { BirthInput } from './types'
@@ -61,7 +62,7 @@ export interface MatchOutcome {
   /** 양방향 평균 총점 */
   total: number
   maxTotal: number
-  band: (typeof SCORE_BANDS)[number]
+  band: ScoreBand
   kootas: KootaScore[]
   /** 순서를 바꾸면 점수가 달라졌는가 — 평균을 낸 근거를 화면에 밝히기 위해 남긴다 */
   wasAsymmetric: boolean
@@ -95,12 +96,12 @@ function scoresByKey(raw: MatchRaw): Map<string, number> {
  * 이런 값이 어디에도 걸리지 않는데, 그때 마지막 구간으로 떨어뜨리면
  * 애매한 점수에 최고 등급이 붙는다. 하한만 보고 위에서부터 내려오며 찾는다.
  */
-function bandFor(total: number): (typeof SCORE_BANDS)[number] {
-  for (let index = SCORE_BANDS.length - 1; index >= 0; index -= 1) {
-    const band = SCORE_BANDS[index]
+function bandFor(total: number, bands: readonly ScoreBand[]): ScoreBand {
+  for (let index = bands.length - 1; index >= 0; index -= 1) {
+    const band = bands[index]
     if (band && total >= band.min) return band
   }
-  return SCORE_BANDS[0]
+  return bands[0] as ScoreBand
 }
 
 /** 소수 둘째자리에서 생기는 부동소수 오차를 없앤다. */
@@ -113,7 +114,8 @@ const roundHalf = (value: number) => Math.round(value * 2) / 2
  * (P2 측정: 150쌍 중 103쌍에서 최대 2점 차). 성별을 입력받지 않기 위해
  * 양방향으로 계산해 평균을 낸다. 그래서 결과는 넣는 순서와 무관하다.
  */
-export function computeMatch(inputA: BirthInput, inputB: BirthInput): MatchOutcome {
+export function computeMatch(inputA: BirthInput, inputB: BirthInput, locale: Locale = 'ko'): MatchOutcome {
+  const { kootas: KOOTAS, scoreBands } = contentFor(locale)
   const kundliA = buildKundli(inputA)
   const kundliB = buildKundli(inputB)
 
@@ -145,7 +147,7 @@ export function computeMatch(inputA: BirthInput, inputB: BirthInput): MatchOutco
   return {
     total,
     maxTotal: MAX_TOTAL_SCORE,
-    band: bandFor(total),
+    band: bandFor(total, scoreBands),
     kootas,
     wasAsymmetric,
     isTimeKnown: Boolean(inputA.time) && Boolean(inputB.time),

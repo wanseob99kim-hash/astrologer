@@ -1,4 +1,6 @@
 import { NAKSHATRAS } from '@/content/index'
+import type { Locale } from '@/lib/i18n'
+import { messagesFor } from '@/messages/index'
 import { NakshatraGlyph } from './NakshatraGlyph'
 
 /**
@@ -42,13 +44,15 @@ interface NakshatraWheelProps {
   /** 달의 항성 황경. 있으면 정확한 위치에 표식을 찍는다. */
   moonLongitude?: number
   archetype: string
+  locale: Locale
 }
 
-export function NakshatraWheel({ activeIndex, glyphKey, moonLongitude, archetype }: NakshatraWheelProps) {
+export function NakshatraWheel({ activeIndex, glyphKey, moonLongitude, archetype, locale }: NakshatraWheelProps) {
+  const t = messagesFor(locale).sections
   const marker = moonLongitude === undefined ? undefined : pointAt(moonLongitude, (OUTER + INNER) / 2)
   const label = moonLongitude === undefined
-    ? `27등분 황도에서 ${archetype}의 자리`
-    : `27등분 황도에서 달이 있던 자리 — ${archetype}, 황경 ${moonLongitude.toFixed(1)}도`
+    ? t.wheelLabelType(archetype)
+    : t.wheelLabelMoon(archetype, moonLongitude.toFixed(1))
 
   return (
     <figure className="wheel">
@@ -105,8 +109,8 @@ export function NakshatraWheel({ activeIndex, glyphKey, moonLongitude, archetype
       </svg>
       <figcaption className="small">
         {moonLongitude === undefined
-          ? '달이 도는 길을 27등분한 그림입니다.'
-          : `태어난 순간 달은 황경 ${moonLongitude.toFixed(1)}° 에 있었습니다.`}
+          ? t.wheelCaptionType
+          : t.wheelCaptionMoon(moonLongitude.toFixed(1))}
       </figcaption>
     </figure>
   )

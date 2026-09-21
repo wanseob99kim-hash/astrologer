@@ -1,5 +1,7 @@
 import { createRequire } from 'node:module'
-import { GRAHAS, NAKSHATRAS, bhagyankOf, grahaByMoolank, moolankOf } from '@/content/index'
+import { bhagyankOf, contentFor, grahaByMoolank, moolankOf } from '@/content/index'
+import type { Locale } from '@/lib/i18n'
+import { messagesFor } from '@/messages/index'
 import type { Graha } from '@/content/types'
 import { DEFAULT_PLACE, toUtcInstant } from './input'
 import type { BirthInput, DashaPeriod, LevelOneResult, LevelZeroResult } from './types'
@@ -35,21 +37,21 @@ const panchangam = require('@ishubhamx/panchangam-js') as PanchangamModule
 const NAKSHATRA_SPAN_DEG = 360 / 27
 const MS_PER_YEAR = 365.25 * 86400000
 
-/** 행성 영문명 → 한글. 화면에 영문이 노출되지 않도록 한다. */
-export const PLANET_KO: Record<string, string> = {
-  Ketu: '케투', Venus: '금성', Sun: '태양', Moon: '달', Mars: '화성',
-  Rahu: '라후', Jupiter: '목성', Saturn: '토성', Mercury: '수성',
+/** 행성 이름. 언어별 사전에서 가져온다 — 화면에 영문 키가 그대로 노출되지 않게. */
+export function planetName(planet: string, locale: Locale = 'ko'): string {
+  return messagesFor(locale).planets[planet] ?? planet
 }
 
-const WEEKDAY_KO = ['일', '월', '화', '수', '목', '금', '토'] as const
+/** 한국어 기본 — 기존 호출부 호환. */
+export const PLANET_KO: Record<string, string> = messagesFor('ko').planets
 
 /** L0 — 생년월일만으로 확정된다. 천체 계산이 없어 오류율 0%. */
-export function computeLevelZero(input: BirthInput): LevelZeroResult {
+export function computeLevelZero(input: BirthInput, locale: Locale = 'ko'): LevelZeroResult {
   const day = Number(input.date.slice(8, 10))
   const moolank = moolankOf(day)
   const bhagyank = bhagyankOf(input.date)
-  const graha = grahaByMoolank(moolank)
-  const destinyGraha = grahaByMoolank(bhagyank)
+  const graha = grahaByMoolank(moolank, locale)
+  const destinyGraha = grahaByMoolank(bhagyank, locale)
 
   if (!graha || !destinyGraha) {
     throw new Error(`물랑크 ${moolank} / 바갼크 ${bhagyank} 에 해당하는 그라하가 없습니다.`)
@@ -63,7 +65,7 @@ export function computeLevelZero(input: BirthInput): LevelZeroResult {
     bhagyank,
     graha,
     destinyGraha,
-    weekdayKo: `${WEEKDAY_KO[weekdayIndex] ?? '일'}요일`,
+    weekdayKo: messagesFor(locale).weekdays[weekdayIndex] ?? '',
   }
 }
 
@@ -75,13 +77,14 @@ function buildTimeline(
   cycle: KundliShape['dasha']['fullCycle'],
   birth: Date,
   now: Date,
+  locale: Locale,
 ): DashaPeriod[] {
   return cycle.map((period) => {
     const start = toDate(period.startTime)
     const end = toDate(period.endTime)
     return {
       planet: period.planet,
-      planetKo: PLANET_KO[period.planet] ?? period.planet,
+      planetKo: planetName(period.planet, locale),
       startAge: Math.max(0, (start.getTime() - birth.getTime()) / MS_PER_YEAR),
       endAge: (end.getTime() - birth.getTime()) / MS_PER_YEAR,
       start,
@@ -95,7 +98,7 @@ function buildTimeline(
  * L1 — 시간·장소까지 반영한 결과.
  * 장소를 모르면 서울로 계산한다. 달 위치는 지역 영향이 작아 문제가 되지 않는다.
  */
-export function computeLevelOne(input: BirthInput, now: Date = new Date()): LevelOneResult {
+export function computeLevelOne(input: BirthInput, locale: Locale = 'ko', now: Date = new Date()): LevelOneResult {
   const instant = toUtcInstant(input)
   const lat = input.lat ?? DEFAULT_PLACE.lat
   const lon = input.lon ?? DEFAULT_PLACE.lon
@@ -109,17 +112,17 @@ export function computeLevelOne(input: BirthInput, now: Date = new Date()): Leve
   if (!moon) throw new Error('달 위치를 계산하지 못했습니다.')
 
   const index = Math.floor((((moon.longitude % 360) + 360) % 360) / NAKSHATRA_SPAN_DEG)
-  const nakshatra = NAKSHATRAS[index]
+  const nakshatra = contentFor(locale).nakshatras[index]
   if (!nakshatra) throw new Error(`나크샤트라 인덱스 ${index} 가 범위를 벗어났습니다.`)
 
   const isTimeKnown = Boolean(input.time)
-  const timeline = buildTimeline(kundli.dasha.fullCycle, instant, now)
+  const timeline = buildTimeline(kundli.dasha.fullCycle, instant, now, locale)
 
   return {
     nakshatra,
     pada: moon.pada ?? 1,
     moonLongitude: moon.longitude,
-    moonRashi: moon.rashiName,
+    moonRashi: messagesFor(locale).rashis[moon.rashiName] ?? moon.rashiName,
     isTimeKnown,
     isPadaReliable: isTimeKnown,
     dasha: {
@@ -135,6 +138,6 @@ export function grahaSlug(graha: Graha): string {
   return graha.sanskrit.toLowerCase()
 }
 
-export function grahaBySlug(slug: string): Graha | undefined {
-  return GRAHAS.find((graha) => grahaSlug(graha) === slug.toLowerCase())
+export function grahaBySlug(slug: string, locale: Locale = 'ko'): Graha | undefined {
+  return contentFor(locale).grahas.find((graha) => grahaSlug(graha) === slug.toLowerCase())
 }

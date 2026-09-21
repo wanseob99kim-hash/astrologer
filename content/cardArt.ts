@@ -37,6 +37,16 @@ export const CARD_ART_KEYS: ReadonlySet<string> = new Set<string>([
   'revati',
 ])
 
-export function cardArtUrl(key: string): string | undefined {
+/** 영어 카드. public/cards-en/<key>.webp. cards:sync 가 채운다. */
+export const CARD_ART_KEYS_EN: ReadonlySet<string> = new Set<string>([
+  // cards:sync 가 채운다
+])
+
+/**
+ * 카드 그림 주소. 영어판은 영어 배너가 박힌 그림이 있을 때만 쓰고,
+ * 없으면 undefined 를 돌려 벡터 카드로 그린다 — 한글 배너를 영어 화면에 내지 않는다.
+ */
+export function cardArtUrl(key: string, locale: 'ko' | 'en' = 'ko'): string | undefined {
+  if (locale === 'en') return CARD_ART_KEYS_EN.has(key) ? `/cards-en/${key}.webp` : undefined
   return CARD_ART_KEYS.has(key) ? `/cards/${key}.webp` : undefined
 }
