@@ -7,6 +7,7 @@ import { computeMatch, formatScore } from '@/lib/astro/match'
 import { localePath, resolveLocale } from '@/lib/i18n'
 import { absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
+import { REPORT_PRICE_KRW, payConfig } from '@/lib/pay/config'
 import { Footer } from '@/app/components/Footer'
 import { ScoreBoard } from './ScoreBoard'
 
@@ -61,6 +62,15 @@ export default async function MatchResultPage({ params, searchParams }: PageProp
   }
 
   const percent = Math.round((outcome.total / outcome.maxTotal) * 100)
+  // 결제가 켜져 있을 때만 잠금 해제 버튼을 보인다. 키가 없으면 지금처럼 "준비 중".
+  const canBuy = payConfig() !== null
+  const checkoutQuery = new URLSearchParams()
+  for (const name of ['ad', 'at', 'an', 'bd', 'bt', 'bn']) {
+    const value = first(query[name])
+    if (value) checkoutQuery.set(name, value)
+  }
+  const checkoutHref = localePath(locale, `/match/checkout?${checkoutQuery}`)
+  const priceLabel = t.unlock(locale === 'ko' ? `${REPORT_PRICE_KRW.toLocaleString('ko-KR')}원` : `₩${REPORT_PRICE_KRW.toLocaleString('en-US')}`)
 
   return (
     <div className="shell">
@@ -116,7 +126,14 @@ export default async function MatchResultPage({ params, searchParams }: PageProp
             <ul className="locked__list">
               {t.lockedItems.map((item) => <li key={item}>{item}</li>)}
             </ul>
-            <p className="small" style={{ marginTop: 14 }}>{t.lockedSoon}</p>
+            {canBuy ? (
+              <>
+                <Link href={checkoutHref} className="btn" style={{ marginTop: 16 }}>{priceLabel}</Link>
+                <p className="small" style={{ marginTop: 10, textAlign: 'center' }}>{t.unlockSub}</p>
+              </>
+            ) : (
+              <p className="small" style={{ marginTop: 14 }}>{t.lockedSoon}</p>
+            )}
           </div>
         </section>
 

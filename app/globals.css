@@ -879,3 +879,42 @@ table.compare td.vedic { color: var(--ink); }
   background: var(--marigold-soft);
   border: 1px solid color-mix(in srgb, var(--marigold) 28%, transparent);
 }
+
+/* 궁합 상세 리포트 */
+.rpt { display: grid; gap: 12px; margin-top: 14px; }
+.rpt__item {
+  padding: 16px 16px 18px; border-radius: 12px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+  border-left: 4px solid var(--line);
+}
+.rpt__item--high { border-left-color: var(--lapis); }
+.rpt__item--mid { border-left-color: color-mix(in srgb, var(--marigold) 55%, var(--line)); }
+.rpt__item--low { border-left-color: var(--marigold); }
+.rpt__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.rpt__name { display: block; font-family: "Gowun Batang", Georgia, serif; font-weight: 700; font-size: var(--step-1); }
+.rpt__sub { display: block; margin-top: 2px; font-size: var(--step--1); color: var(--muted); line-height: 1.5; }
+.rpt__score { flex: none; text-align: right; font-weight: 700; font-size: var(--step-1); font-variant-numeric: tabular-nums; }
+.rpt__max { font-weight: 400; font-size: var(--step--1); color: var(--muted); }
+.rpt__level {
+  display: block; margin-top: 4px; padding: 2px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 600; letter-spacing: .02em;
+}
+.rpt__level--high { background: color-mix(in srgb, var(--lapis) 14%, transparent); color: var(--lapis); }
+.rpt__level--mid { background: var(--surface); color: var(--ink-2); }
+.rpt__level--low { background: var(--marigold-soft); color: var(--marigold); }
+.rpt__label {
+  margin: 14px 0 0; font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: .06em; color: var(--muted);
+}
+.rpt__scene { margin: 6px 0 0; line-height: 1.8; }
+
+.rptTimeline { width: 100%; border-collapse: collapse; font-size: var(--step--1); font-variant-numeric: tabular-nums; }
+.rptTimeline th, .rptTimeline td { padding: 9px 8px; border-bottom: 1px solid var(--line-soft); text-align: left; }
+.rptTimeline thead th { font-weight: 500; color: var(--muted); font-size: 11px; }
+.rptTimeline tbody th { font-weight: 600; }
+.rptTimeline tr.is-good { background: color-mix(in srgb, var(--lapis) 7%, transparent); }
+.rptTimeline tr.is-shaky { background: color-mix(in srgb, var(--marigold) 9%, transparent); }
+.rptTimeline__change { margin-left: 4px; color: var(--marigold); font-weight: 700; }
+.rptTimeline__tone { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.rptTimeline__tone--good { background: color-mix(in srgb, var(--lapis) 14%, transparent); color: var(--lapis); }
+.rptTimeline__tone--shaky { background: var(--marigold-soft); color: var(--marigold); }

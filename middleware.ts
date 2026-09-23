@@ -27,6 +27,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // _next, 파일 확장자가 있는 정적 자산, sitemap/robots 는 제외
-  matcher: ['/((?!_next|cards|sitemap\\.xml|robots\\.txt|favicon\\.ico|.*\\..*).*)'],
+  // _next, API, 파일 확장자가 있는 정적 자산, sitemap/robots 는 제외
+  matcher: ['/((?!_next|api|cards|og|sitemap\\.xml|robots\\.txt|favicon\\.ico|.*\\..*).*)'],
 }
