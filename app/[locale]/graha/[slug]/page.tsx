@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { contentFor } from '@/content/index'
+import { contentFor, grahaLore } from '@/content/index'
 import { grahaBySlug, grahaSlug } from '@/lib/astro/engine'
 import { normalizeDate, normalizeNickname } from '@/lib/astro/input'
 import { LOCALES, localePath, resolveLocale } from '@/lib/i18n'
@@ -79,6 +79,13 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
 
       <main>
         <p style={{ marginTop: 26, fontSize: 'var(--step-1)', lineHeight: 1.75 }}>{graha.copy}</p>
+
+        <section style={{ marginTop: 28 }}>
+          <h2 className="eyebrow" style={{ color: 'var(--lapis)' }}>{t.lore}</h2>
+          <div className="lore">
+            {grahaLore(graha.key, locale).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        </section>
 
         <hr className="rule" style={{ margin: '30px 0' }} />
 

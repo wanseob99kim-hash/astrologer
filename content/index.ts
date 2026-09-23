@@ -9,6 +9,8 @@ import { NAKSHATRA_TEXT_EN_01_09 } from './en/nakshatras-01-09'
 import { NAKSHATRA_TEXT_EN_10_18 } from './en/nakshatras-10-18'
 import { NAKSHATRA_TEXT_EN_19_27 } from './en/nakshatras-19-27'
 import type { Locale } from '@/lib/i18n'
+import { GRAHA_LORE_KO, NAKSHATRA_LORE_KO } from './lore'
+import { GRAHA_LORE_EN, NAKSHATRA_LORE_EN } from './en/lore'
 
 export * from './types'
 export { moolankOf, bhagyankOf, GRAHA_SLUG_BY_MOOLANK } from './numerology'
@@ -116,4 +118,19 @@ export function grahaByKey(key: GrahaKey, locale: Locale = 'ko'): Graha | undefi
 /** 물랑크(1~9)로 조회 — L0 결과. */
 export function grahaByMoolank(moolank: number, locale: Locale = 'ko'): Graha | undefined {
   return CONTENT[locale].grahaByMoolank.get(moolank)
+}
+
+const LORE: Record<Locale, { nakshatra: Record<string, string[]>; graha: Record<string, string[]> }> = {
+  ko: { nakshatra: NAKSHATRA_LORE_KO, graha: GRAHA_LORE_KO },
+  en: { nakshatra: NAKSHATRA_LORE_EN, graha: GRAHA_LORE_EN },
+}
+
+/** 탄생별 신화·유래 문단. 없으면 빈 배열. */
+export function nakshatraLore(key: string, locale: Locale = 'ko'): readonly string[] {
+  return LORE[locale].nakshatra[key] ?? []
+}
+
+/** 행성 신화 문단. 없으면 빈 배열. */
+export function grahaLore(key: GrahaKey, locale: Locale = 'ko'): readonly string[] {
+  return LORE[locale].graha[key] ?? []
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
-import { nakshatraByKey } from '@/content/index'
+import { nakshatraByKey, nakshatraLore } from '@/content/index'
 import { cardArtUrl } from '@/content/cardArt'
 import { computeLevelOne, computeLevelZero, planetName } from '@/lib/astro/engine'
 import { parseBirthInput } from '@/lib/astro/input'
@@ -167,6 +167,13 @@ export default async function StarPage({ params, searchParams }: PageProps) {
         ) : null}
 
         <p className="resultLede">{nakshatra.copy}</p>
+
+        <section className="sect">
+          <h2 className="sect__title">{t.star.lore}</h2>
+          <div className="lore">
+            {nakshatraLore(nakshatra.key, locale).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        </section>
 
         {result && zero ? (
           <section className="sect">

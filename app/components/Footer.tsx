@@ -27,6 +27,8 @@ export function Footer({ locale, path = '/' }: FooterProps) {
         <Link href={href('/tradition/nakshatra')}>{t.footer.nakshatra}</Link>
         <Link href={href('/tradition/navagraha')}>{t.footer.navagraha}</Link>
         <Link href={href('/tradition/dasha')}>{t.footer.dasha}</Link>
+        <Link href={href('/about')}>{t.footer.about}</Link>
+        <Link href={href('/contact')}>{t.footer.contact}</Link>
         <Link href={href('/terms')}>{t.footer.terms}</Link>
         <Link href={href('/privacy')}>{t.footer.privacy}</Link>
         <Link href={localePath(other, path)} lang={other} className="footer__lang">

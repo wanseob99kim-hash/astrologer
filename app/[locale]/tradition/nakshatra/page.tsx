@@ -78,6 +78,16 @@ export default async function NakshatraIndexPage({ params }: PageProps) {
           ))}
         </ol>
 
+        <section className="legal" style={{ marginTop: 48 }}>
+          <h2 className="display" style={{ fontSize: 'var(--step-2)', margin: 0 }}>{t.guideTitle}</h2>
+          {t.guide.map((block) => (
+            <section key={block.h}>
+              <h2>{block.h}</h2>
+              <p>{block.p}</p>
+            </section>
+          ))}
+        </section>
+
         <Link href={href('/birth')} className="btn" style={{ marginTop: 44 }}>{t.cta}</Link>
       </main>
 

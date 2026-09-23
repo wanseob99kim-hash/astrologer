@@ -32,6 +32,9 @@ function resolveOrigin(): string {
   return FALLBACK_ORIGIN
 }
 
+/** 공개 연락처. 개인정보처리방침·소개·문의 페이지가 함께 쓴다. */
+export const CONTACT_EMAIL = 'hello@birthstar.uk'
+
 export const SITE = {
   origin: resolveOrigin(),
   name: '베딕 점성술',

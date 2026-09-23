@@ -11,7 +11,7 @@
 import { createRequire } from 'node:module'
 import { NAKSHATRA_GLYPH_KEYS } from '../app/components/nakshatraGlyphKeys'
 import { LOCALES, type Locale } from '../lib/i18n'
-import { MAX_TOTAL_SCORE, bhagyankOf, contentFor, moolankOf } from './index'
+import { MAX_TOTAL_SCORE, bhagyankOf, contentFor, grahaLore, moolankOf, nakshatraLore } from './index'
 
 const require = createRequire(import.meta.url)
 const engineConstants = require('@ishubhamx/panchangam-js/dist/matching/constants.js')
@@ -176,6 +176,16 @@ for (let day = 1; day <= 31; day += 1) {
   const m = moolankOf(day)
   if (m < 1 || m > 9) fail(`moolankOf(${day}) = ${m} 가 1~9 범위 밖`)
 }
+
+  // 신화·유래 본문 — 결과 화면이 도구만 있는 얇은 페이지가 되지 않게 모든 항목에 있어야 한다
+  for (const n of NAKSHATRAS) {
+    const lore = nakshatraLore(n.key, locale)
+    if (lore.length < 3) fail(`${n.key}: 신화 문단 ${lore.length}개 (최소 3)`)
+    if (lore.join('').length < (locale === 'ko' ? 240 : 450)) fail(`${n.key}: 신화 본문이 너무 짧음`)
+  }
+  for (const g of GRAHAS) {
+    if (grahaLore(g.key, locale).length < 2) fail(`${g.key}: 행성 신화 문단 부족`)
+  }
 
   console.log(`[${locale}] 나크샤트라 ${NAKSHATRAS.length}종 · 그라하 ${GRAHAS.length}종 · 쿠타 ${KOOTAS.length}종 검사`)
 }

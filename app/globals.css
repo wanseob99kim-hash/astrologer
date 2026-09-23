@@ -918,3 +918,15 @@ table.compare td.vedic { color: var(--ink); }
 .rptTimeline__tone { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
 .rptTimeline__tone--good { background: color-mix(in srgb, var(--lapis) 14%, transparent); color: var(--lapis); }
 .rptTimeline__tone--shaky { background: var(--marigold-soft); color: var(--marigold); }
+
+/* 약관·방침·소개 본문 */
+.legal { margin-top: 28px; color: var(--ink-2); display: grid; gap: 22px; }
+.legal h2 { margin: 0 0 8px; font-size: var(--step-1); color: var(--ink); }
+.legal p { margin: 0 0 8px; line-height: 1.8; }
+.legal ul { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; }
+.legal a { color: var(--lapis); }
+
+/* 신화와 유래 */
+.lore { margin-top: 12px; display: grid; gap: 12px; }
+.lore p { margin: 0; line-height: 1.85; color: var(--ink-2); }
+.lore p:first-child::first-letter { font-family: "Gowun Batang", Georgia, serif; font-size: 1.6em; font-weight: 700; color: var(--marigold); }
