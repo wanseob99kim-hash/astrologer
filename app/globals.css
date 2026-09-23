@@ -341,15 +341,15 @@ table.compare td.vedic { color: var(--ink); }
     font-size: var(--step-1);
     margin-bottom: 10px;
   }
-  table.compare td { padding-left: 46px; position: relative; margin-top: 7px; }
+  /* 라벨을 값 위 줄로 올린다. 고정 폭 칸에 넣으면 긴 라벨(영어)이 줄바꿈돼 깨진다. */
+  table.compare td { margin-top: 9px; }
   table.compare td::before {
     content: attr(data-label);
-    position: absolute; left: 0; top: 0;
-    width: 38px;
+    display: block;
+    margin-bottom: 1px;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 10px; letter-spacing: .06em;
     color: var(--muted);
-    line-height: 1.9;
   }
   table.compare td.vedic::before { color: var(--marigold); }
 }
@@ -852,3 +852,22 @@ table.compare td.vedic { color: var(--ink); }
 }
 .langSwitch__item:hover { color: var(--ink); }
 .langSwitch__item.is-active { background: var(--lapis); color: #fff; }
+
+/* 결과 공유 */
+.share {
+  margin-top: 34px; padding: 20px 18px; border-radius: 14px;
+  background: var(--bg-deep); border: 1px solid var(--line-soft);
+}
+.share__title { margin: 0 0 14px; font-weight: 600; font-size: var(--step-0); }
+.share__row { display: flex; flex-wrap: wrap; gap: 8px; }
+.share__btn {
+  flex: 1 1 auto; min-width: 104px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 11px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font: inherit; font-size: var(--step--1); font-weight: 500;
+  transition: border-color 150ms, background 150ms;
+}
+.share__btn:hover { border-color: var(--muted); }
+.share__btn--primary { background: var(--lapis); border-color: var(--lapis); color: #fff; }
+.share__btn--primary:hover { border-color: var(--lapis); filter: brightness(1.08); }
+.share__note { margin: 12px 0 0; }

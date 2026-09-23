@@ -9,6 +9,8 @@ export const dynamic = 'force-dynamic'
 const STATIC: ReadonlyArray<{ path: string; changeFrequency: 'weekly' | 'monthly' | 'yearly'; priority: number }> = [
   { path: '/', changeFrequency: 'weekly', priority: 1 },
   { path: '/compare/saju', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/compare/western', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/tradition/ashtakoota', changeFrequency: 'monthly', priority: 0.85 },
   { path: '/tradition/nakshatra', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/tradition/navagraha', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/tradition/dasha', changeFrequency: 'monthly', priority: 0.8 },

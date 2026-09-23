@@ -22,6 +22,8 @@ export function Footer({ locale, path = '/' }: FooterProps) {
       <hr className="rule" style={{ marginBottom: 20 }} />
       <nav aria-label={t.footer.navLabel}>
         <Link href={href('/compare/saju')}>{t.footer.compare}</Link>
+        <Link href={href('/compare/western')}>{t.footer.western}</Link>
+        <Link href={href('/tradition/ashtakoota')}>{t.footer.ashtakoota}</Link>
         <Link href={href('/tradition/nakshatra')}>{t.footer.nakshatra}</Link>
         <Link href={href('/tradition/navagraha')}>{t.footer.navagraha}</Link>
         <Link href={href('/tradition/dasha')}>{t.footer.dasha}</Link>

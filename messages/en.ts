@@ -14,6 +14,8 @@ export const en: Messages = {
   },
   footer: {
     compare: 'Saju vs Vedic',
+    western: 'Your Zodiac Sign',
+    ashtakoota: 'Compatibility 36',
     nakshatra: '27 Birth Stars',
     navagraha: 'Nine Planets',
     dasha: 'Dasha',
@@ -409,6 +411,17 @@ export const en: Messages = {
     cta: 'Find my birth star — free',
     ctaSub: 'Just your date of birth. 30 seconds.',
     crumb: 'Saju vs Vedic',
+  },
+  share: {
+    title: 'Share this result',
+    native: 'Share',
+    copy: 'Copy link',
+    copied: 'Copied',
+    prompt: 'Copy this address and share it',
+    x: 'X',
+    facebook: 'Facebook',
+    note: 'The link contains the date of birth you entered. Check before sharing.',
+    text: (archetype: string, tagline: string) => `My birth star is '${archetype}' — ${tagline}`,
   },
   common: {
     home: 'Home',

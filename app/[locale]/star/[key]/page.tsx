@@ -12,6 +12,7 @@ import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
 import { NakshatraCard } from '@/app/components/NakshatraCard'
 import { NakshatraWheel } from '@/app/components/NakshatraWheel'
+import { ShareButtons } from '@/app/components/ShareButtons'
 import { DashaTimeline } from './DashaTimeline'
 import {
   FortuneCards,
@@ -49,7 +50,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: nakshatra.copy,
     // 쿼리에 생년월일이 실린 개인 결과 주소가 따로 색인되지 않도록 정규 주소를 고정한다.
     alternates: { canonical: absoluteUrl(localePath(locale, `/star/${nakshatra.key}`)) },
-    openGraph: { title: t.star.ogTitle(nakshatra.archetype), description: nakshatra.tagline },
+    openGraph: {
+      title: t.star.ogTitle(nakshatra.archetype),
+      description: nakshatra.tagline,
+      images: [{ url: absoluteUrl(`/og/${locale}/${nakshatra.key}.jpg`), width: 1200, height: 630, alt: nakshatra.archetype }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.star.ogTitle(nakshatra.archetype),
+      description: nakshatra.tagline,
+      images: [absoluteUrl(`/og/${locale}/${nakshatra.key}.jpg`)],
+    },
   }
 }
 
@@ -108,6 +119,14 @@ export default async function StarPage({ params, searchParams }: PageProps) {
     if (nickname) matchParams.set('n', nickname)
   }
   const matchHref = href(`/match?${matchParams}`)
+  // 공유 주소. 결과가 있으면 생년월일 쿼리를 실어 상대도 같은 결과를 본다.
+  const shareQuery = new URLSearchParams()
+  if (result) {
+    shareQuery.set('d', first(query.d) ?? '')
+    const time = first(query.t)
+    if (time) shareQuery.set('t', time)
+  }
+  const sharePath = href(`/star/${nakshatra.key}${shareQuery.toString() ? `?${shareQuery}` : ''}`)
   const who = nickname ? t.star.honorific(nickname) : t.star.you
   const peak = upcomingPeak(nakshatra.peak.from, nakshatra.peak.to, age)
   const isProvisional = result !== null && !result.isTimeKnown
@@ -279,6 +298,22 @@ export default async function StarPage({ params, searchParams }: PageProps) {
           />
           <MoonPlacement nakshatra={nakshatra} result={result ?? undefined} locale={locale} />
         </section>
+
+        <ShareButtons
+          path={sharePath}
+          shareTitle={t.star.ogTitle(nakshatra.archetype)}
+          shareText={t.share.text(nakshatra.archetype, nakshatra.tagline)}
+          labels={{
+            title: t.share.title,
+            native: t.share.native,
+            copy: t.share.copy,
+            copied: t.share.copied,
+            prompt: t.share.prompt,
+            x: t.share.x,
+            facebook: t.share.facebook,
+            note: t.share.note,
+          }}
+        />
 
         <Link href={href('/birth')} className="btn btn--ghost" style={{ marginTop: 34 }}>{t.star.retry}</Link>
       </main>

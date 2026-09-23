@@ -17,6 +17,8 @@ export const ko = {
   },
   footer: {
     compare: '사주와 뭐가 다른가',
+    western: '내 별자리는?',
+    ashtakoota: '궁합 36점',
     nakshatra: '27 탄생별',
     navagraha: '아홉 행성',
     dasha: '다샤',
@@ -412,6 +414,17 @@ export const ko = {
     cta: '내 탄생별 무료로 보기',
     ctaSub: '생년월일만 넣으면 30초면 끝나요.',
     crumb: '사주와 베딕 비교',
+  },
+  share: {
+    title: '이 결과 공유하기',
+    native: '공유',
+    copy: '링크 복사',
+    copied: '복사했어요',
+    prompt: '아래 주소를 복사해 전달하세요',
+    x: 'X',
+    facebook: '페이스북',
+    note: '링크에는 입력한 생년월일이 담깁니다. 공유 전에 확인해 주세요.',
+    text: (archetype: string, tagline: string) => `내 탄생별은 '${archetype}' — ${tagline}`,
   },
   common: {
     home: '홈',

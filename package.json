@@ -25,7 +25,8 @@
     "cards:sync": "tsx scripts/sync-card-art.ts",
     "cards:prompts": "tsx scripts/card-art-prompts.ts",
     "cards:generate": "tsx scripts/gen-card-art.ts",
-    "cards:crop": "python scripts/crop-card-art.py"
+    "cards:crop": "python scripts/crop-card-art.py",
+    "og:build": "python scripts/make-og.py"
   },
   "dependencies": {
     "@ishubhamx/panchangam-js": "^3.0.0",
