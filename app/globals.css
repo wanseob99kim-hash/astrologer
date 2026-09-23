@@ -870,4 +870,12 @@ table.compare td.vedic { color: var(--ink); }
 .share__btn:hover { border-color: var(--muted); }
 .share__btn--primary { background: var(--lapis); border-color: var(--lapis); color: #fff; }
 .share__btn--primary:hover { border-color: var(--lapis); filter: brightness(1.08); }
-.share__note { margin: 12px 0 0; }
+.share__note { margin: 10px 0 0; }
+/* 인스타 버튼만 브랜드 색 테두리를 준다 — 동작이 다른 버튼이라 눈에 띄어야 한다. */
+.share__btn--ig { border-color: color-mix(in srgb, #C13584 45%, var(--line)); }
+.share__btn--ig:hover { border-color: #C13584; }
+.share__ig {
+  margin: 12px 0 0; padding: 10px 12px; border-radius: 8px;
+  background: var(--marigold-soft);
+  border: 1px solid color-mix(in srgb, var(--marigold) 28%, transparent);
+}

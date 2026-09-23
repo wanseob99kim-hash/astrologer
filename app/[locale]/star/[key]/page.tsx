@@ -301,6 +301,7 @@ export default async function StarPage({ params, searchParams }: PageProps) {
 
         <ShareButtons
           path={sharePath}
+          imagePath={`/og/${locale}/${nakshatra.key}.jpg`}
           shareTitle={t.star.ogTitle(nakshatra.archetype)}
           shareText={t.share.text(nakshatra.archetype, nakshatra.tagline)}
           labels={{
@@ -311,6 +312,9 @@ export default async function StarPage({ params, searchParams }: PageProps) {
             prompt: t.share.prompt,
             x: t.share.x,
             facebook: t.share.facebook,
+            instagram: t.share.instagram,
+            instagramReady: t.share.instagramReady,
+            instagramHint: t.share.instagramHint,
             note: t.share.note,
           }}
         />
