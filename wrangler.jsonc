@@ -24,8 +24,8 @@
     { "pattern": "birthstar.uk", "custom_domain": true },
     { "pattern": "www.birthstar.uk", "custom_domain": true }
   ],
-  // 예전 주소(astrologer.wanseob99-kim.workers.dev)도 계속 열어 둔다.
-  // 미들웨어가 정식 주소로 308 리다이렉트해 검색 점수가 새 주소로 모인다.
+  // 예전 주소(astrologer.wanseob99-kim.workers.dev)도 열어 두되,
+  // 미들웨어가 정식 주소로 308 리다이렉트해 예전 링크가 끊기지 않고 검색 점수가 새 주소로 모인다.
   "workers_dev": true,
   "vars": {
     // canonical·sitemap·hreflang 의 기준 주소.

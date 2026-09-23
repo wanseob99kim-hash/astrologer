@@ -4,7 +4,7 @@ import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 /**
  * 주소 정리.
  *
- * 1. 호스트 — www 로 들어오면 정식 주소(SITE_URL 의 호스트)로 308.
+ * 1. 호스트 — www·workers.dev 로 들어오면 정식 주소(SITE_URL 의 호스트)로 308.
  *    같은 페이지가 두 주소로 색인되면 검색 점수가 갈린다.
  * 2. 언어 접두사
  *    - /en/...  → 그대로 (app/[locale]=en)
@@ -26,9 +26,13 @@ function canonicalHost(): string | null {
   }
 }
 
-/** 정식 주소로 보내야 하는 호스트인가. */
+/**
+ * 정식 주소로 보내야 하는 호스트인가.
+ * www 와, 도메인을 붙이기 전에 쓰던 workers.dev 주소. 예전 링크·공유 카드가 끊기지 않고
+ * 새 주소로 넘어가며, 검색 점수도 새 주소로 옮겨 간다.
+ */
 function isAliasHost(host: string, canonical: string): boolean {
-  return host === `www.${canonical}`
+  return host === `www.${canonical}` || host.endsWith('.workers.dev')
 }
 
 export function middleware(request: NextRequest) {
