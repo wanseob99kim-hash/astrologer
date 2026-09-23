@@ -9,8 +9,17 @@
  * "준비 중"으로 남는다 — 키를 넣기 전까지 라이브 사이트에 영향이 없다.
  */
 
-/** 궁합 상세 리포트 가격(원). 바꾸면 결제 요청과 승인 검증이 함께 바뀐다. */
-export const REPORT_PRICE_KRW = 4900
+/**
+ * 궁합 상세 리포트 가격.
+ *
+ * 정한 가격은 $2 다. 달러를 받는 결제 대행사(Stripe · Lemon Squeezy)는 아직 정하지 않았고,
+ * 지금 붙어 있는 토스는 원화만 받는다. 그래서 토스로 결제할 때는 $2 에 맞춘 원화 금액을 쓴다.
+ * 달러 결제로 바꾸면 REPORT_PRICE_USD 를 그대로 청구하면 된다.
+ */
+export const REPORT_PRICE_USD = 2
+
+/** 토스(원화) 결제 금액. $2 상당. 바꾸면 결제 요청과 승인 검증이 함께 바뀐다. */
+export const REPORT_PRICE_KRW = 2900
 
 export const REPORT_PRODUCT_NAME = '궁합 상세 리포트'
 
