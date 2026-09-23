@@ -38,6 +38,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       description: t.site.ogDescription,
     },
     twitter: { card: 'summary_large_image' },
+    // 검색 엔진 소유 확인. 값은 공개돼도 되는 확인용 문자열이다.
+    verification: {
+      other: { 'naver-site-verification': '2d8dba8c26925917faea7f4d21dd695286532df9' },
+    },
   }
 }
 
