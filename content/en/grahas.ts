@@ -177,5 +177,5 @@ export const SCORE_BAND_TEXT_EN = [
   'A match that needs a lot of tuning',
   'A steady match',
   'A good match',
-  'A rare match',
+  'An excellent match',
 ] as const

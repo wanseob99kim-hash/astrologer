@@ -92,7 +92,7 @@ export const SCORE_BANDS = [
   { min: 0, max: 17, ko: '조율이 많이 필요한 조합', tone: 'caution' },
   { min: 18, max: 24, ko: '무난한 조합', tone: 'neutral' },
   { min: 25, max: 32, ko: '잘 맞는 조합', tone: 'good' },
-  { min: 33, max: 36, ko: '드물게 잘 맞는 조합', tone: 'best' },
+  { min: 33, max: 36, ko: '아주 잘 맞는 조합', tone: 'best' },
 ] as const
 
 export const MAX_TOTAL_SCORE = 36

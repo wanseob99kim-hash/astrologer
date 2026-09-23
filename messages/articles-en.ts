@@ -111,7 +111,7 @@ export const articlesEn: Articles = {
       { range: '0 – 17', label: 'Needs a lot of tuning', body: 'Your basic grains differ in many places. Not a "no" — a list of things to agree on.' },
       { range: '18 – 24', label: 'A steady match', body: 'The range tradition treats as the floor. Most couples land here.' },
       { range: '25 – 32', label: 'A good match', body: 'Several axes line up together. It runs without much friction.' },
-      { range: '33 – 36', label: 'A rare match', body: 'Nearly full marks across the board. Genuinely uncommon.' },
+      { range: '33 – 36', label: 'An excellent match', body: 'Nearly full marks across the board. Genuinely uncommon.' },
     ],
 
     genderTitle: 'Why we do not ask for gender',
