@@ -298,7 +298,6 @@ export const en: Messages = {
     locked: 'Still locked',
     lockedTitle: 'Full commentary and remedies for all eight items',
     lockedItems: ['How each of the eight items shows up between you, and what to do', 'Traditional remedies when Energy (Nadi) or Household (Bhakoot) is low', 'The next 10 years, with both life periods laid side by side'],
-    lockedSoon: 'Coming soon.',
     unlock: (price: string) => `Unlock the full report for ${price}`,
     unlockSub: 'Opens immediately after payment. Save the link to reopen it anytime.',
     how: 'How this score was built',

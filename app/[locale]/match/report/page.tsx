@@ -1,17 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { MATCH_REPORT_KO, type MatchReportCopy } from '@/content/match-report'
-import { MATCH_REPORT_EN } from '@/content/en/match-report'
 import { computeLevelOne } from '@/lib/astro/engine'
 import { computeMatch, formatScore, type KootaScore } from '@/lib/astro/match'
-import { levelOf, pairTimeline } from '@/lib/astro/report'
-import { localePath, resolveLocale, type Locale } from '@/lib/i18n'
+import { pairTimeline } from '@/lib/astro/report'
+import { localePath, resolveLocale } from '@/lib/i18n'
 import { payConfig } from '@/lib/pay/config'
 import { getterFromRecord, parsePair } from '@/lib/pay/pair'
 import { verifyReport } from '@/lib/pay/token'
 import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
+import { ReportSections } from '../ReportSections'
 
 /** 요청마다 새로 그린다 — 주문번호·서명·환경 변수를 빌드 시점에 굳히면 안 된다. */
 export const dynamic = 'force-dynamic'
@@ -26,20 +25,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-const REPORT_COPY: Record<Locale, MatchReportCopy> = { ko: MATCH_REPORT_KO, en: MATCH_REPORT_EN }
-
-const LEVEL_LABEL: Record<Locale, Record<'high' | 'mid' | 'low', string>> = {
-  ko: { high: '잘 맞음', mid: '보통', low: '조심' },
-  en: { high: 'Strong', mid: 'Moderate', low: 'Watch' },
-}
-
 /** 비율 순으로 정렬한 사본. 원본 순서(배점 순)는 항목 풀이에서 그대로 쓴다. */
 const byRatio = (kootas: readonly KootaScore[]) => [...kootas].sort((x, y) => y.ratio - x.ratio)
 
 export default async function MatchReportPage({ params, searchParams }: PageProps) {
   const locale = resolveLocale((await params).locale)
   const t = messagesFor(locale)
-  const copy = REPORT_COPY[locale]
   const query = await searchParams
   const get = getterFromRecord(query)
 
@@ -108,87 +99,7 @@ export default async function MatchReportPage({ params, searchParams }: PageProp
           </div>
         </section>
 
-        <section className="sect">
-          <h2 className="sect__title">{t.pay.itemsTitle}</h2>
-          <div className="rpt">
-            {outcome.kootas.map((entry) => {
-              const level = levelOf(entry.ratio)
-              const body = copy.kootas[entry.koota.key]
-              const section = body?.[level]
-              return (
-                <article key={entry.koota.key} className={`rpt__item rpt__item--${level}`}>
-                  <header className="rpt__head">
-                    <span>
-                      <span className="rpt__name">{entry.koota.ko}</span>
-                      <span className="rpt__sub">{entry.koota.sanskrit} · {entry.koota.measures}</span>
-                    </span>
-                    <span className="rpt__score">
-                      {formatScore(entry.score)}<span className="rpt__max">/{entry.maxScore}</span>
-                      <span className={`rpt__level rpt__level--${level}`}>{LEVEL_LABEL[locale][level]}</span>
-                    </span>
-                  </header>
-                  <span className="kootaBoard__track" style={{ display: 'block', marginTop: 10 }}>
-                    <span className="kootaBoard__fill" style={{ width: `${Math.max(entry.ratio * 100, 2)}%` }} />
-                  </span>
-                  {section ? (
-                    <>
-                      <p className="rpt__label">{t.pay.scene}</p>
-                      <p className="rpt__scene">{section.scene}</p>
-                      <p className="rpt__label">{t.pay.tips}</p>
-                      <ul className="bullets" style={{ marginTop: 6 }}>
-                        {section.tips.map((tip) => <li key={tip}>{tip}</li>)}
-                      </ul>
-                    </>
-                  ) : null}
-                  {level === 'low' && body?.remedy ? (
-                    <div className="ritual">
-                      <p className="eyebrow" style={{ color: 'var(--marigold)' }}>{t.pay.remedyTitle}</p>
-                      <p style={{ margin: '8px 0 0' }}>{body.remedy.tradition}</p>
-                      <p className="eyebrow" style={{ color: 'var(--marigold)', marginTop: 12 }}>{t.pay.remedyModern}</p>
-                      <p style={{ margin: '8px 0 0' }}>{body.remedy.modern}</p>
-                    </div>
-                  ) : null}
-                </article>
-              )
-            })}
-          </div>
-        </section>
-
-        <section className="sect">
-          <h2 className="sect__title">{t.pay.timelineTitle}</h2>
-          <p className="small">{t.pay.timelineSub}</p>
-          {!outcome.isTimeKnown ? <p className="small" style={{ marginTop: 6, color: 'var(--marigold)' }}>{t.pay.timeUnknown}</p> : null}
-          <div className="tablewrap" style={{ marginTop: 16 }}>
-            <table className="rptTimeline">
-              <thead>
-                <tr>
-                  <th scope="col">{t.pay.timelineYear}</th>
-                  <th scope="col">{nameA}</th>
-                  <th scope="col">{nameB}</th>
-                  <th scope="col" aria-label="tone" />
-                </tr>
-              </thead>
-              <tbody>
-                {timeline.map((row) => (
-                  <tr key={row.year} className={row.tone ? `is-${row.tone}` : undefined}>
-                    <th scope="row">{row.year}</th>
-                    <td>{row.a.planetKo}{row.a.changes ? <span className="rptTimeline__change" title={copy.timeline.transition}>↻</span> : null}</td>
-                    <td>{row.b.planetKo}{row.b.changes ? <span className="rptTimeline__change" title={copy.timeline.transition}>↻</span> : null}</td>
-                    <td>
-                      {row.tone === 'good' ? <span className="rptTimeline__tone rptTimeline__tone--good">{copy.timeline.good}</span> : null}
-                      {row.tone === 'shaky' ? <span className="rptTimeline__tone rptTimeline__tone--shaky">{copy.timeline.shaky}</span> : null}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <ul className="bullets" style={{ marginTop: 14 }}>
-            <li>{t.pay.legendGood}</li>
-            <li>{t.pay.legendShaky}</li>
-            <li>↻ {copy.timeline.transition}</li>
-          </ul>
-        </section>
+        <ReportSections locale={locale} outcome={outcome} timeline={timeline} nameA={nameA} nameB={nameB} />
 
         <section style={{ marginTop: 32 }}>
           <p className="small" style={{ lineHeight: 1.75 }}>{t.match.howE}</p>

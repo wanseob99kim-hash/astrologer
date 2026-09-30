@@ -4,12 +4,14 @@ import { redirect } from 'next/navigation'
 import { computeLevelOne } from '@/lib/astro/engine'
 import { parseBirthInput } from '@/lib/astro/input'
 import { computeMatch, formatScore } from '@/lib/astro/match'
+import { pairTimeline } from '@/lib/astro/report'
 import { localePath, resolveLocale } from '@/lib/i18n'
 import { absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { REPORT_PRICE_KRW, payConfig } from '@/lib/pay/config'
 import { Footer } from '@/app/components/Footer'
 import { ScoreBoard } from './ScoreBoard'
+import { ReportSections } from '../ReportSections'
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -41,6 +43,7 @@ export default async function MatchResultPage({ params, searchParams }: PageProp
   let nameB: string
   let starA: string
   let starB: string
+  let timeline: ReturnType<typeof pairTimeline>
   let retryHref: string
 
   try {
@@ -50,8 +53,11 @@ export default async function MatchResultPage({ params, searchParams }: PageProp
     outcome = computeMatch(a, b, locale)
     nameA = a.nickname ?? t.me
     nameB = b.nickname ?? t.partner
-    starA = computeLevelOne(a, locale).nakshatra.archetype
-    starB = computeLevelOne(b, locale).nakshatra.archetype
+    const levelA = computeLevelOne(a, locale)
+    const levelB = computeLevelOne(b, locale)
+    starA = levelA.nakshatra.archetype
+    starB = levelB.nakshatra.archetype
+    timeline = pairTimeline(levelA.dasha.timeline, levelB.dasha.timeline, new Date().getUTCFullYear(), 10)
 
     const back = new URLSearchParams({ d: a.date })
     if (a.time) back.set('t', a.time)
@@ -62,7 +68,7 @@ export default async function MatchResultPage({ params, searchParams }: PageProp
   }
 
   const percent = Math.round((outcome.total / outcome.maxTotal) * 100)
-  // 결제가 켜져 있을 때만 잠금 해제 버튼을 보인다. 키가 없으면 지금처럼 "준비 중".
+  // 결제가 켜져 있으면 전체 해설은 잠그고 결제 버튼을 보인다. 꺼져 있으면 전체 해설을 그대로 보여준다.
   const canBuy = payConfig() !== null
   const checkoutQuery = new URLSearchParams()
   for (const name of ['ad', 'at', 'an', 'bd', 'bt', 'bn']) {
@@ -119,23 +125,21 @@ export default async function MatchResultPage({ params, searchParams }: PageProp
           </section>
         )}
 
-        <section style={{ marginTop: 32 }}>
-          <div className="locked">
-            <p className="eyebrow" style={{ color: 'var(--lapis)' }}>{t.locked}</p>
-            <p style={{ margin: '10px 0 0', fontWeight: 600 }}>{t.lockedTitle}</p>
-            <ul className="locked__list">
-              {t.lockedItems.map((item) => <li key={item}>{item}</li>)}
-            </ul>
-            {canBuy ? (
-              <>
-                <Link href={checkoutHref} className="btn" style={{ marginTop: 16 }}>{priceLabel}</Link>
-                <p className="small" style={{ marginTop: 10, textAlign: 'center' }}>{t.unlockSub}</p>
-              </>
-            ) : (
-              <p className="small" style={{ marginTop: 14 }}>{t.lockedSoon}</p>
-            )}
-          </div>
-        </section>
+        {canBuy ? (
+          <section style={{ marginTop: 32 }}>
+            <div className="locked">
+              <p className="eyebrow" style={{ color: 'var(--lapis)' }}>{t.locked}</p>
+              <p style={{ margin: '10px 0 0', fontWeight: 600 }}>{t.lockedTitle}</p>
+              <ul className="locked__list">
+                {t.lockedItems.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+              <Link href={checkoutHref} className="btn" style={{ marginTop: 16 }}>{priceLabel}</Link>
+              <p className="small" style={{ marginTop: 10, textAlign: 'center' }}>{t.unlockSub}</p>
+            </div>
+          </section>
+        ) : (
+          <ReportSections locale={locale} outcome={outcome} timeline={timeline} nameA={nameA} nameB={nameB} />
+        )}
 
         <section style={{ marginTop: 32 }}>
           <h2 className="eyebrow">{t.how}</h2>
