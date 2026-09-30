@@ -43,9 +43,9 @@ export const KOOTAS: readonly Koota[] = [
   {
     key: 'yoni',
     sanskrit: 'Yoni',
-    ko: '본능',
+    ko: '생활 리듬',
     maxScore: 4,
-    measures: '몸과 본능의 결이 얼마나 맞는가 (14종 동물 상징으로 판정)',
+    measures: '함께 있을 때 몸과 마음의 속도가 얼마나 맞는가 (14종 동물 상징으로 판정)',
     high: '말이 없어도 편안하고, 함께 있는 시간이 회복이 됩니다.',
     low: '리듬이 달라 피로해질 수 있습니다. 각자의 속도를 인정하는 것이 핵심입니다.',
   },

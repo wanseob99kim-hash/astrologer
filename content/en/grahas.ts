@@ -142,8 +142,8 @@ export const KOOTA_TEXT_EN: Record<string, KootaText> = {
     low: "When one of you struggles, the other may shake too. Look after each other's condition.",
   },
   yoni: {
-    ko: 'Instinct',
-    measures: 'How well your bodies and instincts match (judged by 14 animal symbols)',
+    ko: 'Daily rhythm',
+    measures: 'How well your physical and emotional pace match when together (judged by 14 animal symbols)',
     high: 'Comfortable without words; time together restores you.',
     low: "Different rhythms can wear you out. Accepting each other's pace is the key.",
   },
