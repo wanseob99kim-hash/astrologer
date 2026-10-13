@@ -12,7 +12,7 @@ export function LangSwitch({ locale }: { locale: Locale }) {
   const pathname = usePathname() ?? '/'
   const search = useSearchParams()?.toString()
 
-  // 접두사 없는 경로로 정규화한다. /en/star/x → /star/x
+  // 접두사 없는 경로로 정규화한다. /ko/star/x → /star/x
   const [, first = '', ...rest] = pathname.split('/')
   const bare = isLocale(first) ? `/${rest.join('/')}` : pathname
   const suffix = search ? `?${search}` : ''

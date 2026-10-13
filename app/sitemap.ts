@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { GRAHAS, NAKSHATRAS } from '@/content/index'
-import { LOCALES, localePath } from '@/lib/i18n'
+import { DEFAULT_LOCALE, LOCALES, localePath } from '@/lib/i18n'
 import { absoluteUrl } from '@/lib/seo'
 
 /** 기준 주소를 런타임 환경변수에서 읽으므로 요청 시점에 생성한다. */
@@ -41,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: absoluteUrl(localePath(locale, entry.path)),
       lastModified,
       changeFrequency: entry.changeFrequency,
-      priority: locale === 'ko' ? entry.priority : entry.priority * 0.9,
+      priority: locale === DEFAULT_LOCALE ? entry.priority : entry.priority * 0.9,
       alternates: {
         languages: Object.fromEntries(LOCALES.map((l) => [l, absoluteUrl(localePath(l, entry.path))])),
       },

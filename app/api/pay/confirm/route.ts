@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { isLocale, localePath, type Locale } from '@/lib/i18n'
+import { DEFAULT_LOCALE, isLocale, localePath, type Locale } from '@/lib/i18n'
 import { REPORT_PRICE_KRW, payConfig } from '@/lib/pay/config'
 import { parsePair } from '@/lib/pay/pair'
 import { orderMatchesPair, signReport } from '@/lib/pay/token'
@@ -25,8 +25,8 @@ function redirectTo(request: NextRequest, path: string) {
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams
   const get = (name: string) => params.get(name) ?? undefined
-  const rawLocale = get('locale') ?? 'ko'
-  const locale: Locale = isLocale(rawLocale) ? rawLocale : 'ko'
+  const rawLocale = get('locale') ?? DEFAULT_LOCALE
+  const locale: Locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE
 
   const config = payConfig()
   if (!config) return redirectTo(request, localePath(locale, '/'))

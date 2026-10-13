@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
-import { LOCALES, LOCALE_META, isLocale, localePath, type Locale } from '@/lib/i18n'
+import { DEFAULT_LOCALE, LOCALES, LOCALE_META, isLocale, localePath, type Locale } from '@/lib/i18n'
 import { SITE, absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { LangSwitch } from '@/app/components/LangSwitch'
@@ -18,7 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { locale: raw } = await params
-  const locale: Locale = isLocale(raw) ? raw : 'ko'
+  const locale: Locale = isLocale(raw) ? raw : DEFAULT_LOCALE
   const t = messagesFor(locale)
   return {
     metadataBase: new URL(SITE.origin),

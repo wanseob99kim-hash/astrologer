@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { Footer } from '@/app/components/Footer'
 import { messagesFor } from '@/messages/index'
+import { DEFAULT_LOCALE } from '@/lib/i18n'
 
 /**
  * not-found 는 params 를 받지 못한다. 기본 언어로 그린다.
- * 영어 경로의 404 는 드물고, 어느 언어든 홈으로 가는 링크 하나면 충분하다.
+ * 한국어 경로의 404 는 드물고, 어느 언어든 홈으로 가는 링크 하나면 충분하다.
  */
 export default function NotFound() {
-  const t = messagesFor('ko')
+  const t = messagesFor(DEFAULT_LOCALE)
   return (
     <div className="shell">
       <header style={{ paddingTop: 80 }}>
@@ -16,7 +17,7 @@ export default function NotFound() {
         <p className="lede" style={{ marginTop: 12 }}>{t.notFound.body}</p>
         <Link href="/" className="btn btn--ghost" style={{ marginTop: 26 }}>{t.notFound.home}</Link>
       </header>
-      <Footer locale="ko" />
+      <Footer locale={DEFAULT_LOCALE} />
     </div>
   )
 }

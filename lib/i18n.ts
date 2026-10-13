@@ -1,14 +1,14 @@
 /**
  * 언어 설정.
  *
- * 한국어가 기본이고 주소에 접두사가 없다(/star, /birth …).
- * 영어는 /en 아래에 산다(/en/star …). 미들웨어가 접두사 없는 요청을
- * 내부적으로 /ko 로 돌려 app/[locale] 하나로 두 언어를 처리한다.
+ * 영어가 기본이고 주소에 접두사가 없다(/star, /birth …).
+ * 한국어는 /ko 아래에 산다(/ko/star …). 미들웨어가 접두사 없는 요청을
+ * 내부적으로 /en 으로 돌려 app/[locale] 하나로 두 언어를 처리한다.
  */
 
-export const LOCALES = ['ko', 'en'] as const
+export const LOCALES = ['en', 'ko'] as const
 export type Locale = (typeof LOCALES)[number]
-export const DEFAULT_LOCALE: Locale = 'ko'
+export const DEFAULT_LOCALE: Locale = 'en'
 
 export function isLocale(value: string): value is Locale {
   return (LOCALES as readonly string[]).includes(value)
