@@ -22,6 +22,7 @@ export const ko = {
     nakshatra: '27 탄생별',
     navagraha: '아홉 행성',
     dasha: '다샤',
+    guides: '가이드',
     about: '소개',
     contact: '문의',
     terms: '이용약관',

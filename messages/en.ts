@@ -19,6 +19,7 @@ export const en: Messages = {
     nakshatra: '27 Birth Stars',
     navagraha: 'Nine Planets',
     dasha: 'Dasha',
+    guides: 'Guides',
     about: 'About',
     contact: 'Contact',
     terms: 'Terms',

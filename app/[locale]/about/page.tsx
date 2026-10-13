@@ -48,6 +48,20 @@ const COPY: Record<Locale, { title: string; description: string; lede: string; b
         ],
       },
       {
+        h: '무엇을 참고하나요',
+        p: [
+          '행성의 품위·시선·하우스 해석과 다샤 계산은 파라샤라 계열의 고전, 곧 《브리하트 파라샤라 호라 샤스트라》를 중심으로 《팔라디피카》《사라발리》《자타카 파리자타》를 따릅니다. 탄생별의 성질과 길일 분류는 《무후르타 친타마니》 같은 무후르타 문헌을, 궁합은 북인도 표준인 아쉬타쿠타 방식을 따릅니다.',
+          '학파마다 다른 내용(라후·케투의 고양 별자리, 도샤 해소 조건, 아야남샤 값 등)은 한쪽을 정답처럼 쓰지 않고, 어떤 견해를 택했는지와 다른 견해가 있다는 사실을 본문에 함께 적습니다.',
+        ],
+      },
+      {
+        h: '사이트에 있는 것',
+        p: [
+          '27개 탄생별마다 신격·상징·기질·신화를 담은 페이지, 아홉 행성마다 품위 표와 하우스·다샤 해설을 담은 페이지가 있습니다. 탄생별·행성·다샤·궁합의 원리를 설명하는 해설 글과, 달 별자리, 파다, 아야남샤, 간단타, 처방처럼 자주 묻는 주제를 길게 푼 가이드도 있습니다.',
+          '모든 글은 한국어와 영어 두 언어로 씁니다. 번역 투를 피하려고 한쪽을 옮기지 않고 같은 내용을 각 언어로 다시 씁니다.',
+        ],
+      },
+      {
         h: '누가 만드나요',
         p: [
           '점성술과 소프트웨어에 관심 있는 개인이 운영합니다. 콘텐츠는 인도 전통 문헌과 현대 해설서를 바탕으로 직접 쓰고, 계산 코드와 문안을 함께 검수합니다.',
@@ -85,6 +99,20 @@ const COPY: Record<Locale, { title: string; description: string; lede: string; b
           'We leave out verdicts like "Manglik" (Mars affliction), which land on roughly seven people in ten — at that rate they create anxiety, not information.',
           'No gender. Traditional compatibility assigns male and female roles, so the score changes with the order; we calculate both directions and average.',
           'Everything here is for entertainment. It is not fortune-telling, counseling, medical, legal, or financial advice.',
+        ],
+      },
+      {
+        h: 'What we draw on',
+        p: [
+          'Planetary dignities, aspects, house meanings and dasha calculations follow the Parashari tradition, centred on the Brihat Parashara Hora Shastra, with Phaladeepika, Saravali and Jataka Parijata. The natures of the birth stars and the classification of auspicious times follow muhurta texts such as the Muhurta Chintamani. Compatibility follows Ashtakoota, the North Indian standard.',
+          'Where schools disagree, such as the exaltation signs of Rahu and Ketu, the cancellations of doshas, or the ayanamsa value, we do not present one view as the only answer. We say which view we use and note that others exist.',
+        ],
+      },
+      {
+        h: 'What is on the site',
+        p: [
+          'There is a page for each of the 27 birth stars, with its deity, symbol, temperament and mythology, and a page for each of the nine planets with a dignity table and notes on houses and dasha periods. Explanatory articles cover the principles behind birth stars, planets, dashas and compatibility, and longer guides cover frequently asked topics such as Moon signs, padas, ayanamsa, gandanta and remedies.',
+          'Everything is written in both English and Korean. Rather than translating one into the other, we write the same content separately in each language so that neither reads like a translation.',
         ],
       },
       {

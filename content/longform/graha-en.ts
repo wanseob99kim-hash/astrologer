@@ -36,6 +36,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
         'If the Sun is strong in the birth chart, these six years tend to build visibility and confidence. If it is weak or afflicted, the same themes arrive as tests: conflicts with superiors, a bruised reputation, or health issues around the heart, eyes or energy levels. The traditional advice is less about avoiding the Sun than about earning its favour: keep promises, take responsibility without needing applause, and respect the people who carry authority in your life.',
       ],
     },
+    {
+      h: 'The Sun in everyday life',
+      p: [
+        'You can often see the Sun\'s condition in how a person handles being in charge. A strong Sun shows up as someone who takes responsibility naturally, stands straight, keeps a regular routine and is comfortable being visible. A strained Sun shows up as either a reluctance to take the lead or a need to control every room. Typical Sun careers include government, administration, management, medicine (especially cardiology) and any role that carries an official title. The Sun\'s colours are copper, orange and deep red, and its traditional time is early morning: many people with a weak Sun are advised simply to get up with the sunrise.',
+      ],
+    },
   ],
   Moon: [
     {
@@ -64,6 +70,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
       p: [
         'The Moon period lasts ten years. Because the Moon governs the mind, this decade is often remembered less for single events than for a change of emotional climate: a move of house, a new family role, a stronger bond with the mother or with home, sometimes a career that turns toward the public.',
         'A strong Moon makes this a nourishing decade, good for family, property and reputation. A weak or afflicted Moon can make it an anxious one, with restlessness, frequent changes of plan, or health issues tied to sleep and digestion. Traditional remedies for the Moon are gentle: regular sleep, time near water, caring for the mother or older women in the family, and the Monday fast that many families still keep.',
+      ],
+    },
+    {
+      h: 'The Moon in everyday life',
+      p: [
+        'The Moon is easiest to see in someone\'s moods and habits around food, sleep and home. A strong Moon gives a person who is easy to be around, remembers names and birthdays, and recovers quickly from upset. A troubled Moon shows up as restlessness, irregular sleep, emotional eating or difficulty being alone. Typical Moon careers involve caring for or feeding people: nursing, hospitality, food, childcare, public relations, and anything near water such as shipping or fisheries. The Moon\'s colours are white and silver, and its natural rhythm is the lunar month: many people notice their energy rising and falling with the phases.',
       ],
     },
   ],
@@ -96,6 +108,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
         'With a well-placed Mars these years are productive and courageous. With an afflicted Mars they can bring disputes, injuries, surgery, legal fights over land, or a short fuse at home. The traditional prescription is to give Mars something to do: physical exercise, discipline, service in a protective role, and the Tuesday observances found in many Hindu households. The modern version is the same advice in different words: channel the fire before it finds its own way out.',
       ],
     },
+    {
+      h: 'Mars in everyday life',
+      p: [
+        'Mars is visible in how a person deals with conflict and physical energy. A strong Mars gives someone decisive, brave, practical with tools and willing to defend others. A frustrated Mars shows up as impatience, a quick temper, frequent minor injuries or a habit of starting things and abandoning them. Typical Mars careers include engineering, surgery, the military and police, sports, construction, real estate and any job that needs quick action under pressure. Its colour is red, and it responds well to regular exercise: traditional advice for a restless Mars is almost always to give the body hard work to do.',
+      ],
+    },
   ],
   Mercury: [
     {
@@ -124,6 +142,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
       p: [
         'The Mercury period lasts seventeen years, one of the longest in the cycle. It often covers a phase of learning and earning: education, qualifications, a business, a career built on skill rather than status. Communication becomes central, and so does the network of people you trade ideas and favours with.',
         'A strong Mercury makes this a long, intelligent climb, with steady growth in competence and income. A weak Mercury can bring nervous strain, contracts that go wrong, skin or respiratory issues, or a sense of being busy without progress. The remedies are practical: study, keep accounts in order, speak carefully, and honour the Wednesday observances or the green colour traditionally linked with Budha.',
+      ],
+    },
+    {
+      h: 'Mercury in everyday life',
+      p: [
+        'Mercury shows in how a person talks, writes and handles details. A strong Mercury gives quick wit, a talent for languages and numbers, a love of puzzles and a youthful manner that lasts into old age. A strained Mercury shows up as nervous chatter, indecision, skin trouble when stressed, or a habit of over-explaining. Typical Mercury careers include writing, journalism, teaching languages, accounting, trading, programming, data work and anything that relies on communication or analysis. Its colour is green, and it is said to strengthen with use: reading, writing by hand and learning a new skill are classic everyday remedies.',
       ],
     },
   ],
@@ -156,6 +180,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
         'If Jupiter is weak or afflicted, the same period can bring over-extension: too many commitments, financial optimism that outruns income, weight gain or liver strain, or disappointment in a teacher or institution. The traditional remedies are among the most constructive in the tradition: teach what you know, support education, respect elders and teachers, and give generously on Thursdays.',
       ],
     },
+    {
+      h: 'Jupiter in everyday life',
+      p: [
+        'Jupiter shows in a person\'s generosity, outlook and relationship with learning. A strong Jupiter gives someone people instinctively ask for advice, who is optimistic without being naive and who keeps learning all their life. A strained Jupiter shows up as preachiness, over-promising, weight gain or a habit of spending on hope rather than plans. Typical Jupiter careers include teaching, law, counselling, finance and banking, religious or charitable work, and publishing. Its colour is yellow, and its everyday remedy is simple: share what you know, and keep good relations with teachers and elders.',
+      ],
+    },
   ],
   Venus: [
     {
@@ -184,6 +214,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
       p: [
         'The Venus period is the longest in the Vimshottari cycle: twenty years. It frequently covers marriage, family life, property and the acquisition of the comforts that make a home. Creative work, luxury goods and relationships move to the centre.',
         'With a well-placed Venus these are years of enjoyment and harmony. With an afflicted one they can bring relationship turmoil, overspending, or a sense of pleasure that never satisfies. The traditional remedies emphasise respect for women, refinement in daily life, and gifts of white or fragrant things on Fridays. The underlying idea is that Venus responds to beauty offered rather than beauty consumed.',
+      ],
+    },
+    {
+      h: 'Venus in everyday life',
+      p: [
+        'Venus shows in a person\'s taste, relationships and ability to enjoy life. A strong Venus gives someone with an eye for beauty, a gift for making others comfortable and a talent for diplomacy. A strained Venus shows up as difficulty in relationships, overspending on comfort, vanity, or the opposite: an inability to accept pleasure at all. Typical Venus careers include the arts, music, design, fashion, beauty, hospitality, luxury goods, entertainment and diplomacy. Its colours are white and pastel shades, and its everyday remedies are about refinement: keeping your surroundings beautiful and treating partners with care.',
       ],
     },
   ],
@@ -216,6 +252,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
         'If Saturn is well placed, these years build authority, property and respect, even if the pace feels slow. If it is weak, they can bring illness, loss, isolation, or work that does not pay what it costs. The traditional remedies are about humility and service: helping workers and the elderly, keeping promises, living simply, and the Saturday observances with sesame and oil that many families still practise.',
       ],
     },
+    {
+      h: 'Saturn in everyday life',
+      p: [
+        'Saturn shows in a person\'s relationship with time, work and limits. A strong Saturn gives someone patient, reliable, frugal and able to stay with a hard task for years. A strained Saturn shows up as chronic tiredness, pessimism, fear of change, loneliness or a tendency to carry everyone else\'s burdens. Typical Saturn careers include administration, law and the judiciary, mining, agriculture, construction, manufacturing, and any work with the elderly or the poor. Its colours are black and dark blue, and it responds best to steady effort: keeping commitments, simplifying life and serving others are the classic everyday remedies.',
+      ],
+    },
   ],
   Rahu: [
     {
@@ -246,6 +288,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
         'With a well-placed Rahu this period opens doors that were closed to your family before you. With an afflicted Rahu it can bring deception, addiction, legal trouble or a long phase of confusion. The traditional remedies aim at clarity: avoid intoxicants and shortcuts, keep your word, and honour Durga or the Saturday rituals associated with Rahu. The modern advice is to pick a direction and let the hunger serve it.',
       ],
     },
+    {
+      h: 'Rahu in everyday life',
+      p: [
+        'Rahu shows in a person\'s ambitions and in the things they cannot stop thinking about. A strong Rahu gives someone bold, original, at ease with technology and foreign cultures, and willing to break with family tradition. A strained Rahu shows up as restlessness, addiction, a weakness for shortcuts, or the feeling that nothing is ever enough. Typical Rahu careers include technology, media, aviation, foreign trade, research into new fields, politics and anything unconventional. Its colours are smoky and dark, and its everyday remedy is clarity: avoiding intoxicants, keeping promises and choosing one direction to pursue rather than many.',
+      ],
+    },
   ],
   Ketu: [
     {
@@ -274,6 +322,12 @@ export const GRAHA_LONG_EN: Record<GrahaKey, readonly LongSection[]> = {
       p: [
         'The Ketu period lasts seven years. It often feels like a clearing: plans fall away, relationships end or change, and attention turns inward toward spiritual practice, research or healing. For some people it is a period of sudden loss; for others it is a period of surprising freedom, and often it is both.',
         'With a well-placed Ketu these years bring insight, skill and a lighter attachment to outcomes. With an afflicted Ketu they can bring confusion, accidents, unexplained health problems or a feeling of drifting. The traditional remedies centre on Ganesha, the remover of obstacles, and on spiritual discipline. The modern reading is the same: when Ketu takes something away, it is making room.',
+      ],
+    },
+    {
+      h: 'Ketu in everyday life',
+      p: [
+        'Ketu shows in what a person is effortlessly good at and oddly indifferent to. A strong Ketu gives someone intuitive, precise, calm in a crisis and drawn to spiritual practice or deep research. A strained Ketu shows up as absent-mindedness, sudden loss of interest, unexplained health complaints or a feeling of being out of place. Typical Ketu careers include research, healing and alternative medicine, coding and other precise technical work, spiritual teaching, and investigation. Its colours are grey and smoke, and its everyday remedy is quiet: meditation, simple living and letting go of what has already ended.',
       ],
     },
   ],

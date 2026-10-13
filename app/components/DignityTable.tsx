@@ -1,5 +1,4 @@
-import { contentFor } from '@/content/index'
-import { DIGNITY, SIGN_NAMES, type GrahaKey } from '@/content/longform/dignity'
+import { DIGNITY, PLANET_NAMES, SIGN_NAMES, type GrahaKey } from '@/content/longform/dignity'
 import type { Locale } from '@/lib/i18n'
 
 const LABELS: Record<Locale, {
@@ -23,8 +22,8 @@ export function DignityTable({ graha, locale }: { graha: GrahaKey; locale: Local
   const d = DIGNITY[graha]
   const t = LABELS[locale]
   const signs = SIGN_NAMES[locale]
-  const names = new Map(contentFor(locale).grahas.map((g) => [g.key, g.ko]))
-  const list = (keys: readonly GrahaKey[]) => (keys.length ? keys.map((k) => names.get(k) ?? k).join(', ') : t.none)
+  const names = PLANET_NAMES[locale]
+  const list = (keys: readonly GrahaKey[]) => (keys.length ? keys.map((k) => names[k]).join(', ') : t.none)
   const at = (sign: number, degree: number | null) => (degree === null ? signs[sign] + t.disputed : `${signs[sign]} ${degree}°`)
 
   return (

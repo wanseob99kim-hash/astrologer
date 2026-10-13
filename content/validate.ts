@@ -12,6 +12,9 @@ import { createRequire } from 'node:module'
 import { NAKSHATRA_GLYPH_KEYS } from '../app/components/nakshatraGlyphKeys'
 import { LOCALES, type Locale } from '../lib/i18n'
 import { MAX_TOTAL_SCORE, bhagyankOf, contentFor, grahaLore, moolankOf, nakshatraLore } from './index'
+import { articleExtra, grahaLong, guidesFor } from './longform/index'
+import { hasLinkLabel } from './longform/links'
+import type { LongSection } from './longform/types'
 
 const require = createRequire(import.meta.url)
 const engineConstants = require('@ishubhamx/panchangam-js/dist/matching/constants.js')
@@ -189,6 +192,45 @@ for (let day = 1; day <= 31; day += 1) {
 
   console.log(`[${locale}] 나크샤트라 ${NAKSHATRAS.length}종 · 그라하 ${GRAHAS.length}종 · 쿠타 ${KOOTAS.length}종 검사`)
 }
+
+// ---------- 긴 글 (행성 심화 · 해설 보강 · 가이드) ----------
+
+const ARTICLE_PATHS = ['/tradition/nakshatra', '/tradition/navagraha', '/tradition/dasha', '/tradition/ashtakoota', '/compare/saju', '/compare/western']
+/** 단어 수 하한(영어). 한국어는 글자 수로 본다. AdSense '얇은 콘텐츠' 재발 방지용. */
+const MIN_WORDS_EN = { graha: 580, article: 400, guide: 780 }
+const MIN_CHARS_KO = { graha: 1250, article: 800, guide: 1500 }
+
+const sizeOf = (sections: readonly LongSection[], locale: Locale) => {
+  const text = sections.flatMap((s) => [s.h, ...s.p, ...(s.list ?? [])]).join(' ')
+  return locale === 'en' ? text.split(/\s+/).length : text.replace(/\s/g, '').length
+}
+const checkLinks = (where: string, paths: readonly string[]) => {
+  for (const path of paths) if (!hasLinkLabel(path)) fail(`${where}: 링크 이름 없음 ${path}`)
+}
+
+for (const locale of LOCALES) {
+  currentLocale = locale
+  const min = (kind: keyof typeof MIN_WORDS_EN) => (locale === 'en' ? MIN_WORDS_EN[kind] : MIN_CHARS_KO[kind])
+  for (const g of contentFor(locale).grahas) {
+    const size = sizeOf(grahaLong(g.key, locale), locale)
+    if (size < min('graha')) fail(`행성 ${g.key} 심화 글이 짧음 (${size} < ${min('graha')})`)
+  }
+  for (const path of ARTICLE_PATHS) {
+    const extra = articleExtra(path, locale)
+    const size = sizeOf(extra.sections, locale)
+    if (size < min('article')) fail(`${path} 보강 글이 짧음 (${size} < ${min('article')})`)
+    checkLinks(`[${locale}] ${path}`, extra.related)
+  }
+  for (const guide of guidesFor(locale)) {
+    const size = sizeOf(guide.sections, locale)
+    if (size < min('guide')) fail(`가이드 ${guide.slug} 가 짧음 (${size} < ${min('guide')})`)
+    checkLinks(`[${locale}] 가이드 ${guide.slug}`, guide.related)
+    if (!hasLinkLabel(`/guides/${guide.slug}`)) fail(`가이드 ${guide.slug}: links.ts 에 이름 없음`)
+  }
+  console.log(`[${locale}] 긴 글: 행성 ${contentFor(locale).grahas.length} · 해설 ${ARTICLE_PATHS.length} · 가이드 ${guidesFor(locale).length} 검사`)
+}
+const slugs = (locale: Locale) => guidesFor(locale).map((g) => g.slug).join(',')
+if (slugs('en') !== slugs('ko')) fail(`가이드 slug 순서가 언어마다 다름: en=${slugs('en')} ko=${slugs('ko')}`)
 
 // ---------- 결과 ----------
 

@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { contentFor } from '@/content/index'
 import { cardArtUrl } from '@/content/cardArt'
-import { localePath, resolveLocale } from '@/lib/i18n'
+import { localePath, resolveLocale, type Locale } from '@/lib/i18n'
+import { guidesFor } from '@/content/longform/index'
 import { absoluteUrl, faqSchema } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
@@ -10,6 +11,9 @@ import { GrahaGlyph } from '@/app/components/GrahaGlyph'
 import { JsonLd } from '@/app/components/JsonLd'
 import { NakshatraCard } from '@/app/components/NakshatraCard'
 import { NakshatraGlyph } from '@/app/components/NakshatraGlyph'
+
+const GUIDES_HEADING: Record<Locale, string> = { en: 'Guides to Vedic astrology', ko: '베딕 점성술 가이드' }
+const GUIDES_MORE: Record<Locale, string> = { en: 'All eight guides →', ko: '가이드 8편 모두 보기 →' }
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -141,6 +145,23 @@ export default async function HomePage({ params }: PageProps) {
             <Link href={href('/tradition/nakshatra')} className="small" style={{ color: 'var(--lapis)', fontWeight: 500 }}>
               {t.home.typesMore}
             </Link>
+          </p>
+        </section>
+
+        <section style={{ marginTop: 52 }}>
+          <h2 className="display" style={{ fontSize: 'var(--step-2)' }}>{GUIDES_HEADING[locale]}</h2>
+          <ul className="guideList" style={{ marginTop: 16 }}>
+            {guidesFor(locale).slice(0, 4).map((guide) => (
+              <li key={guide.slug}>
+                <Link href={href(`/guides/${guide.slug}`)}>
+                  <span className="guideList__title">{guide.title}</span>
+                  <span className="guideList__desc">{guide.description}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p style={{ marginTop: 14 }}>
+            <Link href={href('/guides')} className="small" style={{ color: 'var(--lapis)', fontWeight: 500 }}>{GUIDES_MORE[locale]}</Link>
           </p>
         </section>
 

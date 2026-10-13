@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { GRAHAS, NAKSHATRAS } from '@/content/index'
+import { guidesFor } from '@/content/longform/index'
 import { DEFAULT_LOCALE, LOCALES, localePath } from '@/lib/i18n'
 import { absoluteUrl } from '@/lib/seo'
 
@@ -34,6 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...STATIC,
     ...NAKSHATRAS.map((n) => ({ path: `/star/${n.key}`, changeFrequency: 'monthly' as const, priority: 0.7 })),
     ...GRAHAS.map((g) => ({ path: `/graha/${g.sanskrit.toLowerCase()}`, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    { path: '/guides', changeFrequency: 'monthly' as const, priority: 0.8 },
+    ...guidesFor(DEFAULT_LOCALE).map((g) => ({ path: `/guides/${g.slug}`, changeFrequency: 'monthly' as const, priority: 0.75 })),
   ]
 
   return paths.flatMap((entry) =>

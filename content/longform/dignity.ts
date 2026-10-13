@@ -38,3 +38,9 @@ export const SIGN_NAMES: Record<'ko' | 'en', readonly string[]> = {
   ko: ['양자리', '황소자리', '쌍둥이자리', '게자리', '사자자리', '처녀자리', '천칭자리', '전갈자리', '사수자리', '염소자리', '물병자리', '물고기자리'],
   en: ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'],
 }
+
+/** 표와 본문에서 쓰는 행성 이름. 행성 페이지 제목(산스크리트 이름)과 달리 일상어로 쓴다. */
+export const PLANET_NAMES: Record<'ko' | 'en', Record<GrahaKey, string>> = {
+  ko: { Sun: '태양', Moon: '달', Mars: '화성', Mercury: '수성', Jupiter: '목성', Venus: '금성', Saturn: '토성', Rahu: '라후', Ketu: '케투' },
+  en: { Sun: 'Sun', Moon: 'Moon', Mars: 'Mars', Mercury: 'Mercury', Jupiter: 'Jupiter', Venus: 'Venus', Saturn: 'Saturn', Rahu: 'Rahu', Ketu: 'Ketu' },
+}
