@@ -932,3 +932,29 @@ table.compare td.vedic { color: var(--ink); }
 .lore { margin-top: 12px; display: grid; gap: 12px; }
 .lore p { margin: 0; line-height: 1.85; color: var(--ink-2); }
 .lore p:first-child::first-letter { font-family: "Gowun Batang", Georgia, serif; font-size: 1.6em; font-weight: 700; color: var(--marigold); }
+
+/* 긴 글 — 해설 보강, 가이드, 행성 심화 */
+.longform { margin-top: 32px; display: grid; gap: 26px; }
+.longform h2 { margin: 0 0 10px; font-size: var(--step-1); color: var(--ink); line-height: 1.4; }
+.longform p { margin: 0 0 10px; line-height: 1.85; color: var(--ink-2); }
+.longform .bullets { margin-top: 6px; }
+
+/* 이어서 읽기 */
+.related { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.related ul { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.related a { color: var(--lapis); text-decoration: none; font-weight: 500; }
+.related a::before { content: "→ "; color: var(--marigold); }
+.related a:hover { text-decoration: underline; }
+
+/* 가이드 목록 */
+.guideList { margin: 28px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.guideList a { display: block; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: inherit; text-decoration: none; transition: border-color .15s; }
+.guideList a:hover { border-color: var(--marigold); }
+.guideList__title { display: block; font-weight: 600; color: var(--ink); }
+.guideList__desc { display: block; margin-top: 4px; font-size: var(--step--1); color: var(--muted); line-height: 1.6; }
+
+/* 행성 품위 표 */
+.dignity { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: var(--step--1); }
+.dignity th, .dignity td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+.dignity th { width: 38%; color: var(--ink-2); font-weight: 600; }
+.dignity td { color: var(--ink); }

@@ -4,6 +4,8 @@ import { LOCALES, localePath, resolveLocale } from '@/lib/i18n'
 import { absoluteUrl, articleSchema, breadcrumbSchema, faqSchema } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
+import { LongSections, RelatedLinks } from '@/app/components/LongForm'
+import { articleExtra } from '@/content/longform/index'
 import { JsonLd } from '@/app/components/JsonLd'
 
 const PATH = '/compare/saju'
@@ -125,8 +127,12 @@ export default async function CompareSajuPage({ params }: PageProps) {
           </div>
         </section>
 
+        <LongSections sections={articleExtra(PATH, locale).sections} />
+
         <Link href={href('/birth')} className="btn" style={{ marginTop: 44 }}>{t.cta}</Link>
         <p className="small" style={{ textAlign: 'center', marginTop: 10 }}>{t.ctaSub}</p>
+
+        <RelatedLinks locale={locale} paths={articleExtra(PATH, locale).related} />
       </main>
 
       <Footer locale={locale} path={PATH} />

@@ -5,6 +5,8 @@ import { LOCALES, localePath, resolveLocale } from '@/lib/i18n'
 import { absoluteUrl, articleSchema, breadcrumbSchema } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
+import { LongSections, RelatedLinks } from '@/app/components/LongForm'
+import { articleExtra } from '@/content/longform/index'
 import { GrahaGlyph } from '@/app/components/GrahaGlyph'
 import { JsonLd } from '@/app/components/JsonLd'
 
@@ -83,6 +85,8 @@ export default async function NavagrahaPage({ params }: PageProps) {
           </p>
         </section>
 
+        <LongSections sections={articleExtra(PATH, locale).sections} />
+
         <section style={{ marginTop: 40 }}>
           <div className="notice">
             <span aria-hidden="true">✦</span>
@@ -90,6 +94,8 @@ export default async function NavagrahaPage({ params }: PageProps) {
           </div>
           <Link href={href('/birth')} className="btn" style={{ marginTop: 18 }}>{t.cta}</Link>
         </section>
+
+        <RelatedLinks locale={locale} paths={articleExtra(PATH, locale).related} />
       </main>
 
       <Footer locale={locale} path={PATH} />

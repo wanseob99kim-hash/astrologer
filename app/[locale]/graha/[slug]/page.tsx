@@ -9,6 +9,9 @@ import { absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
 import { GrahaGlyph } from '@/app/components/GrahaGlyph'
+import { DignityTable } from '@/app/components/DignityTable'
+import { LongSections, RelatedLinks } from '@/app/components/LongForm'
+import { grahaLong } from '@/content/longform/index'
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>
@@ -87,6 +90,10 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
           </div>
         </section>
 
+        <DignityTable graha={graha.key} locale={locale} />
+
+        <LongSections sections={grahaLong(graha.key, locale)} />
+
         <hr className="rule" style={{ margin: '30px 0' }} />
 
         <section>
@@ -129,6 +136,8 @@ export default async function GrahaPage({ params, searchParams }: PageProps) {
           <Link href={nextHref} className="btn" style={{ marginTop: 18 }}>{isoDate ? t.next : t.nextNoDate}</Link>
           <p className="small" style={{ textAlign: 'center', marginTop: 10 }}>{t.nextSub}</p>
         </section>
+
+        <RelatedLinks locale={locale} paths={['/tradition/navagraha', '/tradition/dasha', '/guides/reading-your-dasha', '/guides/vedic-remedies']} />
       </main>
 
       <Footer locale={locale} path={`/graha/${grahaSlug(graha)}`} />
