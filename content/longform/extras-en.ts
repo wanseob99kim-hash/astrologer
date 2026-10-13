@@ -140,7 +140,7 @@ export const ARTICLE_EXTRA_EN: Record<string, ArticleExtra> = {
         ],
       },
     ],
-    related: ['/guides/compatibility-score-explained', '/match', '/tradition/nakshatra', '/guides/moon-sign-vs-sun-sign'],
+    related: ['/guides/compatibility-score-explained', '/tradition/nakshatra', '/guides/moon-sign-vs-sun-sign'],
   },
   '/compare/saju': {
     sections: [

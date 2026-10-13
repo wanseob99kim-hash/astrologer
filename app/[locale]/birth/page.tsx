@@ -4,6 +4,8 @@ import { absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
 import { BirthForm } from './BirthForm'
+import { LongSections, RelatedLinks } from '@/app/components/LongForm'
+import { BIRTH_GUIDE } from '@/content/longform/birth'
 
 interface PageProps {
   params: Promise<{ locale: string }>
@@ -33,6 +35,10 @@ export default async function BirthPage({ params }: PageProps) {
 
       <main>
         <BirthForm locale={locale} labels={t.birth} />
+
+        <LongSections sections={BIRTH_GUIDE[locale]} />
+
+        <RelatedLinks locale={locale} paths={['/guides/find-your-nakshatra', '/guides/moon-sign-vs-sun-sign', '/tradition/nakshatra']} />
       </main>
 
       <Footer locale={locale} path="/birth" />

@@ -127,7 +127,7 @@ export const GUIDES_KO_2: readonly Guide[] = [
         ],
       },
     ],
-    related: ['/match', '/tradition/ashtakoota', '/guides/moon-sign-vs-sun-sign', '/tradition/nakshatra'],
+    related: ['/tradition/ashtakoota', '/guides/moon-sign-vs-sun-sign', '/tradition/nakshatra'],
   },
   {
     slug: 'gandanta',

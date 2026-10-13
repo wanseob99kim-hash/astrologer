@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, isLocale, localePath, type Locale } from '@/lib/i18n'
 import { SITE, absoluteUrl } from '@/lib/seo'
 import { messagesFor } from '@/messages/index'
+import { SiteNav } from '@/app/components/SiteNav'
 import { LangSwitch } from '@/app/components/LangSwitch'
 import '../globals.css'
 
@@ -76,6 +77,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <Suspense fallback={null}>
           <LangSwitch locale={locale} />
         </Suspense>
+        <SiteNav locale={locale} />
         {children}
       </body>
     </html>
