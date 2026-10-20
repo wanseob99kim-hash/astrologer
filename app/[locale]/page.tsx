@@ -8,9 +8,12 @@ import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
 import { GrahaGlyph } from '@/app/components/GrahaGlyph'
 import { JsonLd } from '@/app/components/JsonLd'
-import { NightSky } from '@/app/components/NightSky'
 import { NakshatraGlyph } from '@/app/components/NakshatraGlyph'
 
+const HERO_ALT: Record<Locale, string> = {
+  en: 'A constellation of glowing stars over a night sky with the Milky Way, above clouds lit by a golden sunset',
+  ko: '은하수가 흐르는 밤하늘에 빛나는 별자리, 그 아래 노을빛 구름과 산봉우리',
+}
 const GUIDES_HEADING: Record<Locale, string> = { en: 'Guides to Vedic astrology', ko: '베딕 점성술 가이드' }
 const GUIDES_MORE: Record<Locale, string> = { en: 'All eight guides →', ko: '가이드 8편 모두 보기 →' }
 
@@ -31,8 +34,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 /** 랜딩에 미리 보여줄 네 유형. 성향이 서로 겹치지 않는 것으로 골랐다. */
 const SAMPLE_KEYS = ['rohini', 'ashlesha', 'uttara-ashadha', 'uttara-bhadrapada']
 
-/** 첫 화면 밤하늘에 그릴 탄생별 세 개. 왼쪽부터. */
-const HERO_KEYS = ['magha', 'uttara-ashadha', 'rohini']
 
 export default async function HomePage({ params }: PageProps) {
   const locale = resolveLocale((await params).locale)
@@ -41,9 +42,6 @@ export default async function HomePage({ params }: PageProps) {
   const href = (p: string) => localePath(locale, p)
 
   const samples = nakshatras.filter((n) => SAMPLE_KEYS.includes(n.key))
-  const heroCards = HERO_KEYS.map((key) => nakshatras.find((n) => n.key === key)).filter(
-    (n): n is NonNullable<typeof n> => n !== undefined,
-  )
 
   return (
     <div className="shell">
@@ -63,7 +61,8 @@ export default async function HomePage({ params }: PageProps) {
         <p className="lede" style={{ marginTop: 12 }}>{t.home.lede2}</p>
 
         <div className="heroSky">
-          <NightSky labels={heroCards.map((n) => ({ key: n.key, name: n.sanskrit, sub: n.archetype }))} />
+          {/* Gemini 로 만든 그림을 잘라 webp 로 바꿨다(원본은 art-src/, 저장소 밖). */}
+          <img src="/hero/night-sky.webp" alt={HERO_ALT[locale]} width={1600} height={1100} fetchPriority="high" decoding="async" />
         </div>
 
         <hr className="rule" style={{ margin: '28px 0' }} />
