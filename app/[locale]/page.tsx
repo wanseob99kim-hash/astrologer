@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { contentFor } from '@/content/index'
-import { cardArtUrl } from '@/content/cardArt'
 import { localePath, resolveLocale, type Locale } from '@/lib/i18n'
 import { guidesFor } from '@/content/longform/index'
 import { absoluteUrl, faqSchema } from '@/lib/seo'
@@ -9,7 +8,7 @@ import { messagesFor } from '@/messages/index'
 import { Footer } from '@/app/components/Footer'
 import { GrahaGlyph } from '@/app/components/GrahaGlyph'
 import { JsonLd } from '@/app/components/JsonLd'
-import { NakshatraCard } from '@/app/components/NakshatraCard'
+import { NightSky } from '@/app/components/NightSky'
 import { NakshatraGlyph } from '@/app/components/NakshatraGlyph'
 
 const GUIDES_HEADING: Record<Locale, string> = { en: 'Guides to Vedic astrology', ko: '베딕 점성술 가이드' }
@@ -32,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 /** 랜딩에 미리 보여줄 네 유형. 성향이 서로 겹치지 않는 것으로 골랐다. */
 const SAMPLE_KEYS = ['rohini', 'ashlesha', 'uttara-ashadha', 'uttara-bhadrapada']
 
-/** 히어로 카드 세 장. 가운데가 정면에 온다. */
+/** 첫 화면 밤하늘에 그릴 탄생별 세 개. 왼쪽부터. */
 const HERO_KEYS = ['magha', 'uttara-ashadha', 'rohini']
 
 export default async function HomePage({ params }: PageProps) {
@@ -63,20 +62,8 @@ export default async function HomePage({ params }: PageProps) {
         <p className="lede" style={{ marginTop: 22, fontSize: 'var(--step-1)', color: 'var(--ink)' }}>{t.home.lede1}</p>
         <p className="lede" style={{ marginTop: 12 }}>{t.home.lede2}</p>
 
-        <div className="heroDeck" aria-hidden="true">
-          {heroCards.map((n, i) => (
-            <div key={n.key} className={`heroDeck__slot heroDeck__slot--${i}`}>
-              <NakshatraCard
-                index={n.index}
-                glyphKey={n.key}
-                artUrl={cardArtUrl(n.key, locale)}
-                archetype={n.archetype}
-                keyword={n.keyword}
-                accent={n.luckyColorHex}
-                compact={i !== 1}
-              />
-            </div>
-          ))}
+        <div className="heroSky">
+          <NightSky labels={heroCards.map((n) => ({ key: n.key, name: n.sanskrit, sub: n.archetype }))} />
         </div>
 
         <hr className="rule" style={{ margin: '28px 0' }} />

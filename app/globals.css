@@ -718,29 +718,6 @@ table.compare td.vedic { color: var(--ink); }
 }
 
 /* ── 랜딩 히어로 카드 ── */
-.heroDeck {
-  position: relative;
-  height: 300px;
-  margin: 30px 0 0;
-  display: grid;
-  place-items: center;
-}
-.heroDeck__slot {
-  position: absolute;
-  width: 158px;
-  transition: transform .2s ease;
-}
-.heroDeck__slot--0 { transform: translateX(-84px) rotate(-11deg); opacity: .82; }
-.heroDeck__slot--1 { z-index: 2; width: 186px; }
-.heroDeck__slot--2 { transform: translateX(84px) rotate(11deg); opacity: .82; }
-@media (max-width: 380px) {
-  .heroDeck { height: 258px; }
-  .heroDeck__slot { width: 132px; }
-  .heroDeck__slot--1 { width: 158px; }
-  .heroDeck__slot--0 { transform: translateX(-68px) rotate(-11deg); }
-  .heroDeck__slot--2 { transform: translateX(68px) rotate(11deg); }
-}
-
 /* ── 다섯 축 상세 ── */
 .fortune { display: grid; gap: 12px; margin-top: 18px; }
 .fortune__item {
@@ -979,3 +956,13 @@ table.compare td.vedic { color: var(--ink); }
 }
 .siteNav__list a:hover { color: var(--ink); border-bottom-color: var(--marigold); }
 .siteNav__list a:focus-visible { outline: 2px solid var(--lapis); outline-offset: 2px; border-radius: 4px; }
+
+/* 첫 화면 밤하늘 */
+.heroSky { margin: 30px 0 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid color-mix(in srgb, #C9A961 30%, transparent); }
+.nightSky { display: block; width: 100%; height: auto; aspect-ratio: 640 / 300; min-height: 220px; }
+.nightSky__label { fill: #F3E7C3; }
+.nightSky__name { font-family: "Gowun Batang", Georgia, serif; font-size: 15px; font-weight: 700; }
+.nightSky__sub { font-family: "IBM Plex Sans KR", system-ui, sans-serif; font-size: 11px; fill: #AEB6DA; }
+.nightSky__twinkle { animation: nightSkyTwinkle 3.2s ease-in-out infinite; }
+@keyframes nightSkyTwinkle { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .nightSky__twinkle { animation: none; } }
