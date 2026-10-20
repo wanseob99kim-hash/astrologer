@@ -960,7 +960,7 @@ table.compare td.vedic { color: var(--ink); }
 /* 첫 화면 밤하늘 */
 .heroSky { margin: 30px 0 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid color-mix(in srgb, #C9A961 30%, transparent); }
 .nightSky { display: block; width: 100%; height: auto; aspect-ratio: 640 / 300; min-height: 220px; }
-.nightSky__label { fill: #F3E7C3; }
+.nightSky__label { fill: #F3E7C3; paint-order: stroke; stroke: rgba(4, 5, 14, .8); stroke-width: 3px; stroke-linejoin: round; }
 .nightSky__name { font-family: "Gowun Batang", Georgia, serif; font-size: 15px; font-weight: 700; }
 .nightSky__sub { font-family: "IBM Plex Sans KR", system-ui, sans-serif; font-size: 11px; fill: #AEB6DA; }
 .nightSky__twinkle { animation: nightSkyTwinkle 3.2s ease-in-out infinite; }

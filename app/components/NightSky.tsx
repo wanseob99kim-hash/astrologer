@@ -5,7 +5,7 @@
  *  - 마가: 사자자리의 낫(레굴루스에서 시작하는 거꾸로 된 물음표)
  *  - 웃타라 아샤다: 궁수자리 눈키·아스켈라 쪽의 상아 모양 곡선
  *  - 로히니: 황소자리 히아데스의 V 자와 알데바란
- * 배경 별은 고정 시드로 뿌려 서버·클라이언트 렌더가 같다.
+ * 배경 그림은 public/hero/night-sky.webp. 반짝이는 별만 고정 시드로 얹어 서버·클라이언트 렌더가 같다.
  * 좁은 화면에서는 좌우가 잘리므로(slice) 별자리와 달은 가운데 약 460 폭 안에 둔다.
  */
 
@@ -62,21 +62,28 @@ export function NightSky({ labels }: { labels: readonly NightSkyLabel[] }) {
           <stop offset="0%" stopColor="#FFF4D6" stopOpacity=".9" />
           <stop offset="100%" stopColor="#FFF4D6" stopOpacity="0" />
         </radialGradient>
+        <mask id="nightSkyCrescent" maskUnits="userSpaceOnUse" x="-20" y="-20" width="40" height="40">
+          <circle r="13" fill="#fff" />
+          <circle r="12" cx="5" cy="-3" fill="#000" />
+        </mask>
       </defs>
 
       <rect width="640" height="300" fill="url(#nightSkyBg)" />
+      {/* 은하수·노을·도시 불빛 배경. scripts/paint-hero-sky.py 로 그린다. */}
+      <image href="/hero/night-sky.webp" x="0" y="0" width="640" height="300" preserveAspectRatio="xMidYMid slice" />
 
-      {BACKGROUND.map((s, i) => (
-        <circle key={i} cx={s.x} cy={s.y} r={s.r} fill="#DDE3FF" opacity={0.35 + s.r * 0.35} className={i % 9 === 0 ? 'nightSky__twinkle' : undefined} style={i % 9 === 0 ? { animationDelay: `${(i % 7) * 0.6}s` } : undefined} />
+      {/* 반짝이는 별 몇 개만 그림 위에 얹는다 */}
+      {BACKGROUND.filter((s) => s.y < 200).slice(0, 16).map((s, i) => (
+        <circle key={i} cx={s.x} cy={s.y} r={s.r + 0.4} fill="#EEF1FF" className="nightSky__twinkle" style={{ animationDelay: `${(i % 7) * 0.6}s` }} />
       ))}
 
       {/* 달이 지나는 길 */}
-      <path d="M -10 250 Q 320 20 650 250" fill="none" stroke="#C9A961" strokeOpacity=".28" strokeWidth="1" strokeDasharray="2 6" />
+      <path d="M -10 250 Q 320 20 650 250" fill="none" stroke="#E9C77A" strokeOpacity=".35" strokeWidth="1" strokeDasharray="2 6" />
 
-      {/* 초승달 */}
+      {/* 초승달 — 가리는 원을 칠하지 않고 마스크로 깎아 배경이 그대로 비친다 */}
       <g transform="translate(522 58)">
-        <circle r="13" fill="#F3E7C3" />
-        <circle r="12" cx="5" cy="-3" fill="#0D1230" />
+        <circle r="22" fill="url(#nightSkyGlow)" opacity=".35" />
+        <circle r="13" fill="#F3E7C3" mask="url(#nightSkyCrescent)" />
       </g>
 
       {ASTERISMS.map((a) => {
@@ -91,7 +98,7 @@ export function NightSky({ labels }: { labels: readonly NightSkyLabel[] }) {
               if (!start || !end) return null
               const [x1, y1] = pt(start)
               const [x2, y2] = pt(end)
-              return <line key={`${from}-${to}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9A961" strokeOpacity=".55" strokeWidth="1" />
+              return <line key={`${from}-${to}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#F3D58A" strokeOpacity=".75" strokeWidth="1.1" />
             })}
             {a.stars.map((s, i) => {
               const [x, y] = pt(s)
