@@ -960,3 +960,16 @@ table.compare td.vedic { color: var(--ink); }
 /* 첫 화면 밤하늘 그림 */
 .heroSky { margin: 30px 0 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid color-mix(in srgb, #C9A961 30%, transparent); background: #0B0F26; }
 .heroSky img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover; }
+
+/* 사업자 정보 (전자상거래법 표시 사항) */
+.bizInfo { margin-top: 14px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+.bizInfo__title { margin: 0; font-weight: 600; color: var(--ink-2); }
+.bizInfo__rows { margin: 2px 0 0; display: flex; flex-wrap: wrap; column-gap: 12px; }
+.bizInfo__row { white-space: nowrap; }
+
+/* 상품 페이지 */
+.product__image { margin: 26px 0 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); background: #0B0F26; }
+.product__image img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.buyForm { display: grid; gap: 18px; margin-top: 16px; }
+.buyForm__person { margin: 0; padding: 14px 16px 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); display: grid; gap: 14px; }
+.buyForm__person legend { padding: 0 6px; font-weight: 600; color: var(--ink); }

@@ -1,3 +1,4 @@
+import { BusinessInfo } from './BusinessInfo'
 import Link from 'next/link'
 import { localePath, otherLocale, type Locale } from '@/lib/i18n'
 import { messagesFor } from '@/messages/index'
@@ -37,6 +38,7 @@ export function Footer({ locale, path = '/' }: FooterProps) {
         </Link>
       </nav>
       <p className="disclaimer">{t.footer.disclaimer}</p>
+      <BusinessInfo locale={locale} />
     </footer>
   )
 }

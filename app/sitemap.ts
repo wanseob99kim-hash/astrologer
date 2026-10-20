@@ -36,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...NAKSHATRAS.map((n) => ({ path: `/star/${n.key}`, changeFrequency: 'monthly' as const, priority: 0.7 })),
     ...GRAHAS.map((g) => ({ path: `/graha/${g.sanskrit.toLowerCase()}`, changeFrequency: 'monthly' as const, priority: 0.6 })),
     { path: '/guides', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/report', changeFrequency: 'monthly' as const, priority: 0.7 },
     ...guidesFor(DEFAULT_LOCALE).map((g) => ({ path: `/guides/${g.slug}`, changeFrequency: 'monthly' as const, priority: 0.75 })),
   ]
 

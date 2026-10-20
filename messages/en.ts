@@ -438,9 +438,6 @@ export const en: Messages = {
     testBadge: 'Test mode — no real money is charged.',
     refundTitle: 'Refunds',
     refundBody: 'As digital content, withdrawal is limited once the report has been opened (Korean E-Commerce Act, Art. 17(2)(5)). If payment fails or the report does not open, we refund in full.',
-    sellerTitle: 'Seller',
-    seller: (name: string, owner: string, reg: string, order: string, contact: string) =>
-      `${name} · Owner ${owner} · Business reg. ${reg} · Mail-order reg. ${order} · Contact ${contact}`,
     agree: 'I have read the above and agree to pay.',
     back: 'Back to the free result',
     failTitle: 'Payment was not completed',

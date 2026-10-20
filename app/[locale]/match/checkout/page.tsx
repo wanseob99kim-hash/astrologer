@@ -51,7 +51,6 @@ export default async function CheckoutPage({ params, searchParams }: PageProps) 
   const confirmQuery = new URLSearchParams(parsed.query)
   confirmQuery.set('locale', locale)
   const won = REPORT_PRICE_KRW.toLocaleString('ko-KR')
-  const business = config.business
 
   return (
     <div className="shell">
@@ -77,7 +76,7 @@ export default async function CheckoutPage({ params, searchParams }: PageProps) 
           <ul className="bullets">
             {t.match.lockedItems.map((item) => <li key={item}>{item}</li>)}
           </ul>
-          <dl className="itemGrid" style={{ marginTop: 18 }}>
+          <dl className="itemGrid" style={{ marginTop: 18, gridTemplateColumns: '1fr' }}>
             <div>
               <dt>{t.pay.price}</dt>
               <dd style={{ fontSize: 'var(--step-1)', fontWeight: 600 }}>{t.pay.priceValue(won)}</dd>
@@ -98,14 +97,6 @@ export default async function CheckoutPage({ params, searchParams }: PageProps) 
         <section style={{ marginTop: 28 }}>
           <h2 className="eyebrow">{t.pay.refundTitle}</h2>
           <p className="small" style={{ marginTop: 8, lineHeight: 1.75 }}>{t.pay.refundBody}</p>
-          {business ? (
-            <>
-              <h2 className="eyebrow" style={{ marginTop: 18 }}>{t.pay.sellerTitle}</h2>
-              <p className="small" style={{ marginTop: 8, lineHeight: 1.75 }}>
-                {t.pay.seller(business.name, business.owner, business.registrationNo, business.mailOrderNo, business.contact)}
-              </p>
-            </>
-          ) : null}
         </section>
 
         <Link href={resultHref} className="btn btn--ghost" style={{ marginTop: 34 }}>{t.pay.back}</Link>

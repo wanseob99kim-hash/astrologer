@@ -1,7 +1,10 @@
+import { isBusinessComplete } from '@/lib/business'
+
 /**
  * 결제 설정.
  *
- * 키와 사업자 정보는 전부 환경 변수에서 읽는다. 코드에는 아무 비밀도 두지 않는다.
+ * 키는 환경 변수에서 읽는다. 코드에는 아무 비밀도 두지 않는다.
+ * 사업자 정보는 공개 정보라 lib/business.ts 상수에 있다.
  *  - 로컬: .env.local (저장소에 올라가지 않는다)
  *  - 배포: `npx wrangler secret put TOSS_SECRET_KEY` 처럼 Cloudflare 시크릿으로 넣는다
  *
@@ -28,40 +31,20 @@ export function isTestKey(key: string): boolean {
   return key.startsWith('test_')
 }
 
-export interface BusinessInfo {
-  name: string
-  owner: string
-  registrationNo: string
-  mailOrderNo: string
-  contact: string
-}
-
 export interface PayConfig {
   clientKey: string
   secretKey: string
   signingSecret: string
   isTest: boolean
-  business: BusinessInfo | null
 }
 
 const read = (name: string): string => process.env[name]?.trim() ?? ''
-
-function readBusiness(): BusinessInfo | null {
-  const info: BusinessInfo = {
-    name: read('BIZ_NAME'),
-    owner: read('BIZ_OWNER'),
-    registrationNo: read('BIZ_REG_NO'),
-    mailOrderNo: read('BIZ_MAIL_ORDER_NO'),
-    contact: read('BIZ_CONTACT'),
-  }
-  return Object.values(info).every(Boolean) ? info : null
-}
 
 /**
  * 결제를 켤 수 있으면 설정을, 아니면 null 을 돌려준다.
  *
  * 전자상거래법상 결제 화면에는 상호·대표자·사업자번호·통신판매업 신고번호가 있어야 한다.
- * 그래서 라이브 키인데 사업자 정보가 비어 있으면 결제를 켜지 않는다.
+ * 그래서 라이브 키인데 lib/business.ts 가 덜 채워졌으면 결제를 켜지 않는다.
  * 테스트 키는 실제 돈이 오가지 않으니 사업자 정보 없이도 켠다.
  */
 export function payConfig(): PayConfig | null {
@@ -71,8 +54,7 @@ export function payConfig(): PayConfig | null {
   if (!clientKey || !secretKey || signingSecret.length < 32) return null
 
   const isTest = isTestKey(clientKey) && isTestKey(secretKey)
-  const business = readBusiness()
-  if (!isTest && !business) return null
+  if (!isTest && !isBusinessComplete()) return null
 
-  return { clientKey, secretKey, signingSecret, isTest, business }
+  return { clientKey, secretKey, signingSecret, isTest }
 }

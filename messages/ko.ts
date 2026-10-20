@@ -441,9 +441,6 @@ export const ko = {
     testBadge: '테스트 모드 — 실제로 돈이 빠져나가지 않습니다.',
     refundTitle: '환불 안내',
     refundBody: '디지털 콘텐츠 특성상 리포트가 열린 뒤에는 청약철회가 제한됩니다(전자상거래법 제17조 제2항 제5호). 결제 오류나 리포트가 열리지 않는 경우에는 전액 환불해 드립니다.',
-    sellerTitle: '판매자 정보',
-    seller: (name: string, owner: string, reg: string, order: string, contact: string) =>
-      `상호 ${name} · 대표 ${owner} · 사업자등록번호 ${reg} · 통신판매업 신고 ${order} · 문의 ${contact}`,
     agree: '위 내용을 확인했고 결제에 동의합니다.',
     back: '무료 결과로 돌아가기',
     failTitle: '결제가 완료되지 않았습니다',

@@ -10,6 +10,7 @@ const ITEMS: Record<Locale, ReadonlyArray<{ path: string; label: string }>> = {
     { path: '/tradition/dasha', label: 'Dasha' },
     { path: '/tradition/ashtakoota', label: 'Compatibility' },
     { path: '/guides', label: 'Guides' },
+    { path: '/report', label: 'Report' },
   ],
   ko: [
     { path: '/birth', label: '탄생별 찾기' },
@@ -18,6 +19,7 @@ const ITEMS: Record<Locale, ReadonlyArray<{ path: string; label: string }>> = {
     { path: '/tradition/dasha', label: '다샤' },
     { path: '/tradition/ashtakoota', label: '궁합' },
     { path: '/guides', label: '가이드' },
+    { path: '/report', label: '상세 리포트' },
   ],
 }
 
