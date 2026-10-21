@@ -15,7 +15,7 @@ export interface Business {
   owner: string | null
   /** 사업자등록번호 */
   registrationNo: string
-  /** 통신판매업 신고번호 */
+  /** 통신판매업 신고번호. null 이면 '신고 진행 중'으로 표시한다(2026-10-21 정부24 신고). */
   mailOrderNo: string | null
   /** 사업장 주소 */
   address: string | null
@@ -26,11 +26,11 @@ export interface Business {
 
 export const BUSINESS: Business = {
   name: '달비(Dalbi)',
-  owner: null,
+  owner: '김완섭',
   registrationNo: '262-17-02701',
   mailOrderNo: null,
-  address: null,
-  phone: null,
+  address: '서울특별시 강동구 상암로3길 77, 104동 2403호',
+  phone: '010-3975-6083',
   email: CONTACT_EMAIL,
 }
 
