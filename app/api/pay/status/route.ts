@@ -17,6 +17,8 @@ export function GET() {
       clientKey: { present: client.length > 0, test: client ? isTestKey(client) : null },
       secretKey: { present: secret.length > 0, test: secret ? isTestKey(secret) : null },
       signingSecret: { present: signing.length > 0, longEnough: signing.length >= 32 },
+      // 비교용: wrangler.jsonc vars 에 있는 공개 값. 이게 true 면 환경 변수 전달 경로 자체는 정상이다.
+      siteUrl: { present: Boolean(process.env.SITE_URL) },
     },
     { headers: { 'Cache-Control': 'no-store' } },
   )
