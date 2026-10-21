@@ -7,6 +7,7 @@ import type { Locale } from '@/lib/i18n'
 const LABELS: Record<string, Record<Locale, string>> = {
   '/birth': { en: 'Find your birth star', ko: '내 탄생별 찾기' },
   '/guides': { en: 'All guides', ko: '가이드 전체 보기' },
+  '/report': { en: 'Detailed compatibility report', ko: '궁합 상세 리포트' },
   '/tradition/nakshatra': { en: 'The 27 birth stars', ko: '27 탄생별 사전' },
   '/tradition/navagraha': { en: 'The nine planets (Navagraha)', ko: '아홉 행성(나바그라하)' },
   '/tradition/dasha': { en: 'Dasha: the periods of a life', ko: '다샤: 인생의 구간' },

@@ -33,12 +33,12 @@
     "@ishubhamx/panchangam-js": "^3.0.0",
     "astronomy-engine": "^2.1.19",
     "mhah-panchang": "^1.2.0",
-    "next": "^15.5.25",
+    "next": "^16.4.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.6",
+    "@opennextjs/cloudflare": "^1.20.12",
     "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
