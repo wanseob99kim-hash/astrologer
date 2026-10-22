@@ -27,6 +27,9 @@
   // 예전 주소(astrologer.wanseob99-kim.workers.dev)도 열어 두되,
   // 미들웨어가 정식 주소로 308 리다이렉트해 예전 링크가 끊기지 않고 검색 점수가 새 주소로 모인다.
   "workers_dev": true,
+  // 대시보드에서 넣은 변수(결제 키 등)를 Git 배포가 지우지 않게 한다.
+  // 비밀 값은 이 파일에 적지 않는다 — 저장소에 올라간다. 대시보드에서 Secret 으로 넣는다.
+  "keep_vars": true,
   "vars": {
     // canonical·sitemap·hreflang 의 기준 주소.
     // 비워두면 localhost 가 색인에 박힌다 — 벤치마크 사이트가 저지른 실수.
