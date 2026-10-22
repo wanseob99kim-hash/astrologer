@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { isTestKey, payConfig } from '@/lib/pay/config'
 
 /**
@@ -7,7 +8,17 @@ import { isTestKey, payConfig } from '@/lib/pay/config'
  */
 export const dynamic = 'force-dynamic'
 
-export function GET() {
+/** 워커가 받은 설정 이름(값 제외). 로컬 next dev 에서는 Cloudflare 컨텍스트가 없을 수 있다. */
+async function bindingNames(): Promise<string[] | null> {
+  try {
+    const { env } = await getCloudflareContext({ async: true })
+    return Object.keys(env as Record<string, unknown>).sort()
+  } catch {
+    return null
+  }
+}
+
+export async function GET() {
   const client = process.env.TOSS_CLIENT_KEY?.trim() ?? ''
   const secret = process.env.TOSS_SECRET_KEY?.trim() ?? ''
   const signing = process.env.REPORT_SIGNING_SECRET?.trim() ?? ''
@@ -19,6 +30,7 @@ export function GET() {
       signingSecret: { present: signing.length > 0, longEnough: signing.length >= 32 },
       // 비교용: wrangler.jsonc vars 에 있는 공개 값. 이게 true 면 환경 변수 전달 경로 자체는 정상이다.
       siteUrl: { present: Boolean(process.env.SITE_URL) },
+      bindings: await bindingNames(),
     },
     { headers: { 'Cache-Control': 'no-store' } },
   )
